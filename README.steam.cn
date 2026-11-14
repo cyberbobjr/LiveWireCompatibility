@@ -1,0 +1,62 @@
+[h1]LiveWire Compatibility[/h1]
+
+[b]Build 42.21 · 单人与多人 · 需要 LiveWire[/b]
+
+许多模组添加了游戏本身不计算耗电的电器：它们只检查所在格子是否有电。有了 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url]，它们却在免费运行。本模组把这些机器登记到 LiveWire，使得：
+[list]
+[*]逆变器在它们运行时计算耗电，就像冰箱或炉灶一样；
+[*]它们出现在管理软件的“用电设备”标签页中；
+[*]当其模组允许其他模组读取它的供电检测时，配电箱的电路可以将其断电。
+[/list]
+
+[b]只需启用一次。[/b]它会自动识别你正在使用的受支持模组并忽略其他模组：无需任何设置。
+
+[h2]受支持的模组[/h2]
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: 水井电机、电烘干机、冻干机、化学工作台、交易站和量子基地。电路可停止水井电机、交易站（其自带电池继续工作）和量子基地。
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: 保温柜台与展示柜、自动售货机、热狗机、爆米花机、汽水机、SlurpNBurp、啤酒龙头和抽油烟机；仅计费，电路无法将其断电。
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: 台式电脑，开机时计费。电路在玩家端将其断电。
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: 气象站；电路可以将其断电。
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: 点唱机，播放时计费；电路可以将其断电。
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: 立式钻床、金属带锯、液压机、车床、砂轮机、台锯和混凝土搅拌机；电路可以将其断电。
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: 街机、弹珠台、抓娃娃机、推币机和拳击机，只要有电就计费；仅计费，电路无法将其断电。
+
+[h2]说明[/h2]
+[list]
+[*]耗电量为估算值，参考同类真实机器。
+[*]已由 LiveWire 处理，无需操作：[B42] Working Air Conditioner Units、Badlands Power、Industrial Works。
+[*]无需计费：Video Game Consoles、Vectrex、Palm Pilots 等放在物品栏中或使用电池的物品。
+[/list]
+
+[h2]你的模组不在列表中？[/h2]
+
+模组作者：如果你的模组添加了电器，并希望与 LiveWire 兼容，请在 Discord 上联系我。我会为你的机器添加配置，你的模组无需任何修改。你也可以自己使用 LiveWire 的公开 API：
+[url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]开发者指南[/url]
+[b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+
+[h2]Discord[/h2]
+
+问题、错误报告或推荐模组： [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+
+[h2]支持项目[/h2]
+
+喜欢这个模组？一杯咖啡可以帮助开发新功能和翻译。
+[url=https://ko-fi.com/Z8Z8QJV31][img]https://storage.ko-fi.com/cdn/kofi6.png?v=6[/img][/url]
+
+[h2]制作人员[/h2]
+
+由 batmanfr 制作。上方图片为各受支持模组的创意工坊预览图，版权归其作者所有。
+[url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT

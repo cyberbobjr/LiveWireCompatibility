@@ -1,0 +1,66 @@
+version=1
+title=LiveWire Compatibility
+description=[h1]LiveWire Compatibility[/h1]
+description=
+description=[b]Build 42.21 · Singleplayer & Multiplayer · Requires LiveWire[/b]
+description=
+description=Many mods add electric machines that the game does not count: they only check that their square has power. With [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url], they run for free. This mod declares them to LiveWire, so that:
+description=[list]
+description=[*]the inverter bills what they draw while they run, like a fridge or a stove;
+description=[*]they appear in the management software, in the Consumers tab;
+description=[*]the circuits of the breaker panel switch them off, when their mod lets other mods see its power check.
+description=[/list]
+description=
+description=[b]Enable it once.[/b] It detects the supported mods you use and ignores the others: nothing to configure.
+description=
+description=[h2]Supported mods[/h2]
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: well motor, electric dryer, freeze dryer, chemistry table, trade post and Quantum Base. The circuits stop the well motor, the trade post (its own battery keeps working) and the Quantum Base.
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: heated and display counters, vending machines, hot dog roller, popcorn machine, soda fountain, SlurpNBurp, bar taps and exhaust hoods; billed only, the circuits cannot stop them.
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: desktop computers, while switched on. The circuits cut them on the player's side.
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: the weather station; the circuits stop them.
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: the jukebox, while it plays; the circuits stop them.
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: drill press, metal bandsaw, hydraulic press, lathe, bench grinder, table saws and concrete mixer; the circuits stop them.
+description=
+description=[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
+description=[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: arcade cabinets, pinball tables, claw machines, coin pushers and punching machines, whenever they have power; billed only, the circuits cannot stop them.
+description=
+description=[h2]Notes[/h2]
+description=[list]
+description=[*]Draws are estimates, based on real machines of the same kind.
+description=[*]Already handled by LiveWire, nothing to do: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
+description=[*]Nothing to bill: Video Game Consoles, Vectrex, Palm Pilots and other items carried in the inventory or running on batteries.
+description=[/list]
+description=
+description=[h2]Your mod is not listed?[/h2]
+description=
+description=Mod authors: if your mod adds electric machines and you want it compatible with LiveWire, contact me on Discord. I add a profile for your machines; nothing to change in your mod. You can also use LiveWire's public API yourself:
+description=[url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]Developer guide[/url]
+description=[b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+description=
+description=[h2]Discord[/h2]
+description=
+description=Questions, bug reports or a mod to suggest: [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+description=
+description=[h2]Support the project[/h2]
+description=
+description=Enjoying the mod? A coffee helps fund new features and translations.
+description=[url=https://ko-fi.com/Z8Z8QJV31][img]https://storage.ko-fi.com/cdn/kofi6.png?v=6[/img][/url]
+description=
+description=[h2]Credits[/h2]
+description=
+description=Created by batmanfr. The images above are the Workshop previews of each supported mod, by their authors.
+description=[url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT
+tags=Build 42;Multiplayer
+visibility=public

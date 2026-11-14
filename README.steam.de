@@ -1,0 +1,62 @@
+[h1]LiveWire Compatibility[/h1]
+
+[b]Build 42.21 · Einzelspieler & Mehrspieler · Benötigt LiveWire[/b]
+
+Viele Mods fügen elektrische Maschinen hinzu, die das Spiel nicht mitzählt: Sie prüfen nur, ob ihr Feld Strom hat. Mit [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] laufen sie kostenlos. Diese Mod meldet sie bei LiveWire an, damit:
+[list]
+[*]der Wechselrichter ihren Verbrauch abrechnet, solange sie laufen, wie bei einem Kühlschrank oder Herd;
+[*]sie in der Verwaltungssoftware im Reiter Verbraucher erscheinen;
+[*]die Stromkreise des Sicherungskastens sie abschalten, wenn ihre Mod anderen Mods ihre Stromprüfung zeigt.
+[/list]
+
+[b]Einmal aktivieren.[/b] Sie erkennt die unterstützten Mods, die du nutzt, und ignoriert die anderen: nichts einzustellen.
+
+[h2]Unterstützte Mods[/h2]
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: Brunnenmotor, Elektrotrockner, Gefriertrockner, Chemietisch, Handelsposten und Quantenbasis. Die Stromkreise stoppen den Brunnenmotor, den Handelsposten (seine eigene Batterie läuft weiter) und die Quantenbasis.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: Warmhalte- und Vitrinentheken, Verkaufsautomaten, Hotdog-Grill, Popcornmaschine, Getränkezapfanlage, SlurpNBurp, Bierzapfhähne und Dunstabzugshauben; nur abgerechnet, die Stromkreise können sie nicht abschalten.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: Desktop-Computer, solange sie eingeschaltet sind. Die Stromkreise schalten sie auf Spielerseite ab.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: die Wetterstation; die Stromkreise schalten sie ab.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: die Jukebox, während sie spielt; die Stromkreise schalten sie ab.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: Säulenbohrmaschine, Metallbandsäge, Hydraulikpresse, Drehbank, Schleifbock, Tischkreissägen und Betonmischer; die Stromkreise schalten sie ab.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
+[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: Arcade-Automaten, Flipper, Greifautomaten, Münzschieber und Boxautomaten, sobald sie Strom haben; nur abgerechnet, die Stromkreise können sie nicht abschalten.
+
+[h2]Hinweise[/h2]
+[list]
+[*]Die Verbrauchswerte sind Schätzungen nach echten Maschinen derselben Art.
+[*]Bereits von LiveWire erfasst, nichts zu tun: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
+[*]Nichts abzurechnen: Video Game Consoles, Vectrex, Palm Pilots und andere Gegenstände im Inventar oder mit Batterien.
+[/list]
+
+[h2]Deine Mod fehlt in der Liste?[/h2]
+
+An Mod-Autoren: Wenn deine Mod elektrische Maschinen hinzufügt und du sie mit LiveWire kompatibel machen willst, kontaktiere mich auf Discord. Ich lege ein Profil für deine Maschinen an; an deiner Mod muss sich nichts ändern. Du kannst auch selbst die öffentliche API von LiveWire nutzen:
+[url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]Entwicklerhandbuch[/url]
+[b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+
+[h2]Discord[/h2]
+
+Fragen, Fehlerberichte oder eine Mod vorschlagen: [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+
+[h2]Das Projekt unterstützen[/h2]
+
+Gefällt dir die Mod? Ein Kaffee hilft, neue Funktionen und Übersetzungen zu finanzieren.
+[url=https://ko-fi.com/Z8Z8QJV31][img]https://storage.ko-fi.com/cdn/kofi6.png?v=6[/img][/url]
+
+[h2]Credits[/h2]
+
+Erstellt von batmanfr. Die Bilder oben sind die Workshop-Vorschaubilder der unterstützten Mods, von ihren Autoren.
+[url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT
