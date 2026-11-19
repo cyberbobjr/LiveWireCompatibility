@@ -16,7 +16,7 @@ Noms, faces et emprises lus dans `M\common\media\ProjectArcadeTiles.tiles` (déc
 |---|---|---|---|
 | Bornes d'arcade (10 jeux × 4 faces) | `pa_arcades_0` à `_39` | 1 case | toutes |
 | Borne `complex_t2` | `pa_complex_0`, `_1` | 1 case | toutes |
-| Borne assise `complex_sw` | `pa_complex_2` à `_9` | 2 cases par face | la case `0,0` : `_2`, `_5`, `_6`, `_9` |
+| Borne assise `complex_sw` | `pa_complex_2` à `_9` | 2 cases par face | la pièce que le mod fait jouer : `_3`, `_4`, `_6`, `_9` (le menu s'arrête sur `_2`, `_5`, `_7`, `_8`, `ProjectArcade_PAMPlayGameMenu.lua:404-410` ; correction du 2026-11-20) |
 | Flippers (7 tables) | `pa_pinballs_0` à `_27` | 2 cases par face | la tête jouée par le mod (`PAMPlayGameMenu.lua:166-191`) : `0, 3, 4, 7, …, 24, 27` |
 | Pince (claw machine) | `pa_recreational_2` à `_5` | 1 case | toutes |
 | Pousse-pièces | `pa_recreational_6`, `_7` | 1 case | toutes |
