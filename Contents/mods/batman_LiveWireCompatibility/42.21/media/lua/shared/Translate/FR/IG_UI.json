@@ -1,0 +1,5 @@
+{
+    "IGUI_LWC_MachineOff": "La machine est éteinte",
+    "IGUI_LWC_NoPower": "Pas de courant",
+    "IGUI_LWC_RatedWatts": "Consomme %1 W en marche"
+}

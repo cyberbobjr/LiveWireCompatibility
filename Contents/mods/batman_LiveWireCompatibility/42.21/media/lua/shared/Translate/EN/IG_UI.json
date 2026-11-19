@@ -1,0 +1,5 @@
+{
+    "IGUI_LWC_MachineOff": "The machine is switched off",
+    "IGUI_LWC_NoPower": "No power",
+    "IGUI_LWC_RatedWatts": "Draws %1 W while running"
+}

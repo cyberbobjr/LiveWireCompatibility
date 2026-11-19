@@ -20,8 +20,21 @@ DOUBLES = r"""
 LOG = {}
 print = function(s) LOG[#LOG + 1] = s end
 HANDLERS = {}
-Events = { OnInitWorld = { Add = function(fn) HANDLERS[#HANDLERS + 1] = fn end } }
+EVENTS = {}
+local function event(name)
+    EVENTS[name] = {}
+    return { Add = function(fn) table.insert(EVENTS[name], fn) end }
+end
+Events = { OnInitWorld = { Add = function(fn) HANDLERS[#HANDLERS + 1] = fn end },
+           OnFillWorldObjectContextMenu = event("OnFillWorldObjectContextMenu"),
+           OnClientCommand = event("OnClientCommand") }
 function fire() for _, fn in ipairs(HANDLERS) do fn() end end
+function trigger(name, ...) for _, fn in ipairs(EVENTS[name] or {}) do fn(...) end end
+-- Side of the Lua state: SIDE = "sp", "client" or "server".
+SIDE = "sp"
+function isClient() return SIDE == "client" end
+function isServer() return SIDE == "server" end
+function getText(key, ...) return key end
 ACTIVE = {}
 function getActivatedMods()
     return { contains = function(self, id) return ACTIVE[id] == true end }
@@ -36,9 +49,17 @@ function LiveWire.API.registerConsumer(id, def)
     REGISTERED[id] = def
     return true
 end
-function LiveWire.API.consumer(o) return o and o.cid or nil end
+function LiveWire.API.consumer(o) return type(o) == "table" and o.cid or nil end
 function LiveWire.API.consumerPowered(o) return o.cut ~= true end
-function machine(id, cut) return { cid = id, cut = cut } end
+-- World object double: ModData as IsoObject (hasModData false while empty).
+local ObjectMethods = {}
+ObjectMethods.__index = ObjectMethods
+function ObjectMethods:hasModData() return self.md ~= nil and next(self.md) ~= nil end
+function ObjectMethods:getModData() self.md = self.md or {}; return self.md end
+function ObjectMethods:transmitModData() self.sent = (self.sent or 0) + 1 end
+function ObjectMethods:getSprite() return { getName = function() return self.sprite end } end
+function ObjectMethods:getSquare() return self.sq end
+function machine(id, cut, sprite) return setmetatable({ cid = id, cut = cut, sprite = sprite }, ObjectMethods) end
 function square(...)
     local list = { ... }
     return { getObjects = function()
@@ -69,11 +90,33 @@ PROFILE = { name = "Target", mods = { "TargetMod" },
 """
 
 
+def require_files(lua):
+    """Kahlua-like require: a module path is looked up under shared/, client/ then server/, loaded once."""
+    lua.globals().REQUIRE_ROOT = LUA.replace("\\", "/")
+    lua.execute(r"""
+LOADED = {}
+function require(name)
+    if LOADED[name] ~= nil then return LOADED[name] end
+    for _, side in ipairs({ "shared", "client", "server" }) do
+        local f = io.open(REQUIRE_ROOT .. "/" .. side .. "/" .. name .. ".lua", "r")
+        if f then
+            local code = f:read("*a"); f:close()
+            LOADED[name] = true
+            local r = assert((loadstring or load)(code, name))()
+            if r ~= nil then LOADED[name] = r end
+            return LOADED[name]
+        end
+    end
+    error("module not found: " .. name)
+end
+""")
+
+
 def make(active=True):
     lua = lupa.LuaRuntime(unpack_returned_tuples=True)
     lua.execute(DOUBLES)
-    with open(os.path.join(LUA, "shared", "LiveWireCompatibility", "LWC_Profiles.lua"), encoding="ascii") as f:
-        lua.execute(f.read())
+    require_files(lua)
+    lua.execute('require "LiveWireCompatibility/LWC_Profiles"')
     lua.execute(PROFILE)
     if active:
         lua.execute("ACTIVE.TargetMod = true")
@@ -245,7 +288,7 @@ class SharedAndClientGates(unittest.TestCase):
     def test_unknown_side_is_refused(self):
         lua = make()
         self.assertEqual(lua.eval("""{ LiveWireCompat.Profiles.add({ name = 'S', mods = { 'TargetMod' },
-            consumers = {}, gates = { { path = 'a.b', kind = 'object', consumer = 'X', side = 'server' } } }) }""")[2],
+            consumers = {}, gates = { { path = 'a.b', kind = 'object', consumer = 'X', side = 'both' } } }) }""")[2],
             "invalid_profile")
 
 

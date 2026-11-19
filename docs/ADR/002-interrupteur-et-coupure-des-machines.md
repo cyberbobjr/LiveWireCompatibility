@@ -60,6 +60,9 @@ Analyse statique du 2026-11-20 (lecture seule du Workshop) :
   au serveur (`LWC` / `setSwitch`) ; le serveur vérifie que l'objet est un consommateur d'un profil actif avec
   `switch = true` et que le joueur est à portée, écrit la ModData, la transmet, puis invalide la mesure de l'onduleur
   (`inverterOfObject` → `invalidateDemand`). En solo, même chemin sans réseau.
+  *Précision du 2026-11-20 (I2)* : pas d'invalidation. `inverterOfObject` ne reconnaît que l'objet onduleur
+  (`LW_API.lua:137-145`) et Live Wire relit la consommation de chaque objet à chaque mesure : le changement est
+  facturé à la mesure suivante (10 minutes de jeu au plus).
 - **D04 bis — Une machine éteinte ou coupée le dit.** Une utilisation refusée affiche au joueur « Machine éteinte » ou
   « Pas de courant » (traductions) ; les options de menu concernées restent visibles mais grisées.
 - **D05 — Coupure effective par des gardes déclaratives, un type de garde par fichier.** Les gardes d'ADR-001 D04

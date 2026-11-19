@@ -1,4 +1,4 @@
--- LiveWire Compatibility: registry of profiles and their loader (ADR-001, D02, D04).
+-- LiveWire Compatibility: registry of profiles and their loader (ADR-001, D02, D04; ADR-002).
 -- A profile describes the electric machines of ONE other mod. It is a plain table, added by
 -- its own file under Profiles/, and applied only when one of its mods is active. Everything
 -- goes through LiveWire's public API (revision 6): nothing of LiveWire's internals is used.
@@ -12,20 +12,28 @@
 --     watts     number, or function(o) -> W, while the machine runs
 --     running   optional function(o) -> bool; when it says false the machine draws idle W
 --     idle      optional number, W drawn while not running (default 0)
+--     switch    optional true: the machine gets our on/off switch (LWC_Switch); off = 0 W
 --     category, circuit   optional, as in registerConsumer
 --     couldBePowered      optional function(o) -> bool, as in registerConsumer
---   gates      optional array of power checks of the target mod to make circuit-aware:
---     path      dotted path from a global to a function ("PMK.Well.isPowered")
---     arg       position of the argument that identifies the machine (default 1)
---     kind      "object" (that argument is the machine) or "square" (a square holding it)
---     consumer  id of the consumer (above) the machine belongs to, or an array of ids when one
---               power check serves several machines of the profile
---     side      optional "client": the check lives in the target's client Lua, so it is not
---               wrapped (nor reported missing) on a dedicated server
---   A gated function keeps its own answer and adds "and LiveWire.API.consumerPowered(machine)".
+--   gates      optional array of entry points of the target mod that must refuse to work for a
+--              machine that is not powered (LWC_Gates; one kind per file under Gates/):
+--     kind      "object", "square", "action", "call", "menu" or "custom"
+--     consumer  id of the consumer (above) the machine belongs to, or an array of ids
+--     side      optional "client" or "server": installed on that side only
+--     ...       fields of the kind (see Gates/LWC_Gate<Kind>.lua)
 LiveWireCompat = LiveWireCompat or {}
-local P = LiveWireCompat.Profiles or { list = {}, applied = {}, wrappers = {} }
+require "LiveWireCompatibility/LWC_Switch"
+require "LiveWireCompatibility/LWC_Gates"
+-- Gate kinds, one file each.
+require "LiveWireCompatibility/Gates/LWC_GateCheck"
+require "LiveWireCompatibility/Gates/LWC_GateAction"
+require "LiveWireCompatibility/Gates/LWC_GateCall"
+require "LiveWireCompatibility/Gates/LWC_GateMenu"
+require "LiveWireCompatibility/Gates/LWC_GateCustom"
+
+local P = LiveWireCompat.Profiles or { list = {}, applied = {}, consumers = {} }
 LiveWireCompat.Profiles = P
+local Switch, Gates = LiveWireCompat.Switch, LiveWireCompat.Gates
 
 local API_REVISION = 6
 
@@ -33,40 +41,17 @@ local function log(msg)
     print("[LiveWireCompat] " .. msg)
 end
 
-local function isStringArray(t)
-    if type(t) ~= "table" or #t == 0 then return false end
-    for i = 1, #t do
-        if type(t[i]) ~= "string" or t[i] == "" then return false end
-    end
-    return true
-end
-
 local function validConsumer(c)
-    return type(c) == "table" and type(c.id) == "string" and isStringArray(c.sprites)
+    return type(c) == "table" and type(c.id) == "string" and Gates.isStringArray(c.sprites)
         and (type(c.watts) == "number" or type(c.watts) == "function")
         and (c.running == nil or type(c.running) == "function")
         and (c.idle == nil or type(c.idle) == "number")
-end
-
-local function validGate(g)
-    return type(g) == "table" and type(g.path) == "string"
-        and ((type(g.consumer) == "string" and g.consumer ~= "") or isStringArray(g.consumer))
-        and (g.arg == nil or type(g.arg) == "number")
-        and (g.kind == "object" or g.kind == "square")
-        and (g.side == nil or g.side == "client")
-end
-
--- Consumer ids of a gate, as a set.
-local function gateIds(g)
-    if type(g.consumer) == "string" then return { [g.consumer] = true } end
-    local ids = {}
-    for i = 1, #g.consumer do ids[g.consumer[i]] = true end
-    return ids
+        and (c.switch == nil or type(c.switch) == "boolean")
 end
 
 -- Adds a profile (normally at file load). Returns true, or false and a reason.
 function P.add(profile)
-    if type(profile) ~= "table" or type(profile.name) ~= "string" or not isStringArray(profile.mods)
+    if type(profile) ~= "table" or type(profile.name) ~= "string" or not Gates.isStringArray(profile.mods)
         or type(profile.consumers) ~= "table" then
         return false, "invalid_profile"
     end
@@ -74,7 +59,7 @@ function P.add(profile)
         if not validConsumer(profile.consumers[i]) then return false, "invalid_profile" end
     end
     for i = 1, #(profile.gates or {}) do
-        if not validGate(profile.gates[i]) then return false, "invalid_profile" end
+        if not Gates.validate(profile.gates[i]) then return false, "invalid_profile" end
     end
     for i = 1, #P.list do
         if P.list[i].name == profile.name then return false, "duplicate_profile" end
@@ -97,12 +82,21 @@ local function apiReady()
     return api ~= nil and (api.revision or 0) >= API_REVISION and api.registerConsumer ~= nil
 end
 
+-- W the machine draws while it runs (for the switch tooltip), or nil when unknown.
+function P.ratedWatts(id, o)
+    local c = P.consumers[id]
+    if not c then return nil end
+    if type(c.watts) == "function" then return c.watts(o) end
+    return c.watts
+end
+
 -- registerConsumer definition of one consumer description.
 function P.definition(c)
-    local watts, running, idle = c.watts, c.running, c.idle or 0
+    local watts, running, idle, switch = c.watts, c.running, c.idle or 0, c.switch == true
     return {
         sprites = c.sprites,
         powerConsumption = function(o)
+            if switch and Switch.isOff(o) then return 0 end
             if running and running(o) ~= true then return idle end
             if type(watts) == "function" then return watts(o) end
             return watts
@@ -113,55 +107,7 @@ function P.definition(c)
     }
 end
 
--- Function at a dotted path from a global: the table holding it, its key and the function.
-local function resolve(path)
-    local holder, key = _G, nil
-    for part in string.gmatch(path, "[^%.]+") do
-        if key ~= nil then
-            holder = holder[key]
-            if type(holder) ~= "table" then return nil end
-        end
-        key = part
-    end
-    if key == nil or type(holder[key]) ~= "function" then return nil end
-    return holder, key, holder[key]
-end
-
--- The machine of one of the consumers `ids` on a square, if any.
-local function machineOn(square, ids)
-    local objects = square and square.getObjects and square:getObjects()
-    if not objects then return nil end
-    for i = 0, objects:size() - 1 do
-        local o = objects:get(i)
-        local id = LiveWire.API.consumer(o)
-        if id ~= nil and ids[id] then return o end
-    end
-    return nil
-end
-
--- Wraps the power check named by `gate`, once: original answer, then the circuits' answer.
-function P.wrapGate(gate)
-    local holder, key, current = resolve(gate.path)
-    if not holder then return false, "gate_not_found" end
-    if P.wrappers[gate.path] == current then return true end
-    local original, arg, kind, ids = current, gate.arg or 1, gate.kind, gateIds(gate)
-    local wrapper = function(...)
-        local result = original(...)
-        if not result then return result end
-        local subject = select(arg, ...)
-        local machine = subject
-        if kind == "square" then machine = machineOn(subject, ids) end
-        local id = machine ~= nil and LiveWire.API.consumer(machine) or nil
-        if id == nil or not ids[id] then return result end
-        if LiveWire.API.consumerPowered(machine) then return result end
-        return false
-    end
-    holder[key] = wrapper
-    P.wrappers[gate.path] = wrapper
-    return true
-end
-
--- Applies one active profile: registers its consumers, then wraps its gates.
+-- Applies one active profile: registers its consumers, then installs its gates.
 function P.apply(profile)
     local done = P.applied[profile.name] or {}
     P.applied[profile.name] = done
@@ -171,6 +117,8 @@ function P.apply(profile)
             local ok, reason = LiveWire.API.registerConsumer(c.id, P.definition(c))
             if ok or reason == "duplicate_consumer" then
                 done[c.id] = true
+                P.consumers[c.id] = c
+                if c.switch then Switch.enable(c.id) end
             else
                 done[c.id] = reason
                 log(profile.name .. ": consumer " .. c.id .. " not registered (" .. tostring(reason) .. ")")
@@ -179,9 +127,11 @@ function P.apply(profile)
     end
     for i = 1, #(profile.gates or {}) do
         local g = profile.gates[i]
-        if not (g.side == "client" and isServer and isServer()) then
-            local ok, reason = P.wrapGate(g)
-            if not ok then log(profile.name .. ": power check " .. g.path .. " not wrapped (" .. reason .. ")") end
+        if Gates.onThisSide(g) then
+            local ok, reason = Gates.install(g)
+            if not ok then
+                log(profile.name .. ": power check " .. Gates.label(g) .. " not wrapped (" .. tostring(reason) .. ")")
+            end
         end
     end
 end

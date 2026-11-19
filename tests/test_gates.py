@@ -1,0 +1,237 @@
+"""Offline tests of the gate kinds action, call, menu, custom and of the gate sides (ADR-002, D05).
+
+The "object" and "square" kinds are covered by test_profiles.py. Doubles: a timed action class
+built like ISBaseTimedAction (methods on the class, instances through a metatable), a context
+menu with the fields of ISContextMenu (options[1..numOptions-1], subOption, getSubMenu).
+Run: python tests/test_gates.py
+"""
+import os
+import sys
+import unittest
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import test_profiles as tp  # noqa: E402
+
+TARGET = r"""
+-- Base class with inherited methods, as ISBaseTimedAction.
+Base = {}
+Base.__index = Base
+function Base:isValidStart() return true end
+function Base:isValid() end
+function Base.derive(name)
+    local c = setmetatable({ Type = name }, { __index = Base })
+    c.__index = c
+    return c
+end
+UseMachine = Base.derive("UseMachine")
+function UseMachine:isValid() return true end
+function UseMachine:new(character, m) return setmetatable({ character = character, machine = m }, self) end
+HALO = {}
+function hero() return { setHaloNote = function(self, text) HALO[#HALO + 1] = text end } end
+CALLS = 0
+Target = {
+    onUse = function(player, m, mode) CALLS = CALLS + 1; return "used" end,
+}
+-- Context menu double.
+function menu()
+    local c = { options = {}, numOptions = 1, subs = {} }
+    function c:addOption(name, target, onSelect, p1, p2)
+        local o = { name = name, target = target, onSelect = onSelect, param1 = p1, param2 = p2 }
+        self.options[self.numOptions] = o
+        self.numOptions = self.numOptions + 1
+        return o
+    end
+    function c:getSubMenu(n) return self.subs[n] end
+    return c
+end
+ISWorldObjectContextMenu = { addToolTip = function()
+    return { setName = function(self, n) self.name = n end }
+end }
+GATES = { name = "Gated", mods = { "TargetMod" },
+    consumers = {
+        { id = "GMachine", sprites = { "g_0" }, watts = 100, switch = true },
+        { id = "GOther", sprites = { "g_1" }, watts = 100 },
+    },
+    gates = {
+        { kind = "action", path = "UseMachine", field = "machine", consumer = "GMachine" },
+        { kind = "call", path = "Target.onUse", arg = 2, player = 1, consumer = "GMachine",
+          allow = function(player, m, mode) return mode == "Off" end, refuse = false },
+        { kind = "menu", name = "GatedMenu", consumer = "GMachine" },
+    } }
+"""
+
+
+def make(side="sp"):
+    lua = tp.make()
+    lua.execute(TARGET)
+    lua.execute("SIDE = '%s'; LiveWireCompat.Profiles.add(GATES); fire()" % side)
+    return lua
+
+
+def off(name):
+    return "local %s = machine('GMachine'); %s:getModData().LWC_off = true" % (name, name)
+
+
+class Action(unittest.TestCase):
+    def setUp(self):
+        self.lua = make()
+
+    def test_powered_machine_keeps_the_action(self):
+        self.assertTrue(self.lua.eval("UseMachine:new(hero(), machine('GMachine')):isValid()"))
+        self.assertTrue(self.lua.eval("UseMachine:new(hero(), machine('GMachine')):isValidStart()"))
+
+    def test_switched_off_machine_refuses_and_stops_the_action(self):
+        self.assertFalse(self.lua.eval("(function() %s; return UseMachine:new(hero(), m):isValidStart() end)()" % off("m")))
+        self.assertFalse(self.lua.eval("UseMachine:new(hero(), machine('GMachine', true)):isValid()"))
+
+    def test_player_is_told_once_per_action(self):
+        self.lua.execute("%s; A = UseMachine:new(hero(), m); A:isValid(); A:isValid(); A:isValidStart()" % off("m"))
+        self.assertEqual(self.lua.eval("#HALO"), 1)
+        self.assertEqual(self.lua.eval("HALO[1]"), "IGUI_LWC_MachineOff")
+
+    def test_cut_machine_says_no_power(self):
+        self.lua.execute("UseMachine:new(hero(), machine('GMachine', true)):isValid()")
+        self.assertEqual(self.lua.eval("HALO[1]"), "IGUI_LWC_NoPower")
+
+    def test_other_machines_and_base_class_are_untouched(self):
+        self.assertTrue(self.lua.eval("UseMachine:new(hero(), machine('GOther', true)):isValid()"))
+        self.assertTrue(self.lua.eval("UseMachine:new(hero(), nil):isValid()"))
+        self.assertIsNone(self.lua.eval("rawget(Base, 'lwcRefused')"))
+        self.assertTrue(self.lua.eval("Base.isValidStart({ machine = machine('GMachine', true) })"))
+
+    def test_wrapped_once_across_world_inits(self):
+        self.lua.execute("FIRST = UseMachine.isValid; fire()")
+        self.assertTrue(self.lua.eval("FIRST == UseMachine.isValid"))
+
+    def test_action_needs_field_or_machine_function(self):
+        self.assertEqual(self.lua.eval("""{ LiveWireCompat.Profiles.add({ name = 'Bad', mods = { 'TargetMod' },
+            consumers = {}, gates = { { kind = 'action', path = 'UseMachine', consumer = 'X' } } }) }""")[2],
+            "invalid_profile")
+
+    def test_machine_function_reads_the_machine(self):
+        self.lua.execute("""UseOther = Base.derive('UseOther')
+            function UseOther:isValid() return true end
+            LiveWireCompat.Profiles.add({ name = 'Fn', mods = { 'TargetMod' }, consumers = {},
+                gates = { { kind = 'action', path = 'UseOther', machine = function(a) return a.data.m end,
+                            consumer = 'GMachine' } } }); fire()""")
+        self.assertFalse(self.lua.eval(
+            "setmetatable({ data = { m = machine('GMachine', true) } }, UseOther):isValid()"))
+
+
+class Call(unittest.TestCase):
+    def setUp(self):
+        self.lua = make()
+
+    def test_powered_machine_runs_the_function(self):
+        self.assertEqual(self.lua.eval("Target.onUse(hero(), machine('GMachine'), 'Hot')"), "used")
+
+    def test_blocked_machine_does_not_run_it_and_tells_the_player(self):
+        self.assertFalse(self.lua.eval("(function() %s; return Target.onUse(hero(), m, 'Hot') end)()" % off("m")))
+        self.assertEqual(self.lua.eval("CALLS"), 0)
+        self.assertEqual(self.lua.eval("HALO[1]"), "IGUI_LWC_MachineOff")
+
+    def test_allowed_call_goes_through_when_blocked(self):
+        self.assertEqual(self.lua.eval("Target.onUse(hero(), machine('GMachine', true), 'Off')"), "used")
+
+    def test_instead_replaces_the_refusal(self):
+        self.lua.execute("""Target.update = function(m) return 'warm' end
+            LiveWireCompat.Profiles.add({ name = 'Instead', mods = { 'TargetMod' }, consumers = {},
+                gates = { { kind = 'call', path = 'Target.update', consumer = 'GMachine',
+                            instead = function(original, m) m.forced = true; return 'off' end } } }); fire()""")
+        self.assertEqual(self.lua.eval("Target.update(machine('GMachine', true))"), "off")
+        self.assertEqual(self.lua.eval("Target.update(machine('GMachine'))"), "warm")
+
+    def test_missing_function_is_logged(self):
+        self.lua.execute("""LiveWireCompat.Profiles.add({ name = 'Gone', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'call', path = 'Target.nope', consumer = 'GMachine' } } }); fire()""")
+        self.assertIn("Target.nope not wrapped (gate_not_found)", self.lua.eval("LOG[#LOG]"))
+
+
+class Menu(unittest.TestCase):
+    def fill(self, lua, setup):
+        lua.execute("CTX = menu(); %s; trigger('OnFillWorldObjectContextMenu', 0, CTX, {}, false)" % setup)
+
+    def test_blocked_machine_option_is_greyed_with_the_reason(self):
+        lua = make()
+        self.fill(lua, "%s; OPT = CTX:addOption('Play', nil, print, m)" % off("m"))
+        self.assertTrue(lua.eval("OPT.notAvailable"))
+        self.assertEqual(lua.eval("OPT.toolTip.description"), "IGUI_LWC_MachineOff")
+
+    def test_machine_as_target_is_found_too(self):
+        lua = make()
+        self.fill(lua, "OPT = CTX:addOption('Play', machine('GMachine', true), print)")
+        self.assertTrue(lua.eval("OPT.notAvailable"))
+
+    def test_powered_machine_and_other_options_stay_available(self):
+        lua = make()
+        self.fill(lua, "A = CTX:addOption('Play', nil, print, machine('GMachine')); "
+                       "B = CTX:addOption('Look', nil, print, machine('GOther', true))")
+        self.assertIsNone(lua.eval("A.notAvailable"))
+        self.assertIsNone(lua.eval("B.notAvailable"))
+
+    def test_switch_option_is_never_greyed(self):
+        lua = make()
+        self.fill(lua, "%s; OPT = CTX:addOption('Turn on', nil, print, m); OPT.lwcSwitch = true" % off("m"))
+        self.assertIsNone(lua.eval("OPT.notAvailable"))
+
+    def test_submenus_are_searched(self):
+        lua = make()
+        self.fill(lua, "SUB = menu(); CTX.subs[7] = SUB; P = CTX:addOption('Arcade'); P.subOption = 7; "
+                       "OPT = SUB:addOption('Play', nil, print, machine('GMachine', true))")
+        self.assertTrue(lua.eval("OPT.notAvailable"))
+        self.assertIsNone(lua.eval("P.notAvailable"))
+
+    def test_test_pass_changes_nothing(self):
+        lua = make()
+        lua.execute("CTX = menu(); OPT = CTX:addOption('Play', nil, print, machine('GMachine', true)); "
+                    "trigger('OnFillWorldObjectContextMenu', 0, CTX, {}, true)")
+        self.assertIsNone(lua.eval("OPT.notAvailable"))
+
+    def test_handler_added_once_and_never_on_a_server(self):
+        lua = make()
+        lua.execute("fire()")
+        self.assertEqual(lua.eval("#EVENTS.OnFillWorldObjectContextMenu"), 1)
+        server = make("server")
+        self.assertEqual(server.eval("#EVENTS.OnFillWorldObjectContextMenu"), 0)
+
+
+class CustomAndSides(unittest.TestCase):
+    def test_custom_installer_gets_the_gate_and_helpers(self):
+        lua = make()
+        lua.execute("""LiveWireCompat.Profiles.add({ name = 'Custom', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'custom', name = 'pause', consumer = 'GMachine',
+                        install = function(g, G) GOT = { g.name, G.blocked ~= nil }; return true end } } }); fire()""")
+        self.assertEqual(lua.eval("GOT[1]"), "pause")
+        self.assertTrue(lua.eval("GOT[2]"))
+
+    def test_custom_failure_is_logged(self):
+        lua = make()
+        lua.execute("""LiveWireCompat.Profiles.add({ name = 'Custom', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'custom', name = 'pause', consumer = 'GMachine',
+                        install = function() return false, 'gate_not_found' end } } }); fire()""")
+        self.assertIn("pause not wrapped (gate_not_found)", lua.eval("LOG[#LOG]"))
+
+    def test_custom_needs_name_and_installer(self):
+        lua = make()
+        self.assertEqual(lua.eval("""{ LiveWireCompat.Profiles.add({ name = 'Bad', mods = { 'TargetMod' },
+            consumers = {}, gates = { { kind = 'custom', consumer = 'X', install = print } } }) }""")[2],
+            "invalid_profile")
+
+    SERVER_GATE = """Srv = { check = function(m) return true end }
+        LiveWireCompat.Profiles.add({ name = 'Srv', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'object', path = 'Srv.check', consumer = 'GMachine', side = 'server' } } }); fire()"""
+
+    def test_server_gate_is_installed_on_the_server_and_in_single_player(self):
+        for side in ("server", "sp"):
+            lua = make(side)
+            lua.execute(self.SERVER_GATE)
+            self.assertFalse(lua.eval("Srv.check(machine('GMachine', true))"), side)
+
+    def test_server_gate_is_skipped_on_a_client(self):
+        lua = make("client")
+        lua.execute(self.SERVER_GATE)
+        self.assertTrue(lua.eval("Srv.check(machine('GMachine', true))"))
+
+
+if __name__ == "__main__":
+    unittest.main()
