@@ -26,9 +26,22 @@ DEFAULT_GAME = r"D:\SteamLibrary\steamapps\common\ProjectZomboid"
 
 def profiles():
     lua = lupa.LuaRuntime(unpack_returned_tuples=True)
-    lua.execute("require = function() end; print = function() end")
-    with open(os.path.join(LUA, "shared", "LiveWireCompatibility", "LWC_Profiles.lua"), encoding="ascii") as f:
-        lua.execute(f.read())
+    # Kahlua-like require: each module of this mod is loaded once from shared/ (core files need
+    # each other: LWC_Profiles requires LWC_Switch, LWC_Gates and the gate kinds).
+    lua.globals().SHARED_ROOT = os.path.join(LUA, "shared").replace("\\", "/")
+    lua.execute(r"""
+print = function() end
+local loaded = {}
+function require(name)
+    if loaded[name] then return end
+    loaded[name] = true
+    local f = io.open(SHARED_ROOT .. "/" .. name .. ".lua", "r")
+    if not f then return end
+    local code = f:read("*a"); f:close()
+    assert((loadstring or load)(code, name))()
+end
+require "LiveWireCompatibility/LWC_Profiles"
+""")
     for path in sorted(glob.glob(PROFILE_GLOB)):
         with open(path, encoding="ascii") as f:
             lua.execute(f.read())

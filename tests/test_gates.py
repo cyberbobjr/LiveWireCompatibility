@@ -208,6 +208,77 @@ class Menu(unittest.TestCase):
         self.assertEqual(server.eval("#EVENTS.OnFillWorldObjectContextMenu"), 0)
 
 
+PIECES = r"""
+-- Pieces of one furniture: only `billed` is a registered consumer (one piece per furniture).
+function grid(billed, ...)
+    local all = { billed, ... }
+    local g = {}
+    for _, p in ipairs(all) do
+        p.getSpriteGrid = function() return g end
+        p.getSquare = function() return {} end
+        p.getSpriteGridObjectsIncludingSelf = function(self, list)
+            list:clear(); for _, q in ipairs(all) do list:add(q) end; return list
+        end
+    end
+end
+function piece() return setmetatable({ sprite = 'g_tail' }, getmetatable(machine('x'))) end
+-- B42 built furniture: SpriteConfig.getAllMultiSquareObjects, no sprite grid.
+function entity(billed, ...)
+    local all = { billed, ... }
+    local config = { getAllMultiSquareObjects = function(self, list)
+        for _, q in ipairs(all) do list:add(q) end; return true end }
+    for _, p in ipairs(all) do
+        p.getSpriteGrid = function() return nil end
+        p.getSquare = function() return {} end
+        p.getSpriteConfig = function() return config end
+    end
+end
+"""
+
+
+class OtherPieces(unittest.TestCase):
+    def setUp(self):
+        self.lua = make()
+        self.lua.execute(PIECES)
+
+    def test_piece_of_a_sprite_grid_finds_the_billed_piece(self):
+        self.lua.execute("B = machine('GMachine', true); T = piece(); grid(B, T)")
+        self.assertTrue(self.lua.eval("LiveWireCompat.Gates.billed(T) == B"))
+        self.assertFalse(self.lua.eval("UseMachine:new(hero(), T):isValid()"))
+
+    def test_piece_of_a_built_entity_finds_the_billed_piece(self):
+        self.lua.execute("B = machine('GMachine'); T = piece(); entity(B, T); B:getModData().LWC_off = true")
+        self.assertFalse(self.lua.eval("Target.onUse(hero(), T, 'Hot')"))
+        self.assertEqual(self.lua.eval("HALO[1]"), "IGUI_LWC_MachineOff")
+
+    def test_powered_furniture_keeps_working_from_any_piece(self):
+        self.lua.execute("B = machine('GMachine'); T = piece(); grid(B, T)")
+        self.assertTrue(self.lua.eval("UseMachine:new(hero(), T):isValid()"))
+
+    def test_lone_object_without_consumer_is_not_blocked(self):
+        self.assertIsNone(self.lua.eval("LiveWireCompat.Gates.billed(piece())"))
+        self.assertTrue(self.lua.eval("UseMachine:new(hero(), piece()):isValid()"))
+
+
+class MenuReader(unittest.TestCase):
+    def test_reader_finds_a_machine_the_option_does_not_carry_directly(self):
+        lua = make()
+        lua.execute("""LiveWireCompat.Profiles.add({ name = 'Reader', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'menu', name = 'Claw', consumer = 'GMachine',
+                        machine = function(option) return option.target and option.target.inside end } } }); fire()""")
+        lua.execute("CTX = menu(); OPT = CTX:addOption('Claw', { inside = machine('GMachine', true) }, print); "
+                    "OK = CTX:addOption('Look', { inside = machine('GMachine') }, print); "
+                    "trigger('OnFillWorldObjectContextMenu', 0, CTX, {}, false)")
+        self.assertTrue(lua.eval("OPT.notAvailable"))
+        self.assertIsNone(lua.eval("OK.notAvailable"))
+
+    def test_reader_must_be_a_function(self):
+        lua = make()
+        self.assertEqual(lua.eval("""{ LiveWireCompat.Profiles.add({ name = 'Bad', mods = { 'TargetMod' },
+            consumers = {}, gates = { { kind = 'menu', name = 'M', consumer = 'X', machine = 3 } } }) }""")[2],
+            "invalid_profile")
+
+
 class CustomAndSides(unittest.TestCase):
     def test_custom_installer_gets_the_gate_and_helpers(self):
         lua = make()

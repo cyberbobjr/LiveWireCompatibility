@@ -73,13 +73,48 @@ function G.wrap(name, holder, key, make)
     return true
 end
 
--- The machine is one of `ids` and is not powered (off, cut, or no current at all).
+-- One list reused for every lookup (no allocation on calls made at every frame).
+local pieces
+
+local function billedIn(list)
+    for i = 0, list:size() - 1 do
+        local o = list:get(i)
+        if LiveWire.API.consumer(o) ~= nil then return o end
+    end
+    return nil
+end
+
+-- The billed piece of the furniture `o` belongs to: `o` itself when it is a registered consumer,
+-- else another piece of the same sprite grid (IsoObject.getSpriteGridObjectsIncludingSelf) or of
+-- the same multi-square entity (SpriteConfig.getAllMultiSquareObjects, B42 built furniture).
+-- A profile bills one piece per furniture, but a target mod may hand any piece to its checks.
+function G.billed(o)
+    if LiveWire.API.consumer(o) ~= nil then return o end
+    if not o.getSpriteGrid or not o:getSquare() then return nil end
+    pieces = pieces or ArrayList.new()
+    local found
+    if o:getSpriteGrid() then
+        o:getSpriteGridObjectsIncludingSelf(pieces)
+        found = billedIn(pieces)
+    end
+    local config = not found and o.getSpriteConfig and o:getSpriteConfig()
+    if config then
+        pieces:clear()
+        config:getAllMultiSquareObjects(pieces)
+        found = billedIn(pieces)
+    end
+    pieces:clear()
+    return found
+end
+
+-- The machine (any piece of it) is one of `ids` and is not powered (off, cut, or no current).
 function G.blocked(machine, ids)
     local t = type(machine)
     if t ~= "userdata" and t ~= "table" then return false end
-    local id = LiveWire.API.consumer(machine)
+    local billed = G.billed(machine)
+    local id = billed and LiveWire.API.consumer(billed)
     if id == nil or not ids[id] then return false end
-    return not LiveWireCompat.Switch.powered(machine)
+    return not LiveWireCompat.Switch.powered(billed)
 end
 
 -- The machine of one of `ids` on a square, if any.
@@ -96,7 +131,7 @@ end
 
 -- Translation key of the reason a machine refuses to work.
 function G.reasonKey(machine)
-    if LiveWireCompat.Switch.isOff(machine) then return "IGUI_LWC_MachineOff" end
+    if LiveWireCompat.Switch.isOff(G.billed(machine) or machine) then return "IGUI_LWC_MachineOff" end
     return "IGUI_LWC_NoPower"
 end
 

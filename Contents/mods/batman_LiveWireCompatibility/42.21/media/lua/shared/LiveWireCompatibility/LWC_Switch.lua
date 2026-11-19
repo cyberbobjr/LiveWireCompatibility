@@ -77,10 +77,16 @@ function S.handle(player, args)
     local o = machineAt(args)
     if not o then return false, "no_machine" end
     if not inReach(player, args) then return false, "out_of_reach" end
-    local md = o:getModData()
-    if args.off == true then md[S.KEY] = true else md[S.KEY] = nil end
-    if isServer() then o:transmitModData() end
+    S.write(o, args.off == true)
     return true
+end
+
+-- Authority only: writes the state and sends it to the clients (also used when a target mod
+-- replaces the object of a machine and the state must follow it).
+function S.write(o, off)
+    local md = o:getModData()
+    if off then md[S.KEY] = true else md[S.KEY] = nil end
+    if isServer() then o:transmitModData() end
 end
 
 return S

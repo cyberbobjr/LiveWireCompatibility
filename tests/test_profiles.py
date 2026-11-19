@@ -35,6 +35,15 @@ SIDE = "sp"
 function isClient() return SIDE == "client" end
 function isServer() return SIDE == "server" end
 function getText(key, ...) return key end
+-- java.util.ArrayList as seen from Lua (0-based get).
+ArrayList = { new = function()
+    local l = { items = {} }
+    function l:add(o) self.items[#self.items + 1] = o end
+    function l:size() return #self.items end
+    function l:get(i) return self.items[i + 1] end
+    function l:clear() self.items = {} end
+    return l
+end }
 ACTIVE = {}
 function getActivatedMods()
     return { contains = function(self, id) return ACTIVE[id] == true end }
