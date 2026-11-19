@@ -141,6 +141,19 @@ class Call(unittest.TestCase):
         self.assertEqual(self.lua.eval("Target.update(machine('GMachine', true))"), "off")
         self.assertEqual(self.lua.eval("Target.update(machine('GMachine'))"), "warm")
 
+    def test_machine_function_reads_a_field_of_self(self):
+        self.lua.execute("""Panel = { isUsable = function(self) return true end }
+            LiveWireCompat.Profiles.add({ name = 'Panel', mods = { 'TargetMod' }, consumers = {},
+                gates = { { kind = 'call', path = 'Panel.isUsable', consumer = 'GMachine', refuse = false,
+                            machine = function(self) return self.bench end } } }); fire()""")
+        self.assertFalse(self.lua.eval("Panel.isUsable({ bench = machine('GMachine', true) })"))
+        self.assertTrue(self.lua.eval("Panel.isUsable({ bench = machine('GMachine') })"))
+
+    def test_machine_function_and_arg_together_are_refused(self):
+        self.assertEqual(self.lua.eval("""{ LiveWireCompat.Profiles.add({ name = 'Both', mods = { 'TargetMod' },
+            consumers = {}, gates = { { kind = 'call', path = 'a.b', arg = 2, machine = print, consumer = 'X' } } }) }""")[2],
+            "invalid_profile")
+
     def test_missing_function_is_logged(self):
         self.lua.execute("""LiveWireCompat.Profiles.add({ name = 'Gone', mods = { 'TargetMod' }, consumers = {},
             gates = { { kind = 'call', path = 'Target.nope', consumer = 'GMachine' } } }); fire()""")
