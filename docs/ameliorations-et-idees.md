@@ -7,7 +7,7 @@ Ce document propose ; rien n'est autorisé sans validation de l'utilisateur.
 | Id | Problème | Correction proposée | Priorité | Effort |
 |---|---|---|---|---|
 | C01 | `check_sprites.py` cherche les noms dans le Lua et les scripts, pas dans le `.tiles` binaire | Décoder le format `tdef` pour lire les noms de tuiles | basse | M |
-| C02 | Sécheuse, sublimatrice et établi d'Artel facturés en moyenne : leur marche n'est pas lisible depuis l'objet | Tracer l'état de séchage d'Artel (`PMK_53_Drying`, `PMK_54p_DryingPause`) et lire la marche si une donnée monde existe | moyenne | M |
+| C02 | Établi chimique d'Artel facturé en moyenne (sécheuse et sublimatrice : réglé par l'ADR-002, facture pendant un lot) | Lire la fabrication en cours du panneau d'établi, ou de son infusion (`DryingCraftLogic`) | basse | S |
 
 ## Idées de fonctionnalités
 

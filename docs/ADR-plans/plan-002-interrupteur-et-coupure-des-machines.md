@@ -12,7 +12,7 @@ ADR : [ADR-002](../ADR/002-interrupteur-et-coupure-des-machines.md) (acceptée l
 | I6 | Profil FA2 : gardes `call` et `action`, hotte exclue | Terminée (2026-11-20) | I3 | D05, D06 | S | I4, I5, I7 |
 | I7 | Profils Machinery, PWS, Computer Mod, True Moozic : drapeaux `switch`, gardes existantes sur `powered` ; vérifier les sprites du juke-box | Terminée (2026-11-20) | I3 | D01, D06 | S | I4, I5, I6 |
 | I8 | Profil Project Arcade : `menu`, `action`, `call` sur le pousse-pièces | Terminée (2026-11-20) | I4 | D05, D06 | S | — |
-| I9 | Documentation : architecture, spécifications, wiki EN/FR, `CHANGELOG.md`, renvoi depuis ADR-001 D04 | À faire | I2, I5-I8 | — | S | — |
+| I9 | Documentation : architecture, spécifications, wiki EN/FR, `CHANGELOG.md`, renvoi depuis ADR-001 D04 | Terminée (2026-11-20) | I2, I5-I8 | — | S | — |
 | I10 | Passage en jeu nominal : solo puis multijoueur (PZDevKit) | À faire | I9 | D08 | M | — |
 
 ## I1 — Socle
@@ -99,6 +99,15 @@ Preuve du vert : `python -B -m unittest tests.test_project_arcade tests.test_pro
 `OK` ; `check_sprites` → `ProjectArcade: 68 sprites found`.
 
 Limite : « Voir les scores » du punching-ball est grisé aussi quand la machine est éteinte (même paramètre).
+
+## I9 — Documentation
+
+Fait : `docs/architecture.md`, `docs/specifications-techniques.md`, `docs/specifications-fonctionnelles.md` (F05, F06,
+limites), wiki `fr/01-fonctionnement.md` et `en/01-how-it-works.md` (colonnes « Interrupteur » et « Sans courant »),
+`CHANGELOG.md` (Unreleased), renvoi depuis ADR-001 D04, C02 réduite à l'établi. Descriptions Steam : à reprendre à la
+publication.
+
+Preuve du vert (suite complète, après I5 à I9) : `python -B -m unittest discover -s tests` → `Ran 163 tests in 0.252s OK`.
 
 ## I10 — Passage en jeu
 
