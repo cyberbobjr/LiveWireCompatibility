@@ -20,7 +20,14 @@ LiveWireCompat.Profiles.add({
               return md ~= nil and md.ComputerModPowerOn == true
           end },
     },
+    -- No switch of ours: the power button of Computer Mod (ModData ComputerModPowerOn, written by
+    -- client/ComputerMod_UI_System.lua:3983-3986) is the machine's own switch (ADR-002, D01).
     gates = {
+        -- Computer Mod 42, client/ComputerMod_Power.lua:144-156, hasComputerPower(computer), the
+        -- placed computer as argument 1. Its callers read the global at each call
+        -- (ComputerMod_UI.lua:690-691, ComputerMod_ContextMenu.lua:221-222); the screen update runs
+        -- it every frame and turns the computer off when it answers false
+        -- (ComputerMod_UI_Lifecycle.lua:245-256). Client only: the function lives in client Lua.
         { path = "ComputerModPower.hasComputerPower", kind = "object", consumer = "ComputerModDesktop",
           side = "client" },
     },
