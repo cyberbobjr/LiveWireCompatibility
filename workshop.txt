@@ -3,7 +3,7 @@ id=3839733996
 title=LiveWire Compatibility
 description=[h1]LiveWire Compatibility[/h1]
 description=
-description=[b]Build 42.21 · Singleplayer & Multiplayer · Requires LiveWire[/b]
+description=[b]Build 42.22 · Singleplayer & Multiplayer · Requires LiveWire[/b]
 description=
 description=Many mods add electric machines that the game does not count: they only check that their square has power. With [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url], they run for free. This mod declares them to LiveWire, so that:
 description=[list]

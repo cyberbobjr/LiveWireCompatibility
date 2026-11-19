@@ -1,6 +1,6 @@
 [h1]LiveWire Compatibility[/h1]
 
-[b]Build 42.21 · 싱글 & 멀티플레이 · LiveWire 필요[/b]
+[b]Build 42.22 · 싱글 & 멀티플레이 · LiveWire 필요[/b]
 
 많은 모드가 게임이 전력 소비를 계산하지 않는 전기 기계를 추가합니다. 그 기계들은 칸에 전기가 있는지만 확인합니다. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] 환경에서는 공짜로 돌아갑니다. 이 모드는 그 기계들을 LiveWire에 등록하여:
 [list]

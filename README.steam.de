@@ -1,6 +1,6 @@
 [h1]LiveWire Compatibility[/h1]
 
-[b]Build 42.21 · Einzelspieler & Mehrspieler · Benötigt LiveWire[/b]
+[b]Build 42.22 · Einzelspieler & Mehrspieler · Benötigt LiveWire[/b]
 
 Viele Mods fügen elektrische Maschinen hinzu, die das Spiel nicht mitzählt: Sie prüfen nur, ob ihr Feld Strom hat. Mit [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] laufen sie kostenlos. Diese Mod meldet sie bei LiveWire an, damit:
 [list]

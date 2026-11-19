@@ -1,6 +1,6 @@
 [h1]LiveWire Compatibility[/h1]
 
-[b]Build 42.21 · Un jugador y multijugador · Requiere LiveWire[/b]
+[b]Build 42.22 · Un jugador y multijugador · Requiere LiveWire[/b]
 
 Muchos mods añaden máquinas eléctricas que el juego no cuenta: solo comprueban que su casilla tenga corriente. Con [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url], funcionan gratis. Este mod las declara a LiveWire para que:
 [list]

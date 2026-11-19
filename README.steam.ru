@@ -1,6 +1,6 @@
 [h1]LiveWire Compatibility[/h1]
 
-[b]Build 42.21 · Одиночная и сетевая игра · Требуется LiveWire[/b]
+[b]Build 42.22 · Одиночная и сетевая игра · Требуется LiveWire[/b]
 
 Многие моды добавляют электрические машины, которые игра не учитывает: они лишь проверяют, есть ли ток на их клетке. С [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] они работают бесплатно. Этот мод регистрирует их в LiveWire, чтобы:
 [list]

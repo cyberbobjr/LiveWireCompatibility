@@ -1,6 +1,6 @@
 [h1]LiveWire Compatibility[/h1]
 
-[b]Build 42.21 · 单人与多人 · 需要 LiveWire[/b]
+[b]Build 42.22 · 单人与多人 · 需要 LiveWire[/b]
 
 许多模组添加了游戏本身不计算耗电的电器：它们只检查所在格子是否有电。有了 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url]，它们却在免费运行。本模组把这些机器登记到 LiveWire，使得：
 [list]

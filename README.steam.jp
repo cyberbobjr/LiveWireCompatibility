@@ -1,6 +1,6 @@
 [h1]LiveWire Compatibility[/h1]
 
-[b]Build 42.21 · シングル＆マルチプレイ · LiveWire 必須[/b]
+[b]Build 42.22 · シングル＆マルチプレイ · LiveWire 必須[/b]
 
 多くのMODはゲームが消費電力を数えない電気機械を追加します。それらはマスに電気が来ているかを確認するだけです。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] の環境では無料で動いてしまいます。このMODはそれらをLiveWireに登録し、次のようにします：
 [list]
