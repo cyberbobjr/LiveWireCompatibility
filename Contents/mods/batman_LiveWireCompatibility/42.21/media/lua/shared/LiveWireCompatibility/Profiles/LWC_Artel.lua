@@ -1,8 +1,9 @@
 -- LiveWire Compatibility: Artel Manufactory (Workshop 3794133594, mod id ArtelManufactory).
--- Analysis: docs/annexes/recherches/artel-manufactory.md. Artel states no power figure: every
--- draw below is an estimate (ADR-001, D03). Already counted by the game, so not here: the
--- portable electric stove (IsoStove) and the smart floodlights (IsoLightSwitch). Not placed in
--- the world, so not billable: battery charging station, electric heater, cooler bag.
+-- Analysis: docs/annexes/recherches/artel-manufactory.md; switch and gates: ADR-002 (D06).
+-- Artel states no power figure: every draw below is an estimate (ADR-001, D03). Already counted by
+-- the game, so not here: the portable electric stove (IsoStove) and the smart floodlights
+-- (IsoLightSwitch). Not placed in the world, so not billable: battery charging station, electric
+-- heater, cooler bag. Target lines below: variant 42/, media/lua/<side>/<file>.
 require "LiveWireCompatibility/LWC_Profiles"
 
 local function artel(name)
@@ -16,11 +17,80 @@ local function range(from, to, out)
     return out
 end
 
--- Quantum Base: lit sprites only (dark clones mean "no power", PMK_87c_QuantumBaseCore.lua:52-62).
-local quantum = range(112, 116)
-range(125, 129, quantum)
-range(134, 138, quantum)
+-- Quantum Base: lit sprites and their dark clones ("no power", shared/PMK_87c_QuantumBaseCore.lua:
+-- 52-62). Artel swaps the object between them (QB.rebuild, :562): both must stay the same
+-- consumer, or a cut base turned dark would no longer be gated and would light up again.
+local quantum = range(112, 120)
+range(125, 133, quantum)
+range(134, 142, quantum)
 quantum[#quantum + 1] = "Artel_143"  -- north face: one sprite for lit and dark
+
+-- Drying stations (dryer, sublimator) keep their batches in a DryingCraftLogic component
+-- (server/PMK_58z_SublimatorServer.lua:429-430). The authority reads the batches in progress; the
+-- ModData flag PMK_EDryerNoPower (:65, written by setFlag :337 at :467) means Artel holds them for lack of power.
+local NO_POWER_FLAG = "PMK_EDryerNoPower"
+
+local function batchRunning(o)
+    if not (ComponentType and o.hasComponent and o:hasComponent(ComponentType.DryingCraftLogic)) then
+        return false
+    end
+    local comp = o:getComponent(ComponentType.DryingCraftLogic)
+    if not comp or (tonumber(comp:getActiveCraftCount()) or 0) <= 0 then return false end
+    return not (o:hasModData() and o:getModData()[NO_POWER_FLAG] == true)
+end
+
+-- Batch pause of the drying stations (server). The watchdog (server/PMK_58z:417-475) does, for
+-- each station: Pause.thaw(crd) or Pause.freeze(crd) for every batch (:443, Pause = PMK.dryPause
+-- read at :417), then the stage global of its kind, looked up in _G (:471-472, KINDS :130-133),
+-- which calls PMK_StationApplyStage(obj, comp, cfg) (shared/PMK_54s_ElectricDryerStage.lua:234,
+-- :293; shared/PMK_58s_SublimatorStage.lua:55). A batch (CraftRecipeData) does not know its
+-- station, so thaw only notes the batch; the stage call of its station then decides: thaw as
+-- Artel asked, or freeze (it renews Artel's 6-minute hold lease, shared/PMK_54p_DryingPause.lua:
+-- 143, 168-180) while the station is off or cut. Artel's own tick thaws it again once powered.
+-- PMK_58z:443 is the only caller of thaw in Artel.
+local waiting = {}
+local realThaw = nil
+
+local function installDryingPause(gate, G)
+    local pause = artel("dryPause")
+    if not pause then return false, "gate_not_found" end
+    local ids = G.ids(gate)
+    local ok, reason = G.wrap("PMK_StationApplyStage", _G, "PMK_StationApplyStage", function(original)
+        return function(obj, comp, cfg)
+            local blocked = G.blocked(obj, ids)
+            local hold = PMK.dryPause.freeze
+            for i = 1, #waiting do
+                if blocked then hold(waiting[i]) else realThaw(waiting[i]) end
+                waiting[i] = nil
+            end
+            return original(obj, comp, cfg)
+        end
+    end)
+    if not ok then return ok, reason end
+    return G.wrap("PMK.dryPause.thaw", pause, "thaw", function(original)
+        realThaw = original
+        return function(crd)
+            if crd then waiting[#waiting + 1] = crd end
+        end
+    end)
+end
+
+-- QB.rebuild(sq, obj, cells, powered, face) replaces the object by a new one
+-- (shared/PMK_87c:614-617, IsoObject.getNew) that has none of the old ModData: the switch state
+-- goes over to the new object, so a base switched off stays off (dark, cells locked).
+local function installQuantumKeepSwitch(gate, G)
+    local Switch = LiveWireCompat.Switch
+    return G.wrap("PMK.QBase.rebuild", artel("QBase"), "rebuild", function(original)
+        return function(sq, obj, ...)
+            local wasOff = Switch.isOff(obj)
+            local made = original(sq, obj, ...)
+            if wasOff and made and made ~= obj then
+                Switch.write(made, true)
+            end
+            return made
+        end
+    end)
+end
 
 LiveWireCompat.Profiles.add({
     name = "Artel",
@@ -29,32 +99,57 @@ LiveWireCompat.Profiles.add({
     consumers = {
         -- Well, motor stage only (the hand pump and the pipe stages use other sprites).
         -- 500 W pump, about one hour in five: average 100 W.
-        { id = "ArtelWellMotor", sprites = { "Artel_104", "Artel_107" }, watts = 100 },
-        -- Electric dryer: 2 kW heater used in batches; its running state is not readable
-        -- from the object: average 300 W. Drying stages are overlays on these base sprites.
-        { id = "ArtelElectricDryer", sprites = { "Artel_36", "Artel_37" }, watts = 300 },
-        -- Freeze dryer: 700 W during a cycle, state not readable: average 150 W.
-        { id = "ArtelSublimator", sprites = { "Artel_52", "Artel_53" }, watts = 150 },
-        -- Chemistry table: heated only while crafting, state not readable: average 30 W.
-        { id = "ArtelChemTable", sprites = { "Artel_56" }, watts = 30 },
+        { id = "ArtelWellMotor", sprites = { "Artel_104", "Artel_107" }, watts = 100, switch = true },
+        -- Electric dryer: 2 kW heater (research doc, section 2.2 item 5) while a batch runs,
+        -- 5 W of controls otherwise. Drying stages are overlays on these base sprites
+        -- (shared/PMK_54s:225-226), so the base sprite stays.
+        { id = "ArtelElectricDryer", sprites = { "Artel_36", "Artel_37" }, watts = 2000, idle = 5,
+          switch = true, running = batchRunning },
+        -- Freeze dryer: 700 W during a cycle, 5 W standby (research doc, section 2.3 item 5).
+        { id = "ArtelSublimator", sprites = { "Artel_52", "Artel_53" }, watts = 700, idle = 5,
+          switch = true, running = batchRunning },
+        -- Chemistry table, master tile of each face (scripts/PMK_chem_Entity.txt:132-144: S = 56 57,
+        -- E = 58 / 59). Heated only while crafting, state not readable: average 30 W.
+        { id = "ArtelChemTable", sprites = { "Artel_56", "Artel_58" }, watts = 30, switch = true },
         -- Trade post: two halves per post, 75 W each (150 W) while on grid power; on its own
-        -- battery it draws nothing from the network.
+        -- battery it draws nothing from the network (shared/PMK_91h_TradePower.lua:321-329).
         { id = "ArtelTradePost", sprites = { "Artel_121", "Artel_122", "Artel_123", "Artel_124" }, watts = 75,
+          switch = true,
           running = function(o)
               local t = artel("Trade")
               return t ~= nil and t.powerSource ~= nil and t.powerSource(o) == "grid"
           end },
-        -- Quantum Base wall module: always-on storage field, 100 W while lit.
-        { id = "ArtelQuantumBase", sprites = quantum, watts = 100,
+        -- Quantum Base wall module: always-on storage field, 100 W while it has power.
+        { id = "ArtelQuantumBase", sprites = quantum, watts = 100, switch = true,
           running = function(o)
               local qb = artel("QBase")
               return qb ~= nil and qb.hasPower ~= nil and qb.hasPower(o) == true
           end },
     },
-    -- Public power checks: a cut circuit stops these machines (the others keep running).
     gates = {
+        -- shared/PMK_80_WellCore.lua:430 isPowered(obj); false = motorIdle speed (:436-440).
         { path = "PMK.Well.isPowered", kind = "object", consumer = "ArtelWellMotor" },
+        -- shared/PMK_91h_TradePower.lua:226 gridPowered(obj); false = runs on its battery (:280, :324).
         { path = "PMK.Trade.gridPowered", kind = "object", consumer = "ArtelTradePost" },
+        -- shared/PMK_87c:278 squarePowered(sq), looked up in QB at each call by hasPower (:288-291,
+        -- used by the cell lock shared/PMK_89a_QuantumPowerLock.lua:85, the client gate
+        -- client/PMK_88b:115, the menu client/PMK_88a:219, the actions shared/PMK_88c:194, the cold
+        -- ticker PMK_87c:770) AND by the sprite choice (heal :383, rebuild :571). Gating hasPower
+        -- alone would lock the cells but never darken the base.
         { path = "PMK.QBase.squarePowered", kind = "square", consumer = "ArtelQuantumBase" },
+        { kind = "custom", name = "Artel quantum base switch", consumer = "ArtelQuantumBase", side = "server",
+          install = installQuantumKeepSwitch },
+        { kind = "custom", name = "Artel drying pause", consumer = { "ArtelElectricDryer", "ArtelSublimator" },
+          side = "server", install = installDryingPause },
+        -- client/PMK_57_CraftBenchPanel.lua:2145 PMK_CraftBenchPanel:isUsable() (class :1896,
+        -- methods through the metatable :2573-2574), checked before selecting a recipe (:2065) and
+        -- starting a craft (:2174). The table is self.entity (:2578), the player self.player
+        -- (ISBaseComponentPanel.table_constructor). Artel's answer when refused: false.
+        { kind = "call", path = "PMK_CraftBenchPanel.isUsable", consumer = "ArtelChemTable", side = "client",
+          machine = function(panel) return panel.entity end,
+          instead = function(original, panel)
+              LiveWireCompat.Gates.notify(panel.player, panel.entity)
+              return false
+          end },
     },
 })
