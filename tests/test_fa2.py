@@ -113,6 +113,41 @@ def make(side="client"):
     return lua
 
 
+MENU = r"""
+ISWorldObjectContextMenu = { addToolTip = function() return { setName = function(self, n) self.name = n end } end }
+function menu()
+    local c = { options = {}, numOptions = 1 }
+    function c:addOption(name, target, onSelect, p1, p2, p3)
+        local o = { name = name, target = target, onSelect = onSelect, param1 = p1, param2 = p2, param3 = p3 }
+        self.options[self.numOptions] = o
+        self.numOptions = self.numOptions + 1
+        return o
+    end
+    function c:getSubMenu() return nil end
+    return c
+end
+"""
+
+
+class Menus(unittest.TestCase):
+    """FA 2 menu options carry the machine as param2 (HotDogMachineMenu.lua:14-19)."""
+
+    def fill(self, setup):
+        lua = make()
+        lua.execute(MENU)
+        lua.execute("CTX = menu(); %s; trigger('OnFillWorldObjectContextMenu', 0, CTX, {}, false)" % setup)
+        return lua
+
+    def test_switched_off_hot_dog_options_are_greyed(self):
+        lua = self.fill("local m = machine('FA2HotDogMachine'); m:getModData().LWC_off = true; "
+                        "OPT = CTX:addOption('Make hot dog', nil, print, {}, m, 'snd')")
+        self.assertTrue(lua.eval("OPT.notAvailable"))
+
+    def test_mode_machine_options_stay_available_without_power(self):
+        lua = self.fill("OPT = CTX:addOption('Off', nil, print, {}, machine('FA2HeatedCounter', true), 'Off')")
+        self.assertIsNone(lua.eval("OPT.notAvailable"))
+
+
 class NativeModeMachines(unittest.TestCase):
     """Heated counter, display counters, vending machines: FA 2's own Off mode is the switch."""
 

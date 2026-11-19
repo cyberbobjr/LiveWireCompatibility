@@ -1,0 +1,40 @@
+// pzdev configuration of LiveWire Compatibility (PZDevKit/docs/wiki/fr/01-tests-automatiques.md):
+//   python PZDevKit/pzdev.py sp LiveWireCompatibility --wait-idle 3600
+// Target mods are read from the Workshop copy (read-only) and copied to the test cache.
+{
+  "name": "LiveWireCompatibility",
+  "gameVersion": "42.22",
+  "mods": [
+    {"path": "../LiveWire/Contents/mods/batman_LiveWire"},
+    {"path": "Contents/mods/batman_LiveWireCompatibility"},
+    {"workshop": "3794133594", "id": "ArtelManufactory"},
+    {"workshop": "3042138819", "id": "FunctionalAppliances2"},
+    {"workshop": "3780027195", "id": "Machinery"},
+    {"workshop": "3645980077", "id": "ProjectArcade"}
+  ],
+  "hooks": "autotest/lwc_hooks.lua",
+  "params": {},
+  "sp": {
+    // Same save as LiveWire's own tests (public grid still running).
+    "save": "2026-10-17_17-50-04",
+    "gameMode": "Sandbox",
+    "saveMods": "replace",
+    "timeoutSec": 600,
+    "startDelaySec": 5
+  },
+  // Dedicated server + client 1 (autotest/lwc_mp_hooks.lua): the client switches a roller off through
+  // the real menu; the server applies the command and sends the state back.
+  "mp": {
+    "hooks": "autotest/lwc_mp_hooks.lua",
+    "serverName": "lwctest_pzat_mp",
+    "port": 17397,
+    // Medium house of Muldraugh (same fixed spawn as LiveWire's MP tests).
+    "spawn": "10656,10137,0",
+    "clients": 1,
+    "clientXmx": "4096m",
+    "serverRun": true,
+    "clientRun": true,
+    "timeoutSec": 900,
+    "joinTimeoutSec": 600
+  }
+}

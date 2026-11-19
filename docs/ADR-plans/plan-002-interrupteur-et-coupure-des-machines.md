@@ -13,7 +13,7 @@ ADR : [ADR-002](../ADR/002-interrupteur-et-coupure-des-machines.md) (acceptée l
 | I7 | Profils Machinery, PWS, Computer Mod, True Moozic : drapeaux `switch`, gardes existantes sur `powered` ; vérifier les sprites du juke-box | Terminée (2026-11-20) | I3 | D01, D06 | S | I4, I5, I6 |
 | I8 | Profil Project Arcade : `menu`, `action`, `call` sur le pousse-pièces | Terminée (2026-11-20) | I4 | D05, D06 | S | — |
 | I9 | Documentation : architecture, spécifications, wiki EN/FR, `CHANGELOG.md`, renvoi depuis ADR-001 D04 | Terminée (2026-11-20) | I2, I5-I8 | — | S | — |
-| I10 | Passage en jeu nominal : solo puis multijoueur (PZDevKit) | À faire | I9 | D08 | M | — |
+| I10 | Passage en jeu nominal : solo puis multijoueur (PZDevKit) | Terminée (2026-11-20) | I9 | D08 | M | — |
 
 ## I1 — Socle
 
@@ -114,3 +114,24 @@ Preuve du vert (suite complète, après I5 à I9) : `python -B -m unittest disco
 Liste nominale courte : éteindre et rallumer une machine de chaque mod (0 W dans « Consommateurs »), utilisation
 refusée et message, lot Artel en pause puis repris, disjoncteur coupé = machine arrêtée. Codes de sortie, ligne
 `summary` et dossier `runs/...` cités dans la fiche.
+
+Fait : `autotest.json` (LiveWire, ce mod, Artel, FA2, Machinery et Project Arcade lus en lecture seule dans le
+Workshop), `autotest/lwc_hooks.lua` (solo), `autotest/lwc_mp_hooks.lua` (serveur dédié + 1 client).
+
+- Solo : `python PZDevKit/pzdev.py sp LiveWireCompatibility --wait-idle 3600` → code 0,`
+  `summary=LiveWire Compatibility switch and gates PASS`, `runs/20261120-003547-sp-41dfd081e7c3` : profils appliqués et
+  gardes installées (4 mods), « Éteindre » du vrai menu puis action de marche, 0 W, options FA2 grisées (5/5), usage
+  FA2 refusé, `Machinery.Service.isPowered` faux éteint puis réponse de Machinery rallumé, option de jeu Project
+  Arcade grisée (3/3), « Allumer », 500 W, aucune erreur Lua. Le premier passage (`runs/20261120-003339-sp-bc52ccc58bd1`,
+  code 1) a révélé l'absence de garde `menu` dans le profil FA2 (ajoutée) et un attendu faux du test (`haveElectricity`
+  ne compte que les générateurs).
+- Multijoueur : `python PZDevKit/pzdev.py mp LiveWireCompatibility --clients 1 --client-run --wait-idle 3600` → code 0,
+  `LiveWire Compatibility MP server` et `MP client` ok, `runs/20261120-003738-mp-13b725cb1c6e` : le client choisit
+  « Éteindre », reçoit l'état du serveur en 252 ms, usage FA2 refusé, options grisées (4/4) ; copie serveur éteinte,
+  0 W.
+- Aucun message `[LiveWireCompat]` dans les consoles (aucune garde manquante, aucune demande refusée).
+
+Non couvert en jeu : chemin positif d'usage FA2 avec courant (la sauvegarde n'a que le réseau public, que le test de
+FA2 ignore), pause d'un lot Artel, partie Project Arcade en cours, tour à métal par une autre tuile.
+
+Preuve du vert hors jeu : `python -B -m unittest discover -s tests` → `Ran 165 tests in 0.256s OK`.

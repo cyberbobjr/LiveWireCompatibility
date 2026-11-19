@@ -105,6 +105,11 @@ LiveWireCompat.Profiles.add({
           running = generatorRunning },
     },
     gates = {
+        -- Greys the menu options of a switched-off or unpowered machine (ADR-002, D04 bis): FA 2's
+        -- options carry the machine as param2 (HotDogMachineMenu.lua:14-19 and the other menus).
+        -- Not for the mode machines: their "Off" choice must stay available.
+        { kind = "menu", name = "FA2 menus", side = "client",
+          consumer = { "FA2HotDogMachine", "FA2PopcornMachine", "FA2SodaFountain", "FA2SlurpNBurp", "FA2BarTap" } },
         -- Native Off mode (heated counter, displays, vending machines). FA.updateMachineTemp(Machine)
         -- (client/FAMapObjects.lua:102-129) is looked up by name at chunk load (:98, :136) and before
         -- each menu (client/FAInitContextMenus.lua:41, :44, :47, :50); its last branch (:117-120) is
