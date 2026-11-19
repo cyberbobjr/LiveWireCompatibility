@@ -1,6 +1,6 @@
 # Plan 002 — Interrupteur marche/arrêt et coupure effective des machines
 
-ADR : [ADR-002](../ADR/002-interrupteur-et-coupure-des-machines.md) (acceptée le 2026-11-20).
+ADR : [ADR-002](../../ADR/termines/002-interrupteur-et-coupure-des-machines.md) (acceptée le 2026-11-20).
 
 | # | Étape | Statut | Dépend de | Décisions ADR | Taille | Parallélisable avec |
 |---|---|---|---|---|---|---|

@@ -73,7 +73,7 @@ compatibles sans toucher à ces mods.
   *Précision du 2026-11-13* : un même test peut servir plusieurs machines du profil (`consumer` accepte un tableau
   d'ids, cas de `Machinery.Service.isPowered`) ; un test défini dans le Lua client du mod cible porte
   `side = "client"` et n'est ni enveloppé ni signalé absent sur un serveur dédié (cas de Computer Mod).
-  *Complément du 2026-11-20* : l'[ADR-002](002-interrupteur-et-coupure-des-machines.md) ajoute un interrupteur et
+  *Complément du 2026-11-20* : l'[ADR-002](termines/002-interrupteur-et-coupure-des-machines.md) ajoute un interrupteur et
   d'autres types de garde (actions, fonctions d'usage, menus) : une machine dont le test de courant est `local` est
   désormais coupée par un autre point d'entrée public quand il existe.
 - **D05 — Analyse avant profil.** Chaque mod de la liste reçoit d'abord un court rapport : appareils déjà comptés

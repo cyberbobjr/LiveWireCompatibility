@@ -5,10 +5,10 @@
 | Identifiant | `ADR-002-INTERRUPTEUR-ET-COUPURE-DES-MACHINES` |
 | Date de création et de mise à jour | 2026-11-20 |
 | Statut | Accepté (2026-11-20) |
-| Avancement | voir le [plan 002](../ADR-plans/plan-002-interrupteur-et-coupure-des-machines.md) |
+| Avancement | Terminé le 2026-11-20, voir le [plan 002](../../ADR-plans/termines/plan-002-interrupteur-et-coupure-des-machines.md) |
 | Décideur | l'utilisateur |
 | Portée | `batman_LiveWireCompatibility` : chargeur, nouveaux modules (interrupteur, commande serveur, menu, types de garde), tous les profils ; Live Wire et les mods cibles ne changent pas |
-| Documents liés | [ADR-001](001-compatibilite-mods-tiers.md) (D03 et D04 complétées), Live Wire ADR-002 (API consommateurs) |
+| Documents liés | [ADR-001](../001-compatibilite-mods-tiers.md) (D03 et D04 complétées), Live Wire ADR-002 (API consommateurs) |
 | Références | Live Wire `LW_API.lua:466-512` (`registerConsumer`, `consumer`, `consumerPowered`, `inverterOfObject`, `invalidateDemand`, `ratedWatts`) ; vanilla `LuaTimedActionNew.java:110` (`isValid` relu à chaque mise à jour) ; rapports d'analyse du 2026-11-20 (ci-dessous) |
 | Origine | demande de l'utilisateur du 2026-11-20, après un lyophilisateur Artel facturé 150 W à l'arrêt : « il faudrait un interrupteur marche/arrêt sur les machines […] fait en sorte que les machines […] vérifie si elles sont alimentées avant de pouvoir fonctionner […] Fait la même chose pour les autres appareils déclarés » |
 
