@@ -53,7 +53,7 @@ sprites et tests de courant : [specifications-techniques.md](specifications-tech
 
 | Mod cible | Profil | Interrupteur | Coupure |
 |---|---|---|---|
-| Functional Appliances 2 (3042138819) | `LWC_FunctionalAppliances2.lua` | hot-dog, pop-corn, fontaines, tireuses ; mode Off natif ailleurs | client (fonctions d'usage), actions des deux côtés ; hotte non gérée |
+| Functional Appliances 2 (3042138819) | `LWC_FunctionalAppliances2.lua` | hot-dog, pop-corn, fontaines, tireuses ; mode Off natif ailleurs | client ; hotte non gérée |
 | Computer Mod (3725497089) | `LWC_ComputerMod.lua` | natif | client |
 | Plysken Weather Station (3781590169) | `LWC_PlyskenWeatherStation.lua` | oui | partagée |
 | True Moozic (3632610172), juke-box | `LWC_TrueMoozic.lua` | natif | client |

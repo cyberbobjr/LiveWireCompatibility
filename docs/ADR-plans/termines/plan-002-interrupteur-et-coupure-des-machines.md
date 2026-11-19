@@ -71,7 +71,8 @@ boutons du panneau de chimie restent dessinés actifs (le clic est refusé avec 
 Fichiers : `Profiles/LWC_FunctionalAppliances2.lua`, `tests/test_fa2.py`. Interrupteur : hot-dog, pop-corn,
 fontaine, SlurpNBurp, tireuses. Gardes `call` client sur les `onUse…` (le choix « Off » passe toujours) et
 `FA.updateMachineTemp` (passe en Off par la branche d'arrêt de FA2) ; `action` sur `UseHotDogMachine`,
-`UsePopcornMachine`, `UseSodaFountain`, `UseBarTaps`, des deux côtés (classes `shared` avec `complete()`).
+`UsePopcornMachine`, `UseSodaFountain`, `UseBarTaps`, côté client. *Correction du 2026-11-20* : d'abord installées des deux
+côtés ; un serveur n'appelle jamais `isValid` (`.claude/pz-knowledge/multiplayer.md`), la garde n'agit que chez le client.
 Hotte : ni interrupteur ni garde.
 
 Preuve du vert : `python -B -m unittest tests.test_fa2 tests.test_profile_files` → `Ran 16 tests`, `OK`.

@@ -5,8 +5,9 @@
 -- fridge or freezer container, so LiveWire does not bill them on its own.
 -- FA 2 tests square:haveElectricity() inline, but every use goes through a global function or a
 -- timed action class looked up by name: the gates below wrap those (ADR-002, D06). All of FA 2's
--- power logic runs on the client (client/*.lua), so the menu-side gates are client side (ADR-002,
--- D07); the timed action classes are shared, so their gates are installed on both sides.
+-- power logic runs on the client (client/*.lua), so the gates are client side (ADR-002, D07). The
+-- timed action classes are shared, but a server never calls isValid (it runs complete()): their gates
+-- act on the client only.
 -- Not listed: deep fryers, coffee machine, wall clock, payphones (FA 2 checks no power for
 -- them), the SiloGenerator (a power source).
 require "LiveWireCompatibility/LWC_Profiles"
@@ -139,15 +140,14 @@ LiveWireCompat.Profiles.add({
           consumer = "FA2BarTap" },
         -- Timed actions (shared/TimedActions/Use*.lua): isValid at :5 always returns true; :new
         -- stores the machine in o.machine (UseHotDogMachine.lua:175, UsePopcornMachine.lua:139,
-        -- UseSodaFountain.lua:181, UseBarTaps.lua:114). A cut stops the action in progress. The classes are
-        -- shared (shared/TimedActions) and have complete(): installed on both sides, so the server refuses too.
-        { kind = "action", path = "UseHotDogMachine", field = "machine",
+        -- UseSodaFountain.lua:181, UseBarTaps.lua:114). A cut stops the action in progress (client).
+        { kind = "action", path = "UseHotDogMachine", field = "machine", side = "client",
           consumer = "FA2HotDogMachine" },
-        { kind = "action", path = "UsePopcornMachine", field = "machine",
+        { kind = "action", path = "UsePopcornMachine", field = "machine", side = "client",
           consumer = "FA2PopcornMachine" },
-        { kind = "action", path = "UseSodaFountain", field = "machine",
+        { kind = "action", path = "UseSodaFountain", field = "machine", side = "client",
           consumer = { "FA2SodaFountain", "FA2SlurpNBurp" } },
-        { kind = "action", path = "UseBarTaps", field = "machine",
+        { kind = "action", path = "UseBarTaps", field = "machine", side = "client",
           consumer = "FA2BarTap" },
     },
 })

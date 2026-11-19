@@ -91,7 +91,7 @@ machine est éteinte, sinon `IGUI_LWC_NoPower`.
 | Fichier | Mod cible | `mods` | Interrupteur (`switch`) | Gardes |
 |---|---|---|---|---|
 | `Profiles/LWC_Artel.lua` | Artel Manufactory (3794133594) | `ArtelManufactory` | les six | `PMK.Well.isPowered`, `PMK.Trade.gridPowered` (object) ; `PMK.QBase.squarePowered` (square) ; `custom` serveur : pause des lots (`PMK.dryPause.thaw` + `PMK_StationApplyStage`), état suivi par `PMK.QBase.rebuild` ; `call` client `PMK_CraftBenchPanel.isUsable` |
-| `Profiles/LWC_FunctionalAppliances2.lua` | Functional Appliances 2 (3042138819) | `FunctionalAppliances2` | hot-dog, pop-corn, fontaine, SlurpNBurp, tireuses | `call` client `FA.updateMachineTemp` (passe en Off), `onUse…` des sept tables FA ; `action` `UseHotDogMachine`, `UsePopcornMachine`, `UseSodaFountain`, `UseBarTaps` (deux côtés) |
+| `Profiles/LWC_FunctionalAppliances2.lua` | Functional Appliances 2 (3042138819) | `FunctionalAppliances2` | hot-dog, pop-corn, fontaine, SlurpNBurp, tireuses | `call` client `FA.updateMachineTemp` (passe en Off), `onUse…` des sept tables FA ; `action` `UseHotDogMachine`, `UsePopcornMachine`, `UseSodaFountain`, `UseBarTaps` (client : un serveur n'appelle pas `isValid`) |
 | `Profiles/LWC_ComputerMod.lua` | Computer Mod (3725497089) | `ComputerModkum` | natif | `ComputerModPower.hasComputerPower` (object, client) |
 | `Profiles/LWC_PlyskenWeatherStation.lua` | Plysken Weather Station (3781590169) | `PWS` | oui | `PWS.Power.isPowered` (object) |
 | `Profiles/LWC_TrueMoozic.lua` | True Moozic (3632610172) | `TrueMoozic` | natif | `TMJukebox.hasPower` (square, client) |
