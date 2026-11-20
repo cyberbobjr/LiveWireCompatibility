@@ -95,10 +95,10 @@ local function checkProfiles()
         for _, g in ipairs(profile and profile.gates or {}) do
             if g.path and (g.kind == "object" or g.kind == "square" or g.kind == "call") then
                 local _, _, current = G.resolve(g.path)
-                if current == nil or G.wrappers[g.path] ~= current then notWrapped[#notWrapped + 1] = g.path end
+                if current == nil or not G.wrappers[G.wrapName(g)] then notWrapped[#notWrapped + 1] = g.path end
             elseif g.kind == "action" then
                 local _, _, class = G.resolve(g.path)
-                if not class or G.wrappers[g.path .. ":isValid"] ~= class.isValid then
+                if not class or not G.wrappers[G.wrapName(g, ":isValid")] then
                     notWrapped[#notWrapped + 1] = g.path
                 end
             end

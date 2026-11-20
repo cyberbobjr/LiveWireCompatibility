@@ -40,7 +40,7 @@ local function install(g)
         report(machine)
         return ...
     end
-    return G.wrap(g.path .. ":notify", holder, key, function(original)
+    return G.wrap(G.wrapName(g, ":notify"), holder, key, function(original)
         return function(...)
             local machine
             if machineOf then machine = machineOf(...) else machine = select(arg, ...) end

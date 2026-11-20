@@ -156,6 +156,18 @@ LiveWireCompat.Profiles.add({
         -- LiveWire, which bills the dryers only during a batch (ADR-004).
         { kind = "notify", path = "PMK_StationApplyStage", consumer = { "ArtelElectricDryer", "ArtelSublimator" },
           state = batchRunning, side = "server" },
+        -- Starting a batch ("Dry", "Freeze-dry", steeping): the stations are DryingCraftLogic entities
+        -- started from the vanilla craft logic panel through ISEntityUI.GenericCraftStart(player,
+        -- entity, ...) or GenericCraftTransferAndStart (client/Entity/ISEntityUI.lua:71-105), which
+        -- queue ISGenericCraftStart (shared/Entity/TimedActions/ISGenericCraftStart.lua:5-12, :60-72,
+        -- field `entity`). The batch pause above only holds a batch already running: these refuse to
+        -- start one on a station switched off or without power, with the reason shown to the player.
+        { kind = "call", path = "ISEntityUI.GenericCraftStart", arg = 2, player = 1, side = "client",
+          consumer = { "ArtelElectricDryer", "ArtelSublimator", "ArtelChemTable" } },
+        { kind = "call", path = "ISEntityUI.GenericCraftTransferAndStart", arg = 2, player = 1, side = "client",
+          consumer = { "ArtelElectricDryer", "ArtelSublimator", "ArtelChemTable" } },
+        { kind = "action", path = "ISGenericCraftStart", field = "entity", side = "client",
+          consumer = { "ArtelElectricDryer", "ArtelSublimator", "ArtelChemTable" } },
         -- client/PMK_57_CraftBenchPanel.lua:2145 PMK_CraftBenchPanel:isUsable() (class :1896,
         -- methods through the metatable :2573-2574), checked before selecting a recipe (:2065) and
         -- starting a craft (:2174). The table is self.entity (:2578), the player self.player

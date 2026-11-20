@@ -54,3 +54,14 @@ spécifications, architecture, ADR-001, CHANGELOG.
 
 Preuve du vert : `python -B -m unittest discover -s tests` → `Ran 261 tests in 0.718s OK` ; `python tools/check_sprites.py` → 10 profils, code 0 ;
 `python tools/check_depth.py` → code 0 ; `python tools/build_depth.py` → code 0 ; `luacheck Contents` → 0 avertissement.
+
+## Correction du 2026-11-20 — lancement d'un lot Artel et gardes partagées
+
+Signalé par l'utilisateur : un lyophilisateur éteint (bleu dans « Afficher les consommateurs ») lançait quand même un lot.
+La pause des lots ne tient qu'un lot déjà lancé ; le lancement passe par `ISEntityUI.GenericCraftStart` /
+`GenericCraftTransferAndStart` puis `ISGenericCraftStart` (vanilla) : gardes `call` et `action` ajoutées au profil Artel
+(sécheuse, sublimatrice, établi de chimie). Défaut du cœur trouvé en chemin : une enveloppe était identifiée par le seul
+chemin de la fonction, si bien qu'une seconde garde d'un autre profil sur la même fonction vanilla (Knox et Artel) ne
+s'installait pas ; `G.wrapName(g)` identifie maintenant chaque garde.
+
+Preuve du vert : `python -B -m unittest discover -s tests` → `Ran 266 tests`, `OK`.

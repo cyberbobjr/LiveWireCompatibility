@@ -22,7 +22,7 @@ local function install(g)
     local ids, field, machineOf = G.ids(g), g.field, g.machine
     for i = 1, #METHODS do
         local method = METHODS[i]
-        local ok = G.wrap(g.path .. ":" .. method, class, method, function(original)
+        local ok = G.wrap(G.wrapName(g, ":" .. method), class, method, function(original)
             return function(self, ...)
                 local machine
                 if field then machine = self[field] else machine = machineOf(self) end

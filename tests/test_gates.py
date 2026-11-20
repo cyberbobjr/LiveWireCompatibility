@@ -333,6 +333,23 @@ class Notify(unittest.TestCase):
         self.assertEqual(self.lua.eval("SENT[1][3].sprite"), "g_0")
 
 
+class TwoProfilesOneFunction(unittest.TestCase):
+    def test_each_profile_gates_its_own_machines_on_a_shared_vanilla_function(self):
+        lua = make()
+        lua.execute("""Vanilla = { start = function(p, m) return 'started' end }
+            LiveWireCompat.Profiles.add({ name = 'P1', mods = { 'TargetMod' }, consumers = {},
+                gates = { { kind = 'call', path = 'Vanilla.start', arg = 2, consumer = 'GMachine' } } })
+            LiveWireCompat.Profiles.add({ name = 'P2', mods = { 'TargetMod' }, consumers = {},
+                gates = { { kind = 'call', path = 'Vanilla.start', arg = 2, consumer = 'GOther' } } })
+            fire(); fire()""")
+        self.assertIsNone(lua.eval("Vanilla.start(hero(), machine('GMachine', true))"))
+        self.assertIsNone(lua.eval("Vanilla.start(hero(), machine('GOther', true))"))
+        self.assertEqual(lua.eval("Vanilla.start(hero(), machine('GOther'))"), "started")
+        # Two layers only, even after the second world init.
+        self.assertEqual(lua.eval("""(function() local n, f = 0, Vanilla.start
+            while f do n = n + 1; f = LiveWireCompat.Gates.inner[f] end return n end)()"""), 3)
+
+
 class CustomAndSides(unittest.TestCase):
     def test_custom_installer_gets_the_gate_and_helpers(self):
         lua = make()

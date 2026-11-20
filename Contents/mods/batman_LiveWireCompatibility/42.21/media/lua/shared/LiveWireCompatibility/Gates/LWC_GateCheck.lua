@@ -14,7 +14,7 @@ local function installer(onSquare)
     return function(g)
         local holder, key = G.resolve(g.path)
         local arg, ids = g.arg or 1, G.ids(g)
-        return G.wrap(g.path, holder, key, function(original)
+        return G.wrap(G.wrapName(g), holder, key, function(original)
             return function(...)
                 local result = original(...)
                 if not result then return result end

@@ -115,6 +115,24 @@ function PMK_CraftBenchPanel:new(player, entity)
     return o
 end
 function off(o) o:getModData().LWC_off = true; return o end
+-- Vanilla craft logic start (client/Entity/ISEntityUI.lua:71-87, shared/Entity/TimedActions/ISGenericCraftStart.lua).
+QUEUED = {}
+ISTimedActionQueue = { add = function(a) QUEUED[#QUEUED + 1] = a end }
+ISGenericCraftStart = {}
+ISGenericCraftStart.__index = ISGenericCraftStart
+function ISGenericCraftStart:isValidStart() return true end
+function ISGenericCraftStart:isValid() return self.entity ~= nil end
+function ISGenericCraftStart:new(character, entity, component, funcCanStart, funcStart)
+    return setmetatable({ character = character, entity = entity }, self)
+end
+ISEntityUI = {}
+function ISEntityUI.GenericCraftStart(player, entity, component, funcCanStart, funcStart)
+    ISTimedActionQueue.add(ISGenericCraftStart:new(player, entity, component, funcCanStart, funcStart))
+    return true
+end
+function ISEntityUI.GenericCraftTransferAndStart(player, entity, component, funcCanStart, funcStart, items, slot)
+    return ISEntityUI.GenericCraftStart(player, entity, component, funcCanStart, funcStart)
+end
 """
 
 
@@ -187,6 +205,32 @@ class ArtelGates(unittest.TestCase):
 
     def test_other_well_stages_keep_artel_answer(self):
         self.assertEqual(self.lua.eval("PMK.Well.isPowered({ cut = true })"), True)
+
+
+class ArtelBatchStart(unittest.TestCase):
+    def setUp(self):
+        self.lua = make()
+
+    def test_switched_off_freeze_dryer_refuses_to_start_a_batch(self):
+        self.lua.execute("S = off(station('ArtelSublimator', false, 0)); R = ISEntityUI.GenericCraftStart(hero(), S, {}, print, print)")
+        self.assertEqual(self.lua.eval("#QUEUED"), 0)
+        self.assertEqual(self.lua.eval("HALO[1]"), "IGUI_LWC_MachineOff")
+
+    def test_cut_dryer_refuses_through_transfer_and_start(self):
+        self.lua.execute("ISEntityUI.GenericCraftTransferAndStart(hero(), station('ArtelElectricDryer', true, 0), {}, print, print)")
+        self.assertEqual(self.lua.eval("#QUEUED"), 0)
+        self.assertEqual(self.lua.eval("HALO[1]"), "IGUI_LWC_NoPower")
+
+    def test_powered_station_starts_and_a_queued_start_stops_when_switched_off(self):
+        self.lua.execute("S = station('ArtelSublimator', false, 0); ISEntityUI.GenericCraftStart(hero(), S, {}, print, print)")
+        self.assertEqual(self.lua.eval("#QUEUED"), 1)
+        self.assertTrue(self.lua.eval("QUEUED[1]:isValid()"))
+        self.lua.execute("off(S)")
+        self.assertFalse(self.lua.eval("QUEUED[1]:isValid()"))
+
+    def test_other_stations_keep_the_vanilla_answer(self):
+        self.lua.execute("ISEntityUI.GenericCraftStart(hero(), machine('SomeOtherBench', true), {}, print, print)")
+        self.assertEqual(self.lua.eval("#QUEUED"), 1)
 
 
 class ArtelQuantumBase(unittest.TestCase):

@@ -34,9 +34,15 @@ function G.validate(g)
     return impl.validate(g) == true
 end
 
--- Name used in log lines and as the one-time key of a gate.
+-- Name used in log lines.
 function G.label(g)
     return g.path or g.name or g.kind
+end
+
+-- One-time key of a gate's wrapper: its function and the gate itself, so that two profiles can each
+-- wrap the same vanilla function (both wrappers stay, stacked) while one gate never wraps twice.
+function G.wrapName(g, suffix)
+    return G.label(g) .. (suffix or "") .. "@" .. tostring(g)
 end
 
 -- Consumer ids of a gate, as a set.

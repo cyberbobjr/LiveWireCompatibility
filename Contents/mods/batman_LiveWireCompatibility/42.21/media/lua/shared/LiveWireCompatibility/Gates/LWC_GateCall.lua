@@ -23,7 +23,7 @@ local function install(g)
     local holder, key = G.resolve(g.path)
     local arg, ids, playerArg, allow, refuse, instead = g.arg or 1, G.ids(g), g.player, g.allow, g.refuse, g.instead
     local machineOf = g.machine
-    return G.wrap(g.path, holder, key, function(original)
+    return G.wrap(G.wrapName(g), holder, key, function(original)
         return function(...)
             local machine
             if machineOf then machine = machineOf(...) else machine = select(arg, ...) end
