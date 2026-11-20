@@ -25,7 +25,7 @@ Mod cible : point d'entrée enveloppé --> LWC_Switch.powered(machine) = courant
 
 ```
 Contents/mods/batman_LiveWireCompatibility/
-├── common/                          vide (structure B42)
+├── common/media/                    tileGeometry.txt, depthmaps/DEPTH_Artel.png (profondeurs des machines d'Artel, ADR-003)
 └── 42.21/
     ├── mod.info                     require=\batman_LiveWire
     └── media/lua/
@@ -82,6 +82,9 @@ Le format est dans [specifications-techniques.md](specifications-techniques.md).
   `object`/`square`, doubles de l'API LiveWire et `require` qui charge les vrais fichiers), `tests/test_switch.py`
   (interrupteur, commande, menu ; sources ASCII et sans `next()`), `tests/test_gates.py` (types `action`, `call`,
   `menu`, `custom`, côtés), `tests/test_profile_files.py` et un fichier de tests par profil.
+- `python tools/build_artel_depth.py` : régénère `common/media/depthmaps/DEPTH_Artel.png` (bloc carré centré ajusté à la
+  silhouette de chaque machine d'Artel, projection et codage du moteur ; ADR-003) à partir du pack d'Artel lu en lecture
+  seule. Codes : 0 écrit, 1 pixel sans profondeur, 2 Artel absent. Hors CI ; `tests/test_artel_depth.py` en couvre le calcul.
 - `python tools/check_sprites.py [--workshop DIR] [--game DIR]` : chaque sprite d'un profil doit être défini par un
   `.tiles` du mod cible ou du jeu, ou nommé dans le Lua ou les scripts du mod cible (lecture seule). Codes : 0 tout
   trouvé, 1 sprite absent, 2 mod absent. Hors CI.

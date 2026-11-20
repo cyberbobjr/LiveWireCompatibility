@@ -79,6 +79,14 @@ machine est éteinte, sinon `IGUI_LWC_NoPower`.
 3. Chaque garde de ce côté (`side`) est installée une seule fois (le registre garde l'enveloppe posée ; un second
    passage la reconnaît). Une garde absente du mod cible est signalée, sans erreur.
 
+## Profondeurs des machines d'Artel (ADR-003)
+
+`common/media/depthmaps/DEPTH_Artel.png` (1024 × 7168, mêmes dimensions que celle d'Artel) ne remplit que les 40 cases des
+machines du profil Artel ; Artel garde les siennes (200 à 223). Le moteur fusionne les cartes case par case
+(`TilesetDepthTexture.mergeTileset`) et ne la charge qu'avec `common/media/tileGeometry.txt`. Chaque machine est un bloc
+carré centré sur sa case ajusté à sa silhouette ; aucun pixel du sprite sans texel. Sans profondeur propre, le jeu ne
+dessinait pas la surbrillance de ces machines de face (« Afficher les consommateurs », menu contextuel).
+
 ## Journaux (console, anglais)
 
 - `[LiveWireCompat] LiveWire API revision 6 or later not found: nothing registered`
