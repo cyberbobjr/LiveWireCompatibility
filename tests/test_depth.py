@@ -1,6 +1,6 @@
-"""Offline tests of tools/build_artel_depth.py (ADR-003): engine projection and encoding, box fit
-on a synthetic sprite, no drawn pixel without depth. No Workshop copy needed.
-Run: python tests/test_artel_depth.py
+"""Offline tests of tools/depthlib.py (ADR-003): engine projection and encoding, box fit on a synthetic
+sprite, no drawn pixel without depth, depth sources merged like the engine. No Workshop copy needed.
+Run: python tests/test_depth.py
 """
 import os
 import sys
@@ -10,7 +10,7 @@ import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
-import build_artel_depth as bad  # noqa: E402
+import depthlib as bad  # noqa: E402
 
 
 def project(wx, wy, wz):
@@ -88,6 +88,59 @@ class Fit(unittest.TestCase):
         alpha[ys.min() - 1, int(xs.mean())] = 255   # an antialiased edge pixel above the box
         _depth, _box, left = bad.tile_depth(alpha)
         self.assertEqual(left, 0)
+
+
+class Sources(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        from PIL import Image
+        self.tmp = tempfile.TemporaryDirectory()
+        self.Image = Image
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def root(self, name, maps=None, assign=None):
+        r = os.path.join(self.tmp.name, name)
+        os.makedirs(os.path.join(r, "depthmaps"))
+        for tileset, (rows, filled) in (maps or {}).items():
+            a = np.zeros((rows * 256, 1024, 4), dtype=np.uint8)
+            for i in filled:
+                a[(i // 8) * 256 + 100:(i // 8) * 256 + 200, (i % 8) * 128 + 20:(i % 8) * 128 + 100] = 255
+            self.Image.fromarray(a, "RGBA").save(os.path.join(r, "depthmaps", "DEPTH_%s.png" % tileset))
+        if assign:
+            with open(os.path.join(r, "tileDepthTextureAssignments.txt"), "w") as f:
+                f.write("tileDepthTextureAssignments\n{\n    VERSION = 1,\n")
+                for k, v in assign.items():
+                    f.write("    %s = %s,\n" % (k, v))
+                f.write("}\n")
+        return r
+
+    def test_first_non_empty_cell_wins_across_roots(self):
+        a = self.root("a", {"set": (2, [1])})
+        b = self.root("b", {"set": (2, [3])})
+        s = bad.DepthSources([a, b])
+        self.assertEqual(s.depth_cell("set_1")[0], "own")
+        self.assertEqual(s.depth_cell("set_3")[0], "own")
+        self.assertEqual(s.depth_cell("set_2")[0], None)
+
+    def test_assignment_only_without_own_depth(self):
+        a = self.root("a", {"set": (2, [1, 2])}, {"set_2": "set_9", "set_4": "set_1"})
+        s = bad.DepthSources([a])
+        self.assertEqual(s.depth_cell("set_2")[0], "own")
+        kind, _cell, other = s.depth_cell("set_4")
+        self.assertEqual((kind, other), ("assigned", "set_1"))
+
+    def test_merged_size_is_the_smallest_map(self):
+        a = self.root("a", {"set": (4, [])})
+        b = self.root("b", {"set": (2, [])})
+        self.assertEqual(bad.DepthSources([a, b]).map_size("set"), (1024, 512))
+
+    def test_missing_pixels_counts_sprite_pixels_without_texel(self):
+        sprite = np.zeros((256, 128), dtype=np.uint8); sprite[100:120, 10:30] = 255
+        depth = np.zeros((256, 128), dtype=np.uint8); depth[100:120, 10:20] = 255
+        self.assertEqual(bad.missing_pixels(sprite, depth), 200)
+        self.assertEqual(bad.missing_pixels(sprite, sprite), 0)
 
 
 if __name__ == "__main__":

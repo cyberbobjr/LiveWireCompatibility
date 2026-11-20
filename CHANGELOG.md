@@ -10,7 +10,7 @@
 - Project Arcade: games cannot start without power, before any coin is paid, and a game in progress stops when the power goes.
 
 ### Fixed
-- Artel Manufactory: its machines are now highlighted in LiveWire's Show consumers view and when targeted, from every side (they had no depth map).
+- Artel Manufactory, Project Arcade, Machinery (metal bandsaw) and Plysken Weather Station: machines that had no depth map are now highlighted in LiveWire's Show consumers view and when targeted, from every side.
 - Artel Manufactory: the electric dryer and the freeze dryer no longer draw power around the clock; they draw while a batch runs. East-facing chemistry tables are now billed, and a Quantum Base cut by a breaker no longer flickers back on.
 - Project Arcade: sit-down cabinets facing east or south are now billed.
 - Machinery: the metalwork lathe now stops when its power is cut, whichever part of it is used.

@@ -79,13 +79,16 @@ machine est éteinte, sinon `IGUI_LWC_NoPower`.
 3. Chaque garde de ce côté (`side`) est installée une seule fois (le registre garde l'enveloppe posée ; un second
    passage la reconnaît). Une garde absente du mod cible est signalée, sans erreur.
 
-## Profondeurs des machines d'Artel (ADR-003)
+## Profondeurs B42 des sprites sans profondeur (ADR-003)
 
-`common/media/depthmaps/DEPTH_Artel.png` (1024 × 7168, mêmes dimensions que celle d'Artel) ne remplit que les 40 cases des
-machines du profil Artel ; Artel garde les siennes (200 à 223). Le moteur fusionne les cartes case par case
-(`TilesetDepthTexture.mergeTileset`) et ne la charge qu'avec `common/media/tileGeometry.txt`. Chaque machine est un bloc
-carré centré sur sa case ajusté à sa silhouette ; aucun pixel du sprite sans texel. Sans profondeur propre, le jeu ne
-dessinait pas la surbrillance de ces machines de face (« Afficher les consommateurs », menu contextuel).
+`common/media/depthmaps/` livre une carte par jeu de tuiles dont un sprite de profil n'a aucune profondeur (ni case non vide
+dans une carte du jeu ou d'un mod, ni renvoi) : `DEPTH_Artel.png` (40 cases), `DEPTH_pa_arcades.png` (22),
+`DEPTH_pa_complex.png` (4), `DEPTH_pa_recreational.png` (8), `DEPTH_machinery_metal_bandsaw_01.png` (4),
+`DEPTH_pws_tileset_01.png` (2). Seules ces cases sont remplies ; une carte existante d'un jeu de tuiles garde ses cases et
+fixe les dimensions (le moteur fusionne case par case, `TilesetDepthTexture.mergeTileset`, aux dimensions minimales). Le
+moteur ne les charge qu'avec `common/media/tileGeometry.txt`. Chaque sprite est un bloc carré centré sur sa case ajusté à sa
+silhouette ; aucun pixel du sprite sans texel. Sans profondeur, le jeu ne dessinait pas la surbrillance de ces machines de
+face (« Afficher les consommateurs », menu contextuel).
 
 ## Journaux (console, anglais)
 

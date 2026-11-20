@@ -3,11 +3,11 @@
 | Champ | Valeur |
 |---|---|
 | Identifiant | `ADR-003-PROFONDEURS-MACHINES-ARTEL` |
-| Date de création et de mise à jour | 2026-11-20 |
+| Date de création et de mise à jour | 2026-11-20 (D04 ajoutée le même jour : tous les profils) |
 | Statut | Accepté (2026-11-20) |
 | Avancement | voir le [plan 003](../ADR-plans/plan-003-profondeurs-machines-artel.md) |
 | Décideur | l'utilisateur |
-| Portée | `batman_LiveWireCompatibility` : `common/media/depthmaps/DEPTH_Artel.png`, `common/media/tileGeometry.txt`, outil `tools/build_artel_depth.py` ; Artel et Live Wire ne changent pas |
+| Portée | `batman_LiveWireCompatibility` : `common/media/depthmaps/DEPTH_Artel.png`, `common/media/tileGeometry.txt`, outils `tools/depthlib.py`, `tools/build_depth.py`, `tools/check_depth.py` (d'abord `tools/build_artel_depth.py`, remplacé par D04) ; les mods cibles et Live Wire ne changent pas |
 | Documents liés | [ADR-002](termines/002-interrupteur-et-coupure-des-machines.md), `.claude/pz-knowledge/custom-tiles-entities.md` (profondeur B42 d'une tuile de mod) |
 | Références | `TilesetDepthTexture.mergeTileset` (`TilesetDepthTexture.java:196-206`), `TileDepthTexture.load` (`:155-175`), `IsoSprite.java:962-966`, `TileDepthTextureManager.initMergedTilesets` (`:82-88`) |
 | Origine | demande de l'utilisateur du 2026-11-20 : le lyophilisateur Artel n'a aucune couleur dans « Afficher les consommateurs » de face, mais il est coloré quand le joueur est derrière ; « on ne peut pas ajouter nous même la carte de profondeur pour corriger ? » — « oui » |
@@ -43,6 +43,16 @@ colonnes des cartes.
   `pz-sprite-forge`) et écrit la carte ; il rapporte, par tuile, le bloc retenu et les pixels sans texel (attendu 0).
   À relancer après une mise à jour des sprites d'Artel. Si Artel publie un jour ses propres profondeurs, la carte de ce
   mod n'a plus d'effet sur ces cases (la première case non vide gagne) et peut être retirée.
+
+- **D04 — Généralisation à tous les profils** (2026-11-20, demande de l'utilisateur après le contrôle de tous les
+  profils : 40 sprites sans aucune profondeur dans Project Arcade, Machinery et Plysken Weather Station). Le même
+  calcul fournit une carte `DEPTH_<tileset>.png` par jeu de tuiles concerné, aux dimensions de la carte existante du
+  jeu de tuiles quand il y en a une. Ne sont remplis que les sprites **sans aucune profondeur** (ni case non vide, ni
+  renvoi) : un sprite qui a une profondeur, même incomplète, la garde. Mesure à l'appui : des cartes du jeu lui-même
+  laissent des pixels opaques hors profondeur (hotte `appliances_cooking_01_68` : 130), et le bloc est plus grossier
+  qu'une profondeur dessinée pour le sprite. `tools/check_depth.py` échoue pour un sprite sans profondeur et signale
+  en note les pixels opaques non couverts. `tools/build_artel_depth.py` devient `tools/depthlib.py` (calcul, sources
+  fusionnées comme le moteur, lecture des packs) et `tools/build_depth.py`.
 
 ## Conséquences
 

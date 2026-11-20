@@ -1,26 +1,22 @@
-"""B42 depth map of Artel Manufactory's machines (ADR-003). Local tool, not run in CI.
+"""B42 tile depth: engine projection, box fit, depth sources and sprite masks (ADR-003).
 
-Artel ships DEPTH_Artel.png with texels for tiles 200-223 only: its machines fall back to the
-engine's default depth, and the engine does not draw their highlight from the front. The engine
-merges the depth maps of all mods tile by tile (TilesetDepthTexture.mergeTileset): this mod ships
-its own DEPTH_Artel.png with the machine tiles only, every other tile left empty.
-
-Each machine sprite is taken as the smallest box standing on the floor (rectangular footprint in
-the tile, height) whose projection covers its pixels; every sprite pixel gets the depth of the
-front-most point of the box on its view ray (engine projection and encoding, ADR-003 D02):
+Depth of a sprite pixel, engine projection and encoding (ADR-003 D02):
     screen   sx = 64 (wx - wy) + 64,   sy = 32 (wx + wy) + 192 - 192 wz   (128 x 256 cell, wz in levels)
     depth    1 - 0.25 (wx + wy) - 0.5 wz
     texel    floor(depth * 255) in R, G and B, alpha 255
-A sprite pixel outside the box takes the farthest depth of its neighbours: no drawn pixel is left
-without a texel (the engine does not draw a pixel whose depth texel is transparent).
-
-Reads the Workshop copy of Artel in READ-ONLY mode.
-Usage: python tools/build_artel_depth.py [--workshop DIR] [--forge DIR] [--out PNG]
-Exit code: 0 written, every sprite pixel with a texel; 1 a pixel without texel; 2 Artel not found.
+Engine rules used by the sources (Build 42.22, confirmed statically):
+- every mod and the game load common/media/depthmaps/DEPTH_<tileset>.png (with tileGeometry.txt); the
+  maps are merged tile by tile, an empty cell taking the first non-empty one
+  (TilesetDepthTexture.mergeTileset:196-206), the merged size being the smallest one;
+- an assignment (tileDepthTextureAssignments.txt, <tile> = <other tile>) only applies to a sprite
+  that has no depth of its own (TileDepthTextureAssignmentManager.initSprites:74);
+- a sprite pixel whose depth texel is transparent is not drawn (TileDepthTexture.load:160).
+Everything outside this project is read in READ-ONLY mode.
 """
-import argparse
+import glob
 import io
 import os
+import re
 import sys
 
 import numpy as np
@@ -28,17 +24,21 @@ import numpy as np
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-ARTEL_ID = "3794133594"
 DEFAULT_WORKSHOP = r"D:\SteamLibrary\steamapps\workshop\content\108600"
+DEFAULT_GAME = r"D:\SteamLibrary\steamapps\common\ProjectZomboid"
 DEFAULT_FORGE = r"E:\pz-tools\pz-sprite-forge"
-OUT = os.path.join(ROOT, "Contents", "mods", "batman_LiveWireCompatibility", "common", "media", "depthmaps",
-                   "DEPTH_Artel.png")
+OWN_MEDIA = os.path.join(ROOT, "Contents", "mods", "batman_LiveWireCompatibility", "common", "media")
 CELL_W, CELL_H, COLUMNS = 128, 256, 8
 #: Footprint grid, in tile units.
 STEP = 0.05
 #: Share of the sprite pixels the box must cover; the rest takes a neighbour's depth.
 COVERAGE = 0.995
+#: Half-width range of the square footprint, in tiles: up to 1.0 so that a piece of a multi-tile
+#: furniture drawn over its neighbours is still covered.
+HALF_MAX = 1.0
 
+
+# ---------------------------------------------------------------------------- geometry
 
 def depth_at(s, wz):
     """Normalized depth of a point with wx + wy = s, wz in levels."""
@@ -55,11 +55,6 @@ def s_interval(px, py, x0, x1, y0, y1):
 
 def wz_of(s, py):
     return (32.0 * s + 192.0 - (py + 0.5)) / 192.0
-
-
-#: Half-width range of the square footprint, in tiles: up to 1.0 so that a piece of a multi-tile
-#: furniture drawn over its neighbours is still covered.
-HALF_MAX = 1.0
 
 
 class _Best:
@@ -142,77 +137,163 @@ def tile_depth(alpha):
     return depth, box, left
 
 
-def artel_sprites():
-    """Indices of the Artel sprites billed by the profile."""
+def encode(depth):
+    """RGBA cell of a depth grid (NaN = transparent)."""
+    drawn = ~np.isnan(depth)
+    value = np.floor(np.clip(np.nan_to_num(depth), 0.0, 1.0) * 255.0).astype(np.uint8)
+    cell = np.zeros(depth.shape + (4,), dtype=np.uint8)
+    for c in range(3):
+        cell[..., c] = np.where(drawn, value, 0)
+    cell[..., 3] = np.where(drawn, 255, 0)
+    return cell
+
+
+# ---------------------------------------------------------------------------- names and cells
+
+def split(name):
+    """('tileset', index) of a sprite name, or None."""
+    m = re.match(r"^(.+)_(\d+)$", name)
+    return (m.group(1), int(m.group(2))) if m else None
+
+
+def cell_of(image_alpha, index):
+    """Alpha cell of tile `index` in a depth map (columns from the map width), or None when outside."""
+    cols = image_alpha.shape[1] // CELL_W
+    x, y = (index % cols) * CELL_W, (index // cols) * CELL_H
+    if y + CELL_H > image_alpha.shape[0] or x + CELL_W > image_alpha.shape[1]:
+        return None
+    return image_alpha[y:y + CELL_H, x:x + CELL_W]
+
+
+# ---------------------------------------------------------------------------- depth sources
+
+class DepthSources:
+    """Depth maps and assignments of a set of media roots (game, mods), merged like the engine."""
+
+    def __init__(self, roots):
+        self.maps, self.assign, self._alpha = {}, {}, {}
+        for root in roots:
+            for f in sorted(glob.glob(os.path.join(root, "depthmaps", "DEPTH_*.png"))):
+                self.maps.setdefault(os.path.basename(f)[6:-4], []).append(f)
+            a = os.path.join(root, "tileDepthTextureAssignments.txt")
+            if os.path.isfile(a):
+                with open(a, encoding="utf-8", errors="ignore") as fh:
+                    for line in fh:
+                        m = re.match(r"\s*(\S+_\d+)\s*=\s*(\S+_\d+)\s*,?\s*$", line)
+                        if m:
+                            self.assign.setdefault(m.group(1), m.group(2))
+
+    def _alpha_of(self, path):
+        if path not in self._alpha:
+            from PIL import Image
+            self._alpha[path] = np.array(Image.open(path).convert("RGBA").getchannel("A"))
+        return self._alpha[path]
+
+    def own_cell(self, name):
+        """Alpha of the first non-empty cell of `name` among the maps, or None."""
+        parts = split(name)
+        if not parts:
+            return None
+        for path in self.maps.get(parts[0], []):
+            cell = cell_of(self._alpha_of(path), parts[1])
+            if cell is not None and cell.any():
+                return cell
+        return None
+
+    def depth_cell(self, name):
+        """('own' or 'assigned', alpha cell, assigned tile) the engine would use, or (None, None, None)."""
+        cell = self.own_cell(name)
+        if cell is not None:
+            return "own", cell, None
+        other = self.assign.get(name)
+        cell = other and self.own_cell(other)
+        if cell is not None:
+            return "assigned", cell, other
+        return None, None, None
+
+    def map_size(self, tileset):
+        """(width, height) of the smallest existing map of a tileset (the merged size), or None."""
+        sizes = [self._alpha_of(p).shape[::-1] for p in self.maps.get(tileset, [])]
+        return min(sizes, key=lambda s: s[0] * s[1]) if sizes else None
+
+
+def media_roots(workshop, game, include_own):
+    """Game media, every Workshop mod's common/media, and this mod's when `include_own`."""
+    roots = [os.path.join(game, "media")]
+    roots += sorted(glob.glob(os.path.join(workshop, "*", "mods", "*", "common", "media")))
+    if include_own:
+        roots.append(OWN_MEDIA)
+    return roots
+
+
+# ---------------------------------------------------------------------------- sprite masks
+
+class SpriteMasks:
+    """Alpha (CELL_H x CELL_W) of sprites read from texture packs (pz-sprite-forge reader)."""
+
+    def __init__(self, forge):
+        sys.path.insert(0, forge)
+        self.masks, self.packs = {}, {}
+
+    def _pack(self, path):
+        """Parsed pack, kept: a later call may look for other sprites in it."""
+        if path not in self.packs:
+            from pzforge.packfile import TexturePack
+            with open(path, "rb") as f:
+                self.packs[path] = TexturePack.loads(f.read())
+        return self.packs[path]
+
+    def load(self, pack_paths, names):
+        """Reads the packs in order until every name of `names` is found."""
+        from PIL import Image
+        wanted = set(names) - set(self.masks)
+        for path in pack_paths:
+            if not wanted:
+                return
+            for page in self._pack(path).pages:
+                entries = [e for e in page.entries if e.name in wanted]
+                if not entries:
+                    continue
+                img = Image.open(io.BytesIO(page.png)).convert("RGBA")
+                for e in entries:
+                    cell = Image.new("RGBA", (e.ow, e.oh), (0, 0, 0, 0))
+                    cell.paste(img.crop((e.x, e.y, e.x + e.w, e.y + e.h)), (e.ox, e.oy))
+                    self.masks[e.name] = np.array(cell.getchannel("A"))
+                    wanted.discard(e.name)
+
+    def get(self, name):
+        return self.masks.get(name)
+
+    def tileset_count(self, pack_paths, tileset):
+        """Highest index + 1 of a tileset's sprites in the packs (names only, no decoding)."""
+        top = -1
+        for path in pack_paths:
+            for page in self._pack(path).pages:
+                for e in page.entries:
+                    parts = split(e.name)
+                    if parts and parts[0] == tileset:
+                        top = max(top, parts[1])
+        return top + 1
+
+
+def packs_of(workshop, game, workshop_id):
+    """Texture packs of a target mod (all its variants), then the game's tile packs."""
+    paths = []
+    if workshop_id:
+        paths += sorted(glob.glob(os.path.join(workshop, workshop_id, "mods", "*", "*", "media", "texturepacks",
+                                               "*.pack")))
+    paths += [p for p in (os.path.join(game, "media", "texturepacks", "Tiles2x.pack"),) if os.path.isfile(p)]
+    return paths
+
+
+def missing_pixels(sprite_alpha, depth_alpha):
+    """Pixels the sprite draws but the depth cell leaves transparent (not drawn by the engine)."""
+    if sprite_alpha is None or depth_alpha is None:
+        return None
+    return int(((sprite_alpha > 0) & (depth_alpha == 0)).sum())
+
+
+def profiles():
+    """(name, workshop id, sprite names) of every profile."""
     import check_sprites
-    for name, _workshop, sprites in check_sprites.profiles():
-        if name == "Artel":
-            return sorted(int(s.rsplit("_", 1)[1]) for s in sprites)
-    return []
-
-
-def sprite_alphas(pack_path, forge, indices):
-    from PIL import Image
-    sys.path.insert(0, forge)
-    from pzforge.packfile import TexturePack
-    wanted = {"Artel_%d" % i: i for i in indices}
-    out = {}
-    with open(pack_path, "rb") as f:
-        pack = TexturePack.loads(f.read())
-    for page in pack.pages:
-        img = Image.open(io.BytesIO(page.png)).convert("RGBA")
-        for e in page.entries:
-            if e.name in wanted:
-                cell = Image.new("RGBA", (e.ow, e.oh), (0, 0, 0, 0))
-                cell.paste(img.crop((e.x, e.y, e.x + e.w, e.y + e.h)), (e.ox, e.oy))
-                out[wanted[e.name]] = np.array(cell.getchannel("A"))
-    return out
-
-
-def main(argv=None):
-    from PIL import Image
-    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--workshop", default=DEFAULT_WORKSHOP)
-    ap.add_argument("--forge", default=DEFAULT_FORGE)
-    ap.add_argument("--out", default=OUT)
-    a = ap.parse_args(argv)
-    base = os.path.join(a.workshop, ARTEL_ID, "mods", "ArtelManufactory")
-    pack = os.path.join(base, "42", "media", "texturepacks", "Artel.pack")
-    theirs = os.path.join(base, "common", "media", "depthmaps", "DEPTH_Artel.png")
-    if not (os.path.isfile(pack) and os.path.isfile(theirs)):
-        print("Artel Manufactory not found under %s" % base)
-        return 2
-    size = Image.open(theirs).size  # same size as Artel's map: the merge keeps the smallest
-    their_alpha = np.array(Image.open(theirs).convert("RGBA").getchannel("A"))
-    indices = artel_sprites()
-    alphas = sprite_alphas(pack, a.forge, indices)
-    sheet = np.zeros((size[1], size[0], 4), dtype=np.uint8)
-    bad = 0
-    for i in indices:
-        if i not in alphas:
-            print("Artel_%d: not in the pack, skipped" % i)
-            bad += 1
-            continue
-        ox, oy = (i % COLUMNS) * CELL_W, (i // COLUMNS) * CELL_H
-        if their_alpha[oy:oy + CELL_H, ox:ox + CELL_W].any():
-            print("Artel_%d: Artel already has a depth for it, left to Artel" % i)
-            continue
-        depth, box, left = tile_depth(alphas[i])
-        bad += left
-        drawn = ~np.isnan(depth)
-        value = np.floor(np.clip(np.nan_to_num(depth), 0.0, 1.0) * 255.0).astype(np.uint8)
-        cell = sheet[oy:oy + CELL_H, ox:ox + CELL_W]
-        for c in range(3):
-            cell[..., c] = np.where(drawn, value, 0)
-        cell[..., 3] = np.where(drawn, 255, 0)
-        print("Artel_%d: %d px, box %s, without depth %d" % (
-            i, int(drawn.sum()), "none" if box is None else
-            "x %.2f-%.2f y %.2f-%.2f h %.2f" % box, left))
-    os.makedirs(os.path.dirname(a.out), exist_ok=True)
-    Image.fromarray(sheet, "RGBA").save(a.out)
-    print("wrote %s (%dx%d), %d sprites" % (a.out, size[0], size[1], len(indices)))
-    return 1 if bad else 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    return check_sprites.profiles()
