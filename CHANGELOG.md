@@ -17,6 +17,7 @@
 ### Fixed
 - Artel Manufactory, Project Arcade, Machinery (metal bandsaw) and Plysken Weather Station: machines that had no depth map are now highlighted in LiveWire's Show consumers view and when targeted, from every side, Artel's dryers included while they are loaded.
 - Artel Manufactory: the electric dryer and the freeze dryer no longer draw power around the clock; they draw while a batch runs. East-facing chemistry tables are now billed, and a Quantum Base cut by a breaker no longer flickers back on.
+- Artel Manufactory: an electric dryer or freeze dryer switched off, or cut by LiveWire, can no longer start a batch, and Artel itself now sees it without power: red lamp and Paused banner in its window, batches held. Load LiveWire Compatibility after Artel Manufactory in the mod list.
 - Project Arcade: sit-down cabinets facing east or south are now billed.
 - Machinery: the metalwork lathe now stops when its power is cut, whichever part of it is used.
 ## 1.0.0 — 2026-11-14

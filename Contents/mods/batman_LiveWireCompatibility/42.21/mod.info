@@ -4,6 +4,6 @@ poster=poster.png
 icon=icon.png
 description=Machines of other mods draw their power from LiveWire. Supported mods are detected on their own: enable this mod once, it only acts for the supported mods that are enabled.
 require=\batman_LiveWire
-loadModAfter=\batman_LiveWire
+loadModAfter=\batman_LiveWire,\ArtelManufactory
 versionMin=42.21
 modversion=1.0.0

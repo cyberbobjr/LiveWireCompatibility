@@ -2,8 +2,8 @@
 
 ## Dépendances
 
-- `batman_LiveWireCompatibility` : `require=\batman_LiveWire`, `loadModAfter=\batman_LiveWire`. Aucun mod cible
-  n'est exigé : chaque profil s'applique seulement si l'un de ses `mods` est actif. API LiveWire révision 6 au moins
+- `batman_LiveWireCompatibility` : `require=\batman_LiveWire`, `loadModAfter=\batman_LiveWire,\ArtelManufactory` (ordre
+  seulement, ADR-006 D04 : `loadModAfter` ne rend pas Artel obligatoire). Aucun mod cible n'est exigé : chaque profil s'applique seulement si l'un de ses `mods` est actif. API LiveWire révision 6 au moins
   (`LiveWire.API.revision`) ; sinon rien n'est inscrit et un message est écrit.
 - Fonctions de l'API utilisées : `registerConsumer(id, définition)`, `consumer(obj)`, `consumerPowered(obj)`.
 
@@ -102,6 +102,19 @@ face (« Afficher les consommateurs », menu contextuel).
 - `[LiveWireCompat] <profil>: consumer <id> not registered (<raison>)`
 - `[LiveWireCompat] <profil>: power check <chemin ou nom> not wrapped (gate_not_found)`
 - `[LiveWireCompat] switch request refused (<raison>)` (serveur)
+- `[LiveWireCompat] source patch applied: <mod>:<chemin>` ; `source patch not applied (<raison>), original file runs: …` ;
+  `cannot read <mod> <chemin>: nothing run` ; `source patch not run for <mod> <chemin>: load batman_LiveWireCompatibility after <mod>`
+
+## Correctifs de source (ADR-006)
+
+`LWC_SourcePatch` : un profil déclare `SourcePatch.add({ mod, path, edits = { { old, new } } })` ; un fichier du mod au même
+chemin que celui de la cible appelle `return LiveWireCompat.SourcePatch.run(path)`. Le fichier de la cible est lu dans
+son dossier (`getModFileReader`), chaque `old` doit apparaître une seule fois, le texte modifié s'exécute (`loadstring`) ;
+sinon le fichier d'origine s'exécute tel quel (`SourcePatch.applied[path]` : `true`, `edit_not_found`, `compile_error`,
+`unreadable`). `SourcePatch.report()` (fin de `applyAll`) signale un correctif d'un mod actif qui n'a pas tourné (ordre de
+chargement). Correctif livré : Artel `media/lua/server/PMK_58z_SublimatorServer.lua`, déclaration de `squarePowered`
+remplacée sur une seule ligne par `LiveWireCompat.Artel.stationPowered(square, réponse d'Artel)` ; `loadModAfter` cite
+`ArtelManufactory`.
 
 ## Profils livrés
 

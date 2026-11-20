@@ -35,6 +35,7 @@ require "LiveWireCompatibility/Gates/LWC_GateCall"
 require "LiveWireCompatibility/Gates/LWC_GateMenu"
 require "LiveWireCompatibility/Gates/LWC_GateCustom"
 require "LiveWireCompatibility/Gates/LWC_GateNotify"
+require "LiveWireCompatibility/LWC_SourcePatch"
 
 local P = LiveWireCompat.Profiles or { list = {}, applied = {}, consumers = {} }
 LiveWireCompat.Profiles = P
@@ -255,6 +256,7 @@ function P.applyAll()
     end
     registerShared(active)
     for i = 1, #active do P.apply(active[i]) end
+    LiveWireCompat.SourcePatch.report()
 end
 
 if not P.hooked and Events and Events.OnInitWorld then

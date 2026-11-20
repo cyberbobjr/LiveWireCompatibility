@@ -5,6 +5,7 @@
 -- (IsoLightSwitch). Not placed in the world, so not billable: battery charging station, electric
 -- heater, cooler bag. Target lines below: variant 42/, media/lua/<side>/<file>.
 require "LiveWireCompatibility/LWC_Profiles"
+require "LiveWireCompatibility/LWC_SourcePatch"
 
 local function artel(name)
     local t = PMK and PMK[name]
@@ -100,6 +101,32 @@ local OVERLAYS = {
     Artel_38 = "Artel_36", Artel_42 = "Artel_36", Artel_39 = "Artel_37", Artel_43 = "Artel_37",
     Artel_48 = "Artel_52", Artel_50 = "Artel_52", Artel_49 = "Artel_53", Artel_51 = "Artel_53",
 }
+
+-- Source patch (ADR-006). Artel's drying watchdog decides that a station has power with a local
+-- squarePowered(square) (server/PMK_58z_SublimatorServer.lua:82-88): it freezes the batches (:443),
+-- writes the "no power" flag of the station window (:467, setFlag :337) and logs it. Our file of the
+-- same path (server/PMK_58z_SublimatorServer.lua) runs Artel's own file with that one declaration
+-- turned into: Artel's answer AND the station on the square is on and powered by LiveWire. One
+-- line in, one line out: Artel's line numbers stay. The effect gates below remain as fallback.
+LiveWireCompat.Artel = LiveWireCompat.Artel or {}
+local STATIONS = { ArtelElectricDryer = true, ArtelSublimator = true }
+
+function LiveWireCompat.Artel.stationPowered(square, artelAnswer)
+    if not artelAnswer(square) then return false end
+    local G = LiveWireCompat.Gates
+    return not G.blocked(G.machineOn(square, STATIONS), STATIONS)
+end
+
+LiveWireCompat.SourcePatch.add({
+    mod = "ArtelManufactory",
+    path = "media/lua/server/PMK_58z_SublimatorServer.lua",
+    edits = { {
+        old = "local function squarePowered(square)",
+        new = "local lwcArtelSquarePowered; local function squarePowered(square) return "
+            .. "LiveWireCompat.Artel.stationPowered(square, lwcArtelSquarePowered) end; "
+            .. "function lwcArtelSquarePowered(square)",
+    } },
+})
 
 LiveWireCompat.Profiles.add({
     name = "Artel",
