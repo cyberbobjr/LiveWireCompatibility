@@ -24,7 +24,7 @@ local function install(g)
         local t = type(machine)
         if t ~= "userdata" and t ~= "table" then return end
         local billed = G.billed(machine)
-        local id = billed and LiveWire.API.consumer(billed)
+        local id = billed and G.idOf(billed)
         if id == nil or not ids[id] then return end
         local sq = billed.getSquare and billed:getSquare()
         if not sq then return end

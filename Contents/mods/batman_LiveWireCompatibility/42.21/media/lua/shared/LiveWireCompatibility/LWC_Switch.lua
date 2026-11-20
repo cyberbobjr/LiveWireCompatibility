@@ -31,7 +31,8 @@ function S.enable(id)
 end
 
 function S.switchable(o)
-    local id = o ~= nil and LiveWire.API.consumer(o) or nil
+    local P = LiveWireCompat.Profiles
+    local id = o ~= nil and (P and P.consumerIdOf and P.consumerIdOf(o) or LiveWire.API.consumer(o)) or nil
     return id ~= nil and S.ids[id] == true
 end
 

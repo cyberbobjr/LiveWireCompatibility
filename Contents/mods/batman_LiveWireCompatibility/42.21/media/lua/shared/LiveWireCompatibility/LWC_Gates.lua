@@ -80,6 +80,14 @@ function G.wrap(name, holder, key, make)
     return true
 end
 
+-- Id of the profile consumer an object belongs to (a shared tile is resolved to its member,
+-- ADR-005), or nil.
+function G.idOf(o)
+    local P = LiveWireCompat.Profiles
+    if P and P.consumerIdOf then return P.consumerIdOf(o) end
+    return LiveWire.API.consumer(o)
+end
+
 -- One list reused for every lookup (no allocation on calls made at every frame).
 local pieces
 
@@ -119,7 +127,7 @@ function G.blocked(machine, ids)
     local t = type(machine)
     if t ~= "userdata" and t ~= "table" then return false end
     local billed = G.billed(machine)
-    local id = billed and LiveWire.API.consumer(billed)
+    local id = billed and G.idOf(billed)
     if id == nil or not ids[id] then return false end
     return not LiveWireCompat.Switch.powered(billed)
 end
@@ -130,7 +138,7 @@ function G.machineOn(square, ids)
     if not objects then return nil end
     for i = 0, objects:size() - 1 do
         local o = objects:get(i)
-        local id = LiveWire.API.consumer(o)
+        local id = G.idOf(o)
         if id ~= nil and ids[id] then return o end
     end
     return nil

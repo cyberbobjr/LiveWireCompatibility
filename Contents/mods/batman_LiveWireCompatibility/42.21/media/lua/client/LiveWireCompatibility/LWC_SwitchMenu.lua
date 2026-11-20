@@ -68,7 +68,7 @@ local function addOption(context, playerObj, machine)
     local key = off and "ContextMenu_LWC_TurnOff" or "ContextMenu_LWC_TurnOn"
     local option = context:addOption(getText(key), playerObj, Menu.onSelect, machine, off)
     option.lwcSwitch = true
-    local watts = LiveWireCompat.Profiles.ratedWatts(LiveWire.API.consumer(machine), machine)
+    local watts = LiveWireCompat.Profiles.ratedWatts(LiveWireCompat.Profiles.consumerIdOf(machine), machine)
     if type(watts) == "number" and watts > 0 then
         local tip = ISWorldObjectContextMenu.addToolTip()
         tip:setName(getText(key))

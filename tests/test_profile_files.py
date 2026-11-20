@@ -41,8 +41,10 @@ class AllProfiles(unittest.TestCase):
             for _, p in ipairs(LiveWireCompat.Profiles.list) do
                 for _, c in ipairs(p.consumers) do
                     for _, s in ipairs(c.sprites) do
-                        if seen[s] then dup[#dup + 1] = s end
-                        seen[s] = true
+                        -- a sprite two profiles share must be declared under one shared id (ADR-005)
+                        local owner = c.shared or ('#' .. c.id)
+                        if seen[s] and (seen[s] ~= owner or not c.shared) then dup[#dup + 1] = s end
+                        seen[s] = owner
                     end
                     if seen['#' .. c.id] then dup[#dup + 1] = c.id end
                     seen['#' .. c.id] = true
