@@ -36,7 +36,10 @@ def plan(sources, masks, workshop, game):
         packs = dl.packs_of(workshop, game, workshop_id)
         wanted = [(name, None) for name in sprites]
         wanted += [(name, base) for name, base in sorted(over.get(pname, {}).items())]
-        candidates = [(name, base) for name, base in wanted if sources.depth_cell(name)[0] is None]
+        # A sprite named by a texture path (no tileset cell) has no depth map: the engine uses its
+        # default depth for it.
+        candidates = [(name, base) for name, base in wanted
+                      if dl.split(name) and sources.depth_cell(name)[0] is None]
         masks.load(packs, [name for name, _b in candidates])
         for name, base in candidates:
             tileset, index = dl.split(name)

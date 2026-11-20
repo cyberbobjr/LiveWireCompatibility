@@ -73,7 +73,8 @@ absent ne lit rien de ce mod.
 
 ## Points d'extension
 
-- Ajouter un mod cible = ajouter un fichier `Profiles/LWC_<Cible>.lua`.
+- Ajouter un mod cible = ajouter un fichier `Profiles/LWC_<Cible>.lua`. Une tuile vanilla déjà utilisée par un autre profil se
+  déclare sous un même `shared` avec `owns` (ADR-005).
 - Ajouter un type de garde = ajouter un fichier `Gates/LWC_Gate<Type>.lua` qui s'inscrit dans `LWC_Gates`, et sa
   ligne `require` dans `LWC_Profiles.lua`.
 Le format est dans [specifications-techniques.md](specifications-techniques.md).

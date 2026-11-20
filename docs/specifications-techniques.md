@@ -114,6 +114,15 @@ face (« Afficher les consommateurs », menu contextuel).
 | `Profiles/LWC_TrueMoozic.lua` | True Moozic (3632610172) | `TrueMoozic` | natif | `TMJukebox.hasPower` (square, client) |
 | `Profiles/LWC_Machinery.lua` | Machinery (3780027195) | `Machinery` | les huit | `Machinery.Service.isPowered` (object, les huit) |
 | `Profiles/LWC_ProjectArcade.lua` | Project Arcade (3645980077) | `ProjectArcade` | les six | `menu` client (dont la pince, lue dans les objets cliqués) ; `action` client sur les quatre actions de jeu ; `call` client `ProjectArcade_CoinPusher.OpenUI`, `ProjectArcade_CoinPusherUI.beginPlay` |
+| `Profiles/LWC_KnoxWorkingMachines.lua` | Knox Working Machines (3841890337) | `KnoxWorkingMachines` | toutes | `ISEntityUI.CanOpenWindowFor` (object, arg 2, client), `ISHandcraftAction` (action, `isoObject`, client), menu du lavage auto ; tuiles partagées avec Machinery |
+| `Profiles/LWC_STFO.lua` | STFO 3T (3838240933) | `STFO` | électrificateur, détecteur, boîtier de portail (projecteurs et tourelle : le leur, `notify` sur `SimpleTraps.serverSwitch`) | `SimpleTraps.power` (call : le secteur coupé rend la batterie, éteint rend rien), `SimpleTraps.sensorPowered` (object) |
+| `Profiles/LWC_CamRecorder.lua` | CamRecorder (3840702720) | `CamRecorder` | caméra fixée (Imekagi, moniteurs, PC : le leur, `notify`) | `CamRecorderConsole.available` (object), `PZVideoPower.hasSupply` (call, client), `PZVideoSecurityTerminal.powered` (object, client), `CamRecorderAccessServer.setRecording` (call, serveur) ; ordinateur partagé avec Computer Mod |
+
+Tuiles partagées (ADR-005) : un consommateur peut porter `shared = "<Id>"` et `owns(o)`. Le chargeur inscrit un seul
+consommateur LiveWire par `shared` (sprites des profils actifs) ; chaque objet appartient au premier membre dont `owns`
+est vrai, sinon au membre sans `owns` (`Profiles.memberOf`, `consumerIdOf`), qui décide consommation, interrupteur,
+gardes et nom. Groupes livrés : `VanillaDesktop` (Computer Mod, repli ; CamRecorder), `VanillaDrillPress`, `VanillaLathe`,
+`VanillaIndustry03Mill`, `VanillaBenchGrinder` (Machinery, repli ; Knox Working Machines).
 
 Machines de plusieurs cases : un profil facture une pièce par meuble ; `Gates.billed` retrouve cette pièce depuis
 n'importe quelle autre (grille de sprites, ou entité multi-cases B42 `SpriteConfig.getAllMultiSquareObjects`), avec

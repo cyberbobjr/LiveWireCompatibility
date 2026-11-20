@@ -35,11 +35,17 @@ def check(argv=None):
         counts = {"own": 0, "assigned": 0}
         issues, notes = [], []
         for name in sprites:
+            if not dl.split(name):
+                notes.append("%s: texture path, no tile depth (engine default)" % name)
+                continue
             kind, cell, other = sources.depth_cell(name)
+            alpha = masks.get(name)
+            if alpha is not None and not alpha.any():
+                notes.append("%s: empty sprite, nothing to draw" % name)
+                continue
             if kind is None:
                 issues.append("%s: no depth" % name)
                 continue
-            alpha = masks.get(name)
             if alpha is None:
                 issues.append("%s: sprite not found in the packs" % name)
                 continue

@@ -82,6 +82,11 @@ class Fit(unittest.TestCase):
         self.assertEqual(left, 0)
         self.assertLessEqual(box[0], 0.0)
 
+    def test_empty_sprite_needs_no_depth(self):
+        depth, box, left = bad.tile_depth(np.zeros((256, 128), dtype=np.uint8))
+        self.assertEqual((box, left), (None, 0))
+        self.assertTrue(np.isnan(depth).all())
+
     def test_stray_pixel_takes_a_neighbour_depth(self):
         alpha = box_sprite(0.2, 0.8, 0.2, 0.8, 0.5)
         ys, xs = np.nonzero(alpha)

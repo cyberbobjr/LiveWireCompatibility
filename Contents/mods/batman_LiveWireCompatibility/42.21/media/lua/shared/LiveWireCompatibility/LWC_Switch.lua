@@ -36,9 +36,13 @@ function S.switchable(o)
     return id ~= nil and S.ids[id] == true
 end
 
+-- Sprite name of an object; a runtime sprite reloaded on a dedicated server has no name, the object
+-- still keeps it (IsoObject.getSpriteName, IsoObject.java:2269-2274).
 local function spriteName(o)
     local sprite = o:getSprite()
-    return sprite and sprite:getName() or nil
+    local name = sprite and sprite:getName()
+    if not name and o.getSpriteName then name = o:getSpriteName() end
+    return name
 end
 
 function S.request(player, o, off)

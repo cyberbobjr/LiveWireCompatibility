@@ -18,7 +18,9 @@ LiveWireCompat.Profiles.add({
     workshop = "3725497089",
     mods = { "ComputerModkum" },
     consumers = {
-        { id = "ComputerModDesktop", watts = 120,
+        -- Shared with CamRecorder's surveillance PC (appliances_com_01_72..75, ADR-005, D02): this
+        -- member is the fallback (no owns), so every desktop CamRecorder did not set up stays here.
+        { id = "ComputerModDesktop", watts = 120, shared = "VanillaDesktop",
           sprites = { "appliances_com_01_72", "appliances_com_01_73", "appliances_com_01_74", "appliances_com_01_75",
                       "appliances_com_01_76", "appliances_com_01_77", "appliances_com_01_78", "appliances_com_01_79" },
           running = poweredOn },

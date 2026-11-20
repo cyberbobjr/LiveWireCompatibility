@@ -24,9 +24,12 @@ import test_profile_files as tpf  # noqa: E402
 
 TARGETS = r"""
 ELEC = true
--- Placed machine on a square whose engine power is ELEC.
+-- LiveWire id of the Machinery consumers on tiles shared with Knox Working Machines (ADR-005, D02).
+LW_ID = { MachineryDrillPress = "VanillaDrillPress", MachineryHydraulicPress = "VanillaIndustry03Mill",
+          MachineryLathe = "VanillaLathe", MachineryBenchGrinder = "VanillaBenchGrinder" }
+-- Placed machine on a square whose engine power is ELEC; LiveWire knows it by its LiveWire id.
 function placed(id, cut, off)
-    local m = machine(id, cut)
+    local m = machine(LW_ID[id] or id, cut)
     if off then m:getModData().LWC_off = true end
     m.sq = square(m)
     m.sq.haveElectricity = function(self) return ELEC end
@@ -133,10 +136,11 @@ class Switched(unittest.TestCase):
     def test_each_gets_our_switch_and_draws_nothing_off(self):
         for cid in MACHINERY + ("PWSStation",):
             self.assertTrue(self.lua.eval("LiveWireCompat.Switch.ids.%s == true" % cid), cid)
-            self.assertEqual(self.lua.eval("REGISTERED.%s.powerConsumption(placed('%s', false, true))"
-                                           % (cid, cid)), 0, cid)
-            self.assertGreater(self.lua.eval("REGISTERED.%s.powerConsumption(placed('%s', false))"
-                                             % (cid, cid)), 0, cid)
+            lw = "(LW_ID.%s or '%s')" % (cid, cid)
+            self.assertEqual(self.lua.eval("REGISTERED[%s].powerConsumption(placed('%s', false, true))"
+                                           % (lw, cid)), 0, cid)
+            self.assertGreater(self.lua.eval("REGISTERED[%s].powerConsumption(placed('%s', false))"
+                                             % (lw, cid)), 0, cid)
 
 
 class MachineryGate(unittest.TestCase):
@@ -186,9 +190,9 @@ class ComputerMod(unittest.TestCase):
 
     def test_bill_follows_the_power_button(self):
         self.lua.execute("C = placed('ComputerModDesktop', false)")
-        self.assertEqual(self.lua.eval("REGISTERED.ComputerModDesktop.powerConsumption(C)"), 0)
+        self.assertEqual(self.lua.eval("REGISTERED.VanillaDesktop.powerConsumption(C)"), 0)
         self.lua.execute("C:getModData().ComputerModPowerOn = true")
-        self.assertEqual(self.lua.eval("REGISTERED.ComputerModDesktop.powerConsumption(C)"), 120)
+        self.assertEqual(self.lua.eval("REGISTERED.VanillaDesktop.powerConsumption(C)"), 120)
 
     def test_cut_computer_shuts_down_at_the_next_screen_update(self):
         self.lua.execute("C = placed('ComputerModDesktop', true); C:getModData().ComputerModPowerOn = true")

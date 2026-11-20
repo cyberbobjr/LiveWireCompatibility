@@ -99,6 +99,50 @@ Not billed: the Cabinet table saw (petrol). More Machinery Recipes adds recipes 
 The cabinets' ambient sound goes on while their square has power. Its wall neon lights are lamps, already billed by
 LiveWire.
 
+### Knox Working Machines
+
+| Machine | Draw (estimate, average over a work day) | Switch | Without power or switched off |
+|---|---|---|---|
+| Drill press | 100 W | yes | the station window does not open; a craft in progress stops |
+| Table saw | 375 W | yes | same |
+| Lathe (3 sections) | 42 W per section | yes | same |
+| Milling machine (4 sections) | 47 W per section | yes | same |
+| Hydraulic press | 188 W | yes | same |
+| Bench grinder | 93 W | yes | same |
+| Charging panel | 38 W | yes | same |
+| Canning line | 150 W per section | yes | same |
+| Vehicle lift | 188 W per post | yes | same |
+| Car wash (brush, curtain) | 125 W per part | yes | "Wash" greyed |
+
+Knox reuses vanilla tiles, some of them also used by Machinery: with both mods enabled, each machine follows the rules of
+the mod that placed it. Not electric: welding cart, vises, furnaces, gas racks, tire bench, drums.
+
+### STFO 3T: Traps, Turrets and Towers
+
+| Device | Draw (estimate, on mains) | Switch | Without LiveWire power |
+|---|---|---|---|
+| Fence energizer | 3 W | yes | runs on its battery if it has one, else the fence is dead |
+| Motion sensor | 2 W | yes | stops detecting (mains only) |
+| Gate control box | 5 W | yes | runs on its battery, else no longer drives the gate |
+| Floodlight stand | 300 W when lit | its own | runs on its battery, else goes dark |
+| Work light | 150 W when lit | its own | same |
+| Tower searchlight | 300 W when lit | its own | same |
+| Auto-turret | 40 W on standby | its own | runs on its battery, else stops firing |
+
+Only the mains goes through LiveWire: a device running on its own car battery is not billed. Switched off with our
+switch, a device does not work at all, battery or not. Traps, mines and watchtowers draw nothing.
+
+### CamRecorder
+
+| Device | Draw (estimate) | Switch | Without power |
+|---|---|---|---|
+| Fixed security camera | 5 W | yes | stops filming, recording does not start |
+| Imekagi camera | 20 W when on | its own | stops filming |
+| Security monitors | 50 W (desk), 100 W (wall), when on | their own | screen off (partly: see limits) |
+| Surveillance PC | 120 W when on | its own | cannot be used |
+
+Floor camcorders run on batteries: not billed. TVs used as outputs are already billed by LiveWire. The surveillance PC is
+the vanilla desktop computer, like Computer Mod's: each computer follows the rules of the mod that uses it.
 ## Already handled by LiveWire
 
 - **[B42] Working Air Conditioner Units:** a connected unit becomes a clothes dryer for the game, so LiveWire

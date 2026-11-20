@@ -66,8 +66,8 @@ class _Best:
     def consider(self, px, py, x0, x1, y0, y1):
         lo, hi = s_interval(px, py, x0, x1, y0, y1)
         ok = (lo <= hi) & (wz_of(hi, py) >= 0.0)
-        share = ok.mean()
-        if share <= 0:
+        share = ok.mean() if ok.size else 0.0
+        if not share > 0:
             return
         need = wz_of(lo[ok], py[ok])
         h = max(0.01, float(np.quantile(need, min(1.0, COVERAGE / share))))
@@ -128,6 +128,8 @@ def tile_depth(alpha):
     mask = alpha > 0
     py, px = np.nonzero(mask)
     depth = np.full(alpha.shape, np.nan)
+    if not mask.any():
+        return depth, None, 0  # an empty sprite draws nothing: no depth needed
     box = fit_box(px.astype(float), py.astype(float))
     if box is not None:
         depth[py, px] = box_depth(px.astype(float), py.astype(float), box)

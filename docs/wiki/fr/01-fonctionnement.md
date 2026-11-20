@@ -101,6 +101,52 @@ Non facturée : la scie de table Cabinet (essence). More Machinery Recipes n'ajo
 Le son d'ambiance des bornes continue tant que leur case a du courant. Ses néons muraux sont des lampes, déjà
 facturées par LiveWire.
 
+### Knox Working Machines
+
+| Machine | Consommation (estimée, moyenne sur une journée d'atelier) | Interrupteur | Sans courant ou éteinte |
+|---|---|---|---|
+| Perceuse à colonne | 100 W | oui | la fenêtre de la station ne s'ouvre pas ; une fabrication en cours s'arrête |
+| Scie de table | 375 W | oui | idem |
+| Tour (3 sections) | 42 W par section | oui | idem |
+| Fraiseuse (4 sections) | 47 W par section | oui | idem |
+| Presse hydraulique | 188 W | oui | idem |
+| Touret | 93 W | oui | idem |
+| Panneau de charge | 38 W | oui | idem |
+| Ligne de mise en conserve | 150 W par section | oui | idem |
+| Pont élévateur | 188 W par poteau | oui | idem |
+| Lavage auto (brosse, rideau) | 125 W par élément | oui | « Laver » grisé |
+
+Knox réutilise des tuiles vanilla, dont certaines servent aussi à Machinery : avec les deux mods actifs, chaque machine
+suit les règles du mod qui l'a posée. Non électriques : poste de soudure, étaux, fours, râteliers, banc à pneus, fûts.
+
+### STFO 3T: Traps, Turrets and Towers
+
+| Appareil | Consommation (estimée, sur le secteur) | Interrupteur | Sans courant LiveWire |
+|---|---|---|---|
+| Électrificateur de clôture | 3 W | oui | passe sur sa batterie s'il en a une, sinon la clôture est inerte |
+| Détecteur de mouvement | 2 W | oui | ne détecte plus (secteur seulement) |
+| Boîtier de portail | 5 W | oui | passe sur sa batterie, sinon ne commande plus le portail |
+| Projecteur sur pied | 300 W allumé | le sien | passe sur sa batterie, sinon s'éteint |
+| Lampe de chantier | 150 W allumée | le sien | idem |
+| Projecteur de tour | 300 W allumé | le sien | idem |
+| Tourelle automatique | 40 W en veille | le sien | passe sur sa batterie, sinon ne tire plus |
+
+Seul le secteur passe par LiveWire : un appareil qui tourne sur sa propre batterie de voiture n'est pas facturé. Éteint
+avec notre interrupteur, un appareil ne fonctionne plus du tout, batterie ou non. Pièges, mines et tours de guet ne
+consomment rien.
+
+### CamRecorder
+
+| Appareil | Consommation (estimée) | Interrupteur | Sans courant |
+|---|---|---|---|
+| Caméra de sécurité fixée | 5 W | oui | ne filme plus, l'enregistrement ne démarre pas |
+| Caméra Imekagi | 20 W allumée | la sienne | ne filme plus |
+| Moniteurs de sécurité | 50 W (bureau), 100 W (mur), allumés | le leur | écran éteint (en partie : voir limites) |
+| PC de surveillance | 120 W allumé | le sien | inutilisable |
+
+Les caméscopes au sol fonctionnent sur piles : non facturés. Les téléviseurs utilisés comme sorties sont déjà facturés
+par LiveWire. Le PC de surveillance est l'ordinateur de bureau vanilla, comme celui de Computer Mod : chaque ordinateur
+suit les règles du mod qui l'utilise.
 ## Déjà gérés par LiveWire
 
 - **[B42] Working Air Conditioner Units :** une unité branchée devient un sèche-linge pour le jeu ; LiveWire la

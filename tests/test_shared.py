@@ -18,7 +18,15 @@ function LiveWire.API.registerConsumer(id, def)
     if ok then for _, s in ipairs(def.sprites) do BY_SPRITE[s] = id end end
     return ok, why
 end
-function LiveWire.API.consumer(o) return type(o) == "table" and (o.cid or BY_SPRITE[o.sprite]) or nil end
+-- As LW_Consumers.of: found by sprite, then refined by the definition's couldBePowered.
+function LiveWire.API.consumer(o)
+    if type(o) ~= "table" then return nil end
+    if o.cid then return o.cid end
+    local id = BY_SPRITE[o.sprite]
+    local def = id and REGISTERED[id]
+    if def and def.couldBePowered and def.couldBePowered(o) ~= true then return nil end
+    return id
+end
 Tool = { isPowered = function(o) return true end }
 DESK = { "desk_0", "desk_1" }
 LiveWireCompat.Profiles.add({ name = "A", mods = { "ModA" },
@@ -55,6 +63,21 @@ class Registration(unittest.TestCase):
         lua = make("ModA", "ModB")
         lua.execute("fire()")
         self.assertEqual(lua.eval("#LOG"), 0)
+
+
+class CouldBePowered(unittest.TestCase):
+    def test_a_member_refining_its_objects_does_not_recurse(self):
+        lua = tp.make(active=False)
+        lua.execute(PROFILES)
+        lua.execute("""LiveWireCompat.Profiles.add({ name = "C", mods = { "ModC" },
+            consumers = { { id = "CCam", sprites = { "desk_0" }, watts = 5, shared = "VanillaDesk",
+                            owns = function(o) return o.c == true end,
+                            couldBePowered = function(o) return o.grid == true end } } })
+            ACTIVE.ModA = true; ACTIVE.ModC = true; fire()""")
+        self.assertEqual(lua.eval("LiveWireCompat.Profiles.consumerIdOf(obj('desk_0'))"), "AMachine")
+        lua.execute("C1 = obj('desk_0'); C1.c = true; C1.grid = true; C2 = obj('desk_0'); C2.c = true")
+        self.assertEqual(lua.eval("LiveWireCompat.Profiles.consumerIdOf(C1)"), "CCam")
+        self.assertIsNone(lua.eval("LiveWire.API.consumer(C2)"))   # a battery camcorder is not a consumer
 
 
 class Members(unittest.TestCase):

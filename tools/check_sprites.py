@@ -137,7 +137,11 @@ def main():
             code = max(code, 2)
             continue
         known = known_names(mod_dir) | vanilla
-        missing = [s for s in sprites if s not in known]
+        # A sprite named by a texture path (IsoObject.new(square, "media/textures/...png")) is found
+        # when the target mod ships that file.
+        def texture_found(s):
+            return "/" in s and bool(glob.glob(os.path.join(mod_dir, "mods", "*", "*", s.replace("/", os.sep))))
+        missing = [s for s in sprites if s not in known and not texture_found(s)]
         if missing:
             print("%s: %d sprite(s) defined nowhere (target mod or game): %s" % (name, len(missing), ", ".join(missing)))
             code = max(code, 1)

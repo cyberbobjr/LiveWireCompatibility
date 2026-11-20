@@ -106,6 +106,8 @@ compatibles sans toucher à ces mods.
 - **Video Game Consoles** (2831786301) et ses addons de jeux, **Palm Pilots** (3776531193) : consoles posées au sol comme objets d'inventaire ou sur piles. Pas de profil (même cas que Vectrex).
 - **Plysken Battery Charger** (3793465866), **Plysken Irrigation Pipes** (3739173520) : rien de posé ni d'électrique. Pas de profil.
 - **Badlands Power** (3804093735), **Industrial Works** (3680638986) : générateurs `IsoGenerator`, sources déjà connues de LiveWire. Pas de profil.
+- **Knox Working Machines** (3841890337), **STFO 3T** (3838240933), **CamRecorder** (3840702720) : analyses et profils du
+  2026-11-20, voir [ADR-005](005-tuiles-partagees-et-trois-nouveaux-mods.md).
 - **[B42] Working Air Conditioner Units** (3784995595) : l'unité branchée devient un `IsoClothingDryer`, déjà facturée et coupée par LiveWire (famille sèche-linge). Pas de profil.
 
 ## Hors portée

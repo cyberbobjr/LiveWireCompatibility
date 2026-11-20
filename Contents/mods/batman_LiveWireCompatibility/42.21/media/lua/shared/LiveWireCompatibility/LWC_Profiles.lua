@@ -95,12 +95,9 @@ end
 -- the member without `owns`. That member decides draw, switch, gates and name.
 P.shared = P.shared or {} -- shared id -> { members = { consumer... }, sprites = { name... }, seen = set }
 
--- The profile consumer an object belongs to, or nil (not one of ours).
-function P.memberOf(o)
-    local id = o ~= nil and LiveWire.API.consumer(o) or nil
-    if id == nil then return nil end
-    local group = P.shared[id]
-    if not group then return P.consumers[id] end
+-- The member of a shared group an object belongs to, or nil. Never asks LiveWire: the group's own
+-- couldBePowered runs inside LiveWire's consumer lookup (asking it again would recurse).
+function P.memberIn(group, o)
     local fallback
     for i = 1, #group.members do
         local m = group.members[i]
@@ -111,6 +108,15 @@ function P.memberOf(o)
         end
     end
     return fallback
+end
+
+-- The profile consumer an object belongs to, or nil (not one of ours).
+function P.memberOf(o)
+    local id = o ~= nil and LiveWire.API.consumer(o) or nil
+    if id == nil then return nil end
+    local group = P.shared[id]
+    if not group then return P.consumers[id] end
+    return P.memberIn(group, o)
 end
 
 -- Id of the profile consumer an object belongs to (gates, switch, names), or nil.
@@ -156,11 +162,11 @@ local function sharedDefinition(group)
     return {
         sprites = group.sprites,
         powerConsumption = function(o)
-            local m = P.memberOf(o)
+            local m = P.memberIn(group, o)
             return m and P.draw(m, o) or 0
         end,
         couldBePowered = refine and function(o)
-            local m = P.memberOf(o)
+            local m = P.memberIn(group, o)
             return m ~= nil and (m.couldBePowered == nil or m.couldBePowered(o) == true)
         end or nil,
         category = first.category,
