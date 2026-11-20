@@ -5,10 +5,10 @@
 | Identifiant | `ADR-006-CORRECTIF-SOURCE-ARTEL` |
 | Date de création et de mise à jour | 2026-11-20 |
 | Statut | Accepté (2026-11-20) |
-| Avancement | voir le [plan 006](../ADR-plans/plan-006-correctif-source-artel.md) |
+| Avancement | Terminé le 2026-11-20 ; voir le [plan 006](../../ADR-plans/termines/plan-006-correctif-source-artel.md) |
 | Décideur | l'utilisateur |
 | Portée | `batman_LiveWireCompatibility` : nouveau module `LWC_SourcePatch`, profil Artel, fichier de même chemin `media/lua/server/PMK_58z_SublimatorServer.lua`, `mod.info` (`loadModAfter`) |
-| Documents liés | [ADR-002](termines/002-interrupteur-et-coupure-des-machines.md) (D06 Artel), [ADR-005](005-tuiles-partagees-et-trois-nouveaux-mods.md) |
+| Documents liés | [ADR-002](002-interrupteur-et-coupure-des-machines.md) (D06 Artel), [ADR-005](../005-tuiles-partagees-et-trois-nouveaux-mods.md) |
 | Références | Artel `server/PMK_58z_SublimatorServer.lua:82-88` (`squarePowered`, fonction locale), `:430`, `:467` ; Java `LuaManager.getModFileReader` (`LuaManager.java:4925-4958`, dossier de version puis `common`, UTF-8) ; Kahlua `loadstring` (`LuaCompiler.java:96, 109`) ; `.claude/pz-knowledge/mod-loading.md` (remplacement par même chemin, `loadModAfter` indicatif) |
 | Origine | demande de l'utilisateur du 2026-11-20 : un lyophilisateur éteint ne montre pas « pas de courant » ; l'auteur d'Artel ne maintient plus le mod ; « faire en sorte que notre mod écrase le code fautif » |
 
