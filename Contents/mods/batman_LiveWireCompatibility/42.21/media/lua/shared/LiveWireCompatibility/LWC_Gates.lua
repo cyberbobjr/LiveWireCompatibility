@@ -62,14 +62,21 @@ function G.resolve(path)
 end
 
 -- Replaces holder[key] (a function) by make(original), once: a second call for the same `name`
--- while our wrapper is still in place does nothing. Returns true, or false and "gate_not_found".
+-- while our wrapper is still in the chain of holder[key] does nothing, even with other wrappers of
+-- ours stacked on it (several gates on one function). Returns true, or false and "gate_not_found".
+G.inner = G.inner or {} -- wrapper -> the function it wraps
 function G.wrap(name, holder, key, make)
     local current = holder and holder[key]
     if type(current) ~= "function" then return false, "gate_not_found" end
-    if G.wrappers[name] == current then return true end
+    local f = current
+    while f do
+        if G.wrappers[name] == f then return true end
+        f = G.inner[f]
+    end
     local wrapper = make(current)
     holder[key] = wrapper
     G.wrappers[name] = wrapper
+    G.inner[wrapper] = current
     return true
 end
 

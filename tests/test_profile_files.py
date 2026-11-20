@@ -51,6 +51,27 @@ class AllProfiles(unittest.TestCase):
             return table.concat(dup, ',') end)()""")
         self.assertEqual(sprites, "")
 
+    def test_every_machine_tells_livewire_when_switched(self):
+        # ADR-004: our switch reports each change; a machine with a switch of its own has a notify
+        # gate on it. The FA2 exhaust hood has neither switch nor lever (ADR-002, D06).
+        silent = self.lua.eval("""(function()
+            local out = {}
+            for _, p in ipairs(LiveWireCompat.Profiles.list) do
+                local notified = {}
+                for _, g in ipairs(p.gates or {}) do
+                    if g.kind == 'notify' then
+                        local named = type(g.consumer) == 'table' and g.consumer or { g.consumer }
+                        for _, id in ipairs(named) do notified[id] = true end
+                    end
+                end
+                for _, c in ipairs(p.consumers) do
+                    if not c.switch and not notified[c.id] then out[#out + 1] = c.id end
+                end
+            end
+            table.sort(out)
+            return table.concat(out, ',') end)()""")
+        self.assertEqual(silent, "FA2ExhaustHood")
+
     def test_gates_name_their_own_consumers(self):
         bad = self.lua.eval("""(function()
             local bad = {}

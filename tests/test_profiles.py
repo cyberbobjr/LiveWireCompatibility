@@ -59,6 +59,9 @@ function LiveWire.API.registerConsumer(id, def)
     return true
 end
 function LiveWire.API.consumer(o) return type(o) == "table" and o.cid or nil end
+-- Revision 10: networks measured again at once (records the objects reported).
+CHANGED = {}
+function LiveWire.API.consumerChanged(o) CHANGED[#CHANGED + 1] = o; return 1 end
 function LiveWire.API.consumerPowered(o) return o.cut ~= true end
 -- World object double: ModData as IsoObject (hasModData false while empty).
 local ObjectMethods = {}
@@ -73,7 +76,7 @@ function square(...)
     local list = { ... }
     return { getObjects = function()
         return { size = function() return #list end, get = function(_, i) return list[i + 1] end }
-    end }
+    end, getX = function() return 0 end, getY = function() return 0 end, getZ = function() return 0 end }
 end
 -- A target mod with public power checks.
 Target = { Power = {

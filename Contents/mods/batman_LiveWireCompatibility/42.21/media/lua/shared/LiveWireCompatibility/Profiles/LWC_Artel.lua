@@ -151,6 +151,11 @@ LiveWireCompat.Profiles.add({
           install = installQuantumKeepSwitch },
         { kind = "custom", name = "Artel drying pause", consumer = { "ArtelElectricDryer", "ArtelSublimator" },
           side = "server", install = installDryingPause },
+        -- PMK_StationApplyStage(obj, comp, cfg) runs for each station every game minute on the server
+        -- (server/PMK_58z_SublimatorServer.lua:471-472): a batch that starts or ends is reported to
+        -- LiveWire, which bills the dryers only during a batch (ADR-004).
+        { kind = "notify", path = "PMK_StationApplyStage", consumer = { "ArtelElectricDryer", "ArtelSublimator" },
+          state = batchRunning, side = "server" },
         -- client/PMK_57_CraftBenchPanel.lua:2145 PMK_CraftBenchPanel:isUsable() (class :1896,
         -- methods through the metatable :2573-2574), checked before selecting a recipe (:2065) and
         -- starting a craft (:2174). The table is self.entity (:2578), the player self.player

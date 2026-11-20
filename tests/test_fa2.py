@@ -32,7 +32,8 @@ function famachine(id, cut, temp)
     end
     m.getSquare = function(self)
         return { transmitModdata = function() self.squareSent = self.squareSent + 1 end,
-                 haveElectricity = function() return true end }
+                 haveElectricity = function() return true end,
+                 getX = function() return 0 end, getY = function() return 0 end, getZ = function() return 0 end }
     end
     return m
 end

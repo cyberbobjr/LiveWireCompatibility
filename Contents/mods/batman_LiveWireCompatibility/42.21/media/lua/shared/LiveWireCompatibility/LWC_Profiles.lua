@@ -17,7 +17,8 @@
 --     couldBePowered      optional function(o) -> bool, as in registerConsumer
 --   gates      optional array of entry points of the target mod that must refuse to work for a
 --              machine that is not powered (LWC_Gates; one kind per file under Gates/):
---     kind      "object", "square", "action", "call", "menu" or "custom"
+--     kind      "object", "square", "action", "call", "menu", "custom" or "notify" (tells LiveWire
+--               that a machine was switched on or off by the target mod, ADR-004)
 --     consumer  id of the consumer (above) the machine belongs to, or an array of ids
 --     side      optional "client" or "server": installed on that side only
 --     ...       fields of the kind (see Gates/LWC_Gate<Kind>.lua)
@@ -30,6 +31,7 @@ require "LiveWireCompatibility/Gates/LWC_GateAction"
 require "LiveWireCompatibility/Gates/LWC_GateCall"
 require "LiveWireCompatibility/Gates/LWC_GateMenu"
 require "LiveWireCompatibility/Gates/LWC_GateCustom"
+require "LiveWireCompatibility/Gates/LWC_GateNotify"
 
 local P = LiveWireCompat.Profiles or { list = {}, applied = {}, consumers = {} }
 LiveWireCompat.Profiles = P

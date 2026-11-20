@@ -127,6 +127,14 @@ LiveWireCompat.Profiles.add({
           consumer = "FA2DisplayCounter", allow = settingOff },
         { kind = "call", path = "FAVendingMachine.onUseVendingMachine", arg = 3, player = 2, side = "client",
           consumer = "FA2VendingMachine", allow = settingOff },
+        -- The same three functions write the new mode and send it (HeatedCountersMenu.lua:96-119): the
+        -- change is reported to LiveWire (ADR-004).
+        { kind = "notify", path = "FAHeatedCounter.onUseHeatedCounter", arg = 3, side = "client",
+          consumer = "FA2HeatedCounter", state = mode },
+        { kind = "notify", path = "FADisplayCounter.onUseDisplayCounter", arg = 3, side = "client",
+          consumer = "FA2DisplayCounter", state = mode },
+        { kind = "notify", path = "FAVendingMachine.onUseVendingMachine", arg = 3, side = "client",
+          consumer = "FA2VendingMachine", state = mode },
         -- No-state machines: onUse(junk, player, machine, soundFile, ...) queues the action
         -- (HotDogMachineMenu.lua:77, :104, :112; PopcornMachineMenu.lua:23, :38;
         -- SodaFountainMenu.lua:238, :256, also for the SlurpNBurp; BarTapsMenu.lua:137, :149).

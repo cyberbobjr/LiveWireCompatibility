@@ -279,6 +279,60 @@ class MenuReader(unittest.TestCase):
             "invalid_profile")
 
 
+class Notify(unittest.TestCase):
+    NOTIFY = """Mod = { transmit = function(m, extra) m.sent = (m.sent or 0) + 1; return 'ok', extra end }
+        LiveWireCompat.Profiles.add({ name = 'N', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'notify', path = 'Mod.transmit', consumer = 'GMachine',
+                        state = function(m) return m.on end } } }); fire()"""
+
+    def setUp(self):
+        self.lua = make()
+        self.lua.execute("""function placed(id, sprite)
+            local m = machine(id, false, sprite)
+            m.sq = { getX = function() return 3 end, getY = function() return 4 end, getZ = function() return 0 end }
+            return m end""")
+        self.lua.execute(self.NOTIFY)
+
+    def test_original_runs_and_returns_are_kept(self):
+        self.assertEqual(tuple(self.lua.eval("{ Mod.transmit(placed('GMachine'), 7) }").values()), ("ok", 7))
+
+    def test_a_change_of_state_is_reported_once(self):
+        self.lua.execute("M = placed('GMachine'); M.on = true; Mod.transmit(M); Mod.transmit(M)")
+        self.assertEqual(self.lua.eval("#CHANGED"), 1)
+        self.lua.execute("M.on = false; Mod.transmit(M)")
+        self.assertEqual(self.lua.eval("#CHANGED"), 2)
+        self.assertTrue(self.lua.eval("CHANGED[2] == M"))
+
+    def test_other_machines_are_not_reported(self):
+        self.lua.execute("Mod.transmit(placed('GOther')); Mod.transmit({})")
+        self.assertEqual(self.lua.eval("#CHANGED"), 0)
+
+    def test_without_state_every_call_is_reported(self):
+        self.lua.execute("""Mod2 = { use = function(p, m) end }
+            LiveWireCompat.Profiles.add({ name = 'N2', mods = { 'TargetMod' }, consumers = {},
+                gates = { { kind = 'notify', path = 'Mod2.use', arg = 2, consumer = 'GMachine' } } }); fire()
+            Mod2.use(hero(), placed('GMachine')); Mod2.use(hero(), placed('GMachine'))""")
+        self.assertEqual(self.lua.eval("#CHANGED"), 2)
+
+    def test_notify_wraps_on_top_of_a_call_gate_of_the_same_function(self):
+        self.lua.execute("""LiveWireCompat.Profiles.add({ name = 'N3', mods = { 'TargetMod' }, consumers = {},
+            gates = { { kind = 'notify', path = 'Target.onUse', arg = 2, consumer = 'GMachine',
+                        state = function(m) return m.mode end } } }); fire()
+            M = placed('GMachine'); M.mode = 'Hot'; Target.onUse(hero(), M, 'Hot')""")
+        self.assertEqual(self.lua.eval("CALLS"), 1)
+        self.assertEqual(self.lua.eval("#CHANGED"), 1)
+
+    def test_client_reports_through_a_command(self):
+        self.lua.execute("""SIDE = 'client'; SENT = {}
+            function sendClientCommand(p, mod, cmd, args) SENT[#SENT + 1] = { mod, cmd, args } end
+            function getPlayer() return hero() end
+            M = placed('GMachine', 'g_0')
+            M.on = true; Mod.transmit(M)""")
+        self.assertEqual(self.lua.eval("#CHANGED"), 0)
+        self.assertEqual(self.lua.eval("SENT[1][1] .. '/' .. SENT[1][2]"), "LWC/changed")
+        self.assertEqual(self.lua.eval("SENT[1][3].sprite"), "g_0")
+
+
 class CustomAndSides(unittest.TestCase):
     def test_custom_installer_gets_the_gate_and_helpers(self):
         lua = make()

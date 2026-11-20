@@ -21,6 +21,10 @@
   Le serveur (`server/LWC_SwitchServer.lua`, ignoré par un client MP) cherche sur la case un objet de ce sprite qui a
   un interrupteur, vérifie la portée (2,5 cases, même étage), écrit la ModData et `transmitModData()`. Refus écrits
   dans la console : `bad_request`, `no_machine`, `out_of_reach`.
+- Chaque basculement prévient Live Wire (`Switch.changed`, ADR-004) : sur l'autorité `LiveWire.API.consumerChanged(obj)`
+  (révision 10, remesure immédiate des réseaux qui servent la machine) ; sur un client, commande `LWC` / `changed`
+  `{ x, y, z, sprite }`, que le serveur valide (consommateur inscrit de ce sprite sur la case, joueur à 10 cases au plus)
+  avant d'appeler l'API. Sans révision 10, rien : la mesure suivante (10 minutes de jeu au plus) le montre.
 - Aucune boucle propre : ni `OnTick`, ni `Every*`.
 
 ## Format d'un profil
@@ -65,6 +69,7 @@ enveloppes, clé = chemin ou chemin:méthode), arguments et retours préservés.
 | `call` | `path`, `arg` ou `machine(...)`, `player`, `allow(...)`, `refuse`, `instead(original, ...)` | la fonction n'est pas exécutée : rend `refuse` (ou le résultat de `instead`) ; `allow` laisse passer certains appels (choisir « arrêt ») |
 | `menu` | `name` | client : après les menus des mods cibles (`OnFillWorldObjectContextMenu`), grise les options dont `target` ou `param1..10` est une machine bloquée, sous-menus compris ; infobulle = raison |
 | `custom` | `name`, `install(gate, G)` | installeur fourni par le profil, quand aucun type ne convient |
+| `notify` | `path`, `arg` ou `machine(...)`, `state(machine)` | ne refuse rien : après l'appel d'origine, prévient Live Wire (`Switch.changed`) que la machine a changé ; avec `state`, seulement quand cet état change (ADR-004) |
 
 Côtés : `side = "client"` n'est pas installé sur un serveur dédié, `side = "server"` pas sur un client MP ; les
 deux s'installent en solo. Message au joueur (client seulement, `setHaloNote`) : `IGUI_LWC_MachineOff` si la

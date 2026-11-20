@@ -160,6 +160,24 @@ class Command(unittest.TestCase):
         self.assertTrue(self.lua.eval("LiveWireCompat.Switch.isOff(M)"))
         self.assertEqual(self.lua.eval("#SENT"), 0)
 
+    def test_switching_tells_livewire_at_once(self):
+        self.handle("{ x = 10, y = 20, z = 0, sprite = 'sw_0', off = true }")
+        self.assertTrue(self.lua.eval("CHANGED[1] == M"))
+
+    def test_change_report_from_a_client_is_checked_then_measured(self):
+        ok = lambda args, at="10, 21, 0": tuple(self.lua.eval(
+            "{ LiveWireCompat.Switch.handleChanged(player(%s), %s) }" % (at, args)).values())
+        self.assertEqual(ok("{ x = 10, y = 20, z = 0, sprite = 'sw_0' }"), (True,))
+        self.assertTrue(self.lua.eval("CHANGED[1] == M"))
+        self.assertEqual(ok("{ x = 10, y = 20, z = 0, sprite = 'nope_0' }"), (False, "no_machine"))
+        self.assertEqual(ok("{ x = 10, y = 20, z = 0, sprite = 'sw_0' }", "10, 40, 0"), (False, "out_of_reach"))
+        self.assertEqual(ok("{ x = 10 }"), (False, "bad_request"))
+        self.assertEqual(self.lua.eval("#CHANGED"), 1)
+
+    def test_without_api_revision_10_nothing_is_called(self):
+        self.lua.execute("LiveWire.API.consumerChanged = nil")
+        self.assertEqual(self.handle("{ x = 10, y = 20, z = 0, sprite = 'sw_0', off = true }"), (True,))
+
     def test_server_handler_applies_client_commands(self):
         self.lua.execute("SIDE = 'server'")
         self.lua.execute('require "LiveWireCompatibility/LWC_SwitchServer"')

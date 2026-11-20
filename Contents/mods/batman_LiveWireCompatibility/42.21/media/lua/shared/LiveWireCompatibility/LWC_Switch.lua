@@ -78,6 +78,50 @@ function S.handle(player, args)
     if not o then return false, "no_machine" end
     if not inReach(player, args) then return false, "out_of_reach" end
     S.write(o, args.off == true)
+    S.changed(o)
+    return true
+end
+
+-- The draw of machine `o` just changed (switched on or off, a mode, a batch): LiveWire measures
+-- its networks again now instead of at its next ten-minute step (API revision 10,
+-- consumerChanged; ADR-004). Authority: direct call; client: command to the server. Without the
+-- API function, nothing (the next step shows it).
+S.CHANGED = "changed"
+S.CHANGE_REACH = 10
+
+function S.changed(o)
+    local api = LiveWire and LiveWire.API
+    local sq = o and o.getSquare and o:getSquare()
+    if not api or not api.consumerChanged or not sq then return end
+    if isClient() then
+        local player = getPlayer and getPlayer()
+        if player then
+            sendClientCommand(player, S.MODULE, S.CHANGED,
+                { x = sq:getX(), y = sq:getY(), z = sq:getZ(), sprite = spriteName(o) })
+        end
+    else
+        api.consumerChanged(o)
+    end
+end
+
+-- Authority: a client reports a change. Returns true, or false and a reason.
+function S.handleChanged(player, args)
+    if type(args) ~= "table" or type(args.x) ~= "number" or type(args.y) ~= "number"
+        or type(args.z) ~= "number" or type(args.sprite) ~= "string" then
+        return false, "bad_request"
+    end
+    local sq = getCell():getGridSquare(args.x, args.y, args.z)
+    local objects = sq and sq:getObjects()
+    local o
+    for i = 0, objects and objects:size() - 1 or -1 do
+        local x = objects:get(i)
+        if spriteName(x) == args.sprite and LiveWire.API.consumer(x) ~= nil then o = x end
+    end
+    if not o then return false, "no_machine" end
+    if not player or math.abs(player:getZ() - args.z) >= 2 then return false, "out_of_reach" end
+    local dx, dy = player:getX() - args.x, player:getY() - args.y
+    if dx * dx + dy * dy > S.CHANGE_REACH * S.CHANGE_REACH then return false, "out_of_reach" end
+    S.changed(o)
     return true
 end
 

@@ -7,6 +7,12 @@
 -- the client side only; the dedicated server keeps its own local check (not reachable).
 require "LiveWireCompatibility/LWC_Profiles"
 
+-- The power button's state (ModData ComputerModPowerOn).
+local function poweredOn(o)
+    local md = o:getModData()
+    return md ~= nil and md.ComputerModPowerOn == true
+end
+
 LiveWireCompat.Profiles.add({
     name = "ComputerMod",
     workshop = "3725497089",
@@ -15,10 +21,7 @@ LiveWireCompat.Profiles.add({
         { id = "ComputerModDesktop", watts = 120,
           sprites = { "appliances_com_01_72", "appliances_com_01_73", "appliances_com_01_74", "appliances_com_01_75",
                       "appliances_com_01_76", "appliances_com_01_77", "appliances_com_01_78", "appliances_com_01_79" },
-          running = function(o)
-              local md = o:getModData()
-              return md ~= nil and md.ComputerModPowerOn == true
-          end },
+          running = poweredOn },
     },
     -- No switch of ours: the power button of Computer Mod (ModData ComputerModPowerOn, written by
     -- client/ComputerMod_UI_System.lua:3983-3986) is the machine's own switch (ADR-002, D01).
@@ -30,5 +33,10 @@ LiveWireCompat.Profiles.add({
         -- (ComputerMod_UI_Lifecycle.lua:245-256). Client only: the function lives in client Lua.
         { path = "ComputerModPower.hasComputerPower", kind = "object", consumer = "ComputerModDesktop",
           side = "client" },
+        -- The power button ends with ComputerModComputerTypes.transmitData(computer)
+        -- (client/ComputerMod_UI_System.lua:3983-3996, shared/ComputerMod_ComputerTypes.lua:119), also
+        -- called for other data: only a change of the power state is reported (ADR-004).
+        { kind = "notify", path = "ComputerModComputerTypes.transmitData", consumer = "ComputerModDesktop",
+          state = poweredOn, side = "client" },
     },
 })

@@ -17,7 +17,9 @@ Profiles/LWC_<Cible>.lua --add--> LWC_Profiles (registre)
                                    \--> LWC_Gates.install(garde)     un type par fichier sous Gates/
                                --non--> rien
 
-Joueur : menu « Allumer / Éteindre » (client) --LWC/setSwitch--> serveur : ModData LWC_off, transmitModData
+Joueur : menu « Allumer / Éteindre » (client) --LWC/setSwitch--> serveur : ModData LWC_off, transmitModData,
+        puis LiveWire.API.consumerChanged (remesure immédiate, ADR-004)
+Interrupteur propre au mod cible --garde notify--> Switch.changed --(client) LWC/changed--> serveur --> consumerChanged
 Mod cible : point d'entrée enveloppé --> LWC_Switch.powered(machine) = courant LiveWire ET allumée
 ```
 
@@ -33,7 +35,7 @@ Contents/mods/batman_LiveWireCompatibility/
         │   ├── LWC_Profiles.lua     registre des profils, validation, chargeur
         │   ├── LWC_Switch.lua       état de l'interrupteur, powered(), traitement d'une demande
         │   ├── LWC_Gates.lua        registre des types de garde et aides communes
-        │   ├── Gates/               un fichier par type : Check (object, square), Action, Call, Menu, Custom
+        │   ├── Gates/               un fichier par type : Check (object, square), Action, Call, Menu, Custom, Notify
         │   └── Profiles/            un fichier par mod cible
         ├── shared/Translate/EN|FR/  ContextMenu.json, IG_UI.json
         ├── client/LiveWireCompatibility/LWC_SwitchMenu.lua   option de menu et action « Allumer / Éteindre »
