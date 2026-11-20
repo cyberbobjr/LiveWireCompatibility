@@ -4,39 +4,33 @@
 
 Viele Mods fügen elektrische Maschinen hinzu, die das Spiel nicht mitzählt: Sie prüfen nur, ob ihr Feld Strom hat. Mit [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] laufen sie kostenlos. Diese Mod meldet sie bei LiveWire an, damit:
 [list]
-[*]der Wechselrichter ihren Verbrauch abrechnet, solange sie laufen, wie bei einem Kühlschrank oder Herd;
+[*]der Wechselrichter ihren Verbrauch abrechnet, solange sie laufen;
 [*]sie in der Verwaltungssoftware im Reiter Verbraucher erscheinen;
-[*]die Stromkreise des Sicherungskastens sie abschalten, wenn ihre Mod anderen Mods ihre Stromprüfung zeigt.
+[*]Rechtsklick auf eine Maschine und Ausschalten oder Einschalten wählen: eine ausgeschaltete Maschine zieht keinen Strom;
+[*]eine ausgeschaltete, stromlose oder vom Sicherungskasten abgeschaltete Maschine arbeitet nicht: Optionen ausgegraut mit Grund, laufende Benutzung stoppt.
 [/list]
 
 [b]Einmal aktivieren.[/b] Sie erkennt die unterstützten Mods, die du nutzt, und ignoriert die anderen: nichts einzustellen.
 
 [h2]Unterstützte Mods[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: Brunnenmotor, Elektrotrockner, Gefriertrockner, Chemietisch, Handelsposten und Quantenbasis. Die Stromkreise stoppen den Brunnenmotor, den Handelsposten (seine eigene Batterie läuft weiter) und die Quantenbasis.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: Warmhalte- und Vitrinentheken, Verkaufsautomaten, Hotdog-Grill, Popcornmaschine, Getränkezapfanlage, SlurpNBurp, Bierzapfhähne und Dunstabzugshauben; nur abgerechnet, die Stromkreise können sie nicht abschalten.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: Desktop-Computer, solange sie eingeschaltet sind. Die Stromkreise schalten sie auf Spielerseite ab.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: die Wetterstation; die Stromkreise schalten sie ab.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: die Jukebox, während sie spielt; die Stromkreise schalten sie ab.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: Säulenbohrmaschine, Metallbandsäge, Hydraulikpresse, Drehbank, Schleifbock, Tischkreissägen und Betonmischer; die Stromkreise schalten sie ab.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: Arcade-Automaten, Flipper, Greifautomaten, Münzschieber und Boxautomaten, sobald sie Strom haben; nur abgerechnet, die Stromkreise können sie nicht abschalten.
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: Brunnenmotor, Elektrotrockner, Gefriertrockner, Chemietisch, Handelsposten und Quantenbasis. Ohne Strom stoppen sie: Trockner behalten ihre Charge, der Handelsposten läuft mit eigener Batterie weiter. Diese Mod nach Artel Manufactory laden.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: Warmhalte- und Vitrinentheken, Verkaufsautomaten, Hotdog-Grill, Popcornmaschine, Getränkezapfanlage, SlurpNBurp, Bierzapfhähne und Dunstabzugshauben; ohne Strom verweigern sie den Dienst, und Theken und Automaten gehen auf Aus zurück.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: Desktop-Computer, solange sie eingeschaltet sind; ein Computer ohne Strom fährt herunter.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: die Wetterstation; ohne Strom liefert sie keine Messwerte.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: die Jukebox, während sie spielt; ohne Strom hält sie an.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: Säulenbohrmaschine, Metallbandsäge, Hydraulikpresse, Drehbank, Schleifbock, Tischkreissägen und Betonmischer; ohne Strom arbeiten sie nicht.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: Arcade-Automaten, Flipper, Greifautomaten, Münzschieber und Boxautomaten, sobald sie Strom haben; ohne Strom startet kein Spiel, bevor eine Münze bezahlt wurde, und ein laufendes Spiel stoppt.[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b]: Säulenbohrmaschine, Tischkreissäge, Drehbänke, Fräsmaschine, Hydraulikpresse, Schleifbock, Ladepanel, Einkochanlage, Fahrzeughebebühne und Autowaschanlage; ohne Strom öffnen ihre Stationen nicht. Arbeitet zusammen mit Machinery.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b]: Weidezaun-Energizer, Bewegungsmelder, Torsteuerkasten, Flutlichter, Arbeitsleuchte, Turmsuchscheinwerfer und Auto-Turret, wenn am Netz; eine Autobatterie im Gerät hält es am Laufen, wenn das Netz abgeschaltet wird.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b]: feste Überwachungskameras, Imekagi-Kamera, Überwachungsmonitore und Überwachungs-PC; ohne Strom stoppen sie. Arbeitet zusammen mit Computer Mod.[/td][/tr]
+[/table]
 
 [h2]Hinweise[/h2]
 [list]
 [*]Die Verbrauchswerte sind Schätzungen nach echten Maschinen derselben Art.
+[*]Mit LiveWire 2.2.0 oder neuer wird eine ein- oder ausgeschaltete Maschine sofort auf den Inverter-Bildschirmen angezeigt.
 [*]Bereits von LiveWire erfasst, nichts zu tun: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
 [*]Nichts abzurechnen: Video Game Consoles, Vectrex, Palm Pilots und andere Gegenstände im Inventar oder mit Batterien.
 [/list]

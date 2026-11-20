@@ -2,54 +2,48 @@
 
 [b]Build 42.22 · 싱글 & 멀티플레이 · LiveWire 필요[/b]
 
-많은 모드가 게임이 전력 소비를 계산하지 않는 전기 기계를 추가합니다. 그 기계들은 칸에 전기가 있는지만 확인합니다. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] 환경에서는 공짜로 돌아갑니다. 이 모드는 그 기계들을 LiveWire에 등록하여:
+많은 모드가 게임이 계산하지 않는 전기 기계를 추가합니다. 그 기계들은 칸의 전기만 확인합니다. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] 환경에서는 공짜로 돌아갑니다. 이 모드는 그 기계들을 LiveWire에 등록하여:
 [list]
-[*]작동하는 동안 인버터가 소비 전력을 계산합니다(냉장고나 스토브처럼).
-[*]관리 소프트웨어의 소비 기기 탭에 표시됩니다.
-[*]해당 모드가 전원 확인을 다른 모드에 공개하면 배전반 회로로 끌 수 있습니다.
+[*]작동하는 동안 인버터가 소비 전력을 계산합니다.
+[*]관리 소프트웨어 소비 기기 탭에 표시됩니다.
+[*]우클릭으로 끄기 또는 켜기를 선택하세요: 꺼진 기계는 전력을 쓰지 않습니다;
+[*]꺼졌거나 전기가 없거나 차단된 기계는 작동하지 않습니다: 옵션은 이유와 함께 회색 표시되고, 진행 중인 사용은 멈춥니다.
 [/list]
 
-[b]한 번만 활성화하세요.[/b] 사용 중인 지원 모드를 자동으로 감지하고 나머지는 무시합니다. 설정할 것이 없습니다.
+[b]한 번만 활성화하세요.[/b] 지원 모드를 자동 감지하고 나머지는 무시합니다. 설정할 것이 없습니다.
 
 [h2]지원 모드[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: 우물 모터, 전기 건조기, 동결 건조기, 화학 작업대, 교역소, 퀀텀 베이스. 회로로 우물 모터, 교역소(자체 배터리는 계속 작동), 퀀텀 베이스를 정지할 수 있습니다.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: 보온·진열 카운터, 자판기, 핫도그 그릴, 팝콘 기계, 탄산음료 디스펜서, SlurpNBurp, 맥주 탭, 환기 후드; 요금만 계산되며 회로로 정지할 수 없습니다.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: 데스크톱 컴퓨터(켜져 있을 때). 회로가 플레이어 쪽에서 차단합니다.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: 기상 관측소; 회로로 정지할 수 있습니다.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: 주크박스(재생 중); 회로로 정지할 수 있습니다.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: 드릴 프레스, 금속 띠톱, 유압 프레스, 선반, 벤치 그라인더, 테이블 톱, 콘크리트 믹서; 회로로 정지할 수 있습니다.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: 아케이드 기기, 핀볼, 인형 뽑기, 코인 푸셔, 펀치 기계(전기가 있는 동안); 요금만 계산되며 회로로 정지할 수 없습니다.
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: 우물 모터, 전기 건조기, 동결 건조기, 화학 작업대, 교역소, 퀀텀 베이스. 전기가 없으면 멈춥니다: 건조기는 배치를 유지하고, 교역소는 자체 배터리로 계속 작동합니다. Artel Manufactory 뒤에 로드하세요.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: 보온·진열 카운터, 자판기, 핫도그 그릴, 팝콘 기계, 탄산음료 디스펜서, SlurpNBurp, 맥주 탭, 환기 후드; 전기가 없으면 서비스를 거부하고, 카운터와 자판기는 꺼짐으로 돌아갑니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: 데스크톱 컴퓨터(켜졌을 때). 전기가 없으면 종료됩니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: 기상 관측소; 전기가 없으면 아무것도 측정하지 않습니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: 주크박스(재생 중); 전기가 없으면 멈춥니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: 드릴 프레스, 금속 띠톱, 유압 프레스, 선반, 벤치 그라인더, 테이블 톱, 콘크리트 믹서; 전기가 없으면 작동을 거부합니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: 아케이드 기기, 핀볼, 인형 뽑기, 코인 푸셔, 펀치 기계(전기가 있는 동안); 전기가 없으면 게임을 시작할 수 없고 진행 중인 게임은 멈춥니다.[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b]: 드릴 프레스, 테이블 톱, 선반, 밀링 머신, 유압 프레스, 벤치 그라인더, 충전 패널, 통조림 라인, 차량 리프트, 세차기; 전기가 없으면 작업대가 열리지 않습니다. Machinery와 함께 작동합니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b]: 울타리 전기 발생기, 모션 센서, 게이트 제어 박스, 투광등, 작업등, 타워 탐조등, 자동 터렛; 전원이 있을 때 작동합니다. 기기 안의 자동차 배터리가 전원이 끊겨도 작동을 유지합니다.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b]: 고정형 보안 카메라, Imekagi 카메라, 보안 모니터, 감시 PC; 전기가 없으면 멈춥니다. Computer Mod와 함께 작동합니다.[/td][/tr]
+[/table]
 
 [h2]참고[/h2]
 [list]
 [*]소비 전력은 같은 종류의 실제 기계를 바탕으로 한 추정치입니다.
+[*]LiveWire 2.2.0 이상에서는 켜거나 끈 기계가 인버터 화면에 즉시 표시됩니다.
 [*]LiveWire가 이미 처리, 할 일 없음: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
-[*]계산할 것 없음: Video Game Consoles, Vectrex, Palm Pilots 등 인벤토리에 넣거나 배터리로 작동하는 물건.
+[*]계산 제외: Video Game Consoles, Vectrex, Palm Pilots 등 인벤토리 물건이나 배터리 기기.
 [/list]
 
 [h2]당신의 모드가 목록에 없나요?[/h2]
 
-모드 제작자분들께: 전기 기계를 추가하는 모드를 LiveWire와 호환시키고 싶다면 Discord로 연락 주세요. 기계용 프로필을 추가해 드리며, 모드는 수정할 필요가 없습니다. LiveWire의 공개 API를 직접 사용할 수도 있습니다:
+모드 제작자분들께: 전기 기계 모드를 LiveWire와 호환시키고 싶다면 Discord로 연락 주세요. 기계용 프로필을 추가해 드리며 모드는 수정할 필요가 없습니다. 공개 API를 직접 사용할 수도 있습니다:
 [url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]개발자 가이드[/url]
 [b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
 
 [h2]Discord[/h2]
 
-질문, 버그 제보, 추가할 모드 제안: [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+질문, 버그 제보, 모드 제안: [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
 
 [h2]프로젝트 후원[/h2]
 
@@ -58,5 +52,5 @@
 
 [h2]크레딧[/h2]
 
-제작: batmanfr. 위 이미지는 각 지원 모드의 창작마당 미리보기이며, 각 제작자의 것입니다.
+제작: batmanfr. 위 이미지는 지원 모드의 창작마당 미리보기입니다.
 [url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT

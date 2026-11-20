@@ -2,61 +2,55 @@
 
 [b]Build 42.22 · シングル＆マルチプレイ · LiveWire 必須[/b]
 
-多くのMODはゲームが消費電力を数えない電気機械を追加します。それらはマスに電気が来ているかを確認するだけです。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url] の環境では無料で動いてしまいます。このMODはそれらをLiveWireに登録し、次のようにします：
+多くのMODはゲームが計上しない電気機械を追加します。区画の電気を確認するだけです。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url]では無料で動いてしまいます。このMODはそれらをLiveWireに登録し、次のようにします：
 [list]
-[*]稼働中の消費電力をインバーターが計上します（冷蔵庫やコンロと同じ）。
-[*]管理ソフトの「消費機器」タブに表示されます。
-[*]そのMODが電源チェックを他のMODに公開している場合、分電盤の回路で停止できます。
+[*]稼働中の消費電力をインバーターが計上。
+[*]管理ソフトの「消費機器」タブに出ます。
+[*]右クリックで「停止する」「作動する」を選択：停止中の機械は電力を消費しません；
+[*]停止・電源なし・遮断中の機械は動作せず、オプションは理由付きでグレー表示、使用中の作業も止まります。
 [/list]
 
-[b]一度有効にするだけ。[/b]使用中の対応MODを自動で検出し、それ以外は無視します。設定は不要です。
+[b]一度有効にするだけ。[/b]対応MODを自動検出します。設定不要です。
 
 [h2]対応MOD[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: 井戸のモーター、電気乾燥機、フリーズドライ機、化学作業台、交易所、量子ベース。回路で井戸のモーター、交易所（自前のバッテリーは動作継続）、量子ベースを停止できます。
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: 保温・ショーケースカウンター、自動販売機、ホットドッググリル、ポップコーンマシン、ソーダファウンテン、SlurpNBurp、ビアサーバー、換気フード。計上のみ。回路では停止できません。
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: デスクトップPC（電源オン時）。回路でプレイヤー側から停止されます。
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: 気象ステーション。回路で停止できます。
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: ジュークボックス（再生中）。回路で停止できます。
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: ボール盤、金属用バンドソー、油圧プレス、旋盤、グラインダー、テーブルソー、コンクリートミキサー。回路で停止できます。
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: アーケード筐体、ピンボール、クレーンゲーム、プッシャー、パンチングマシン（通電中）。計上のみ。回路では停止できません。
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: 井戸のモーター、電気乾燥機、フリーズドライ機、化学作業台、交易所、量子ベース。電源がないと停止します。乾燥機は作業分を保持し、交易所は自前のバッテリーで動作します。Artel Manufactoryの後に読み込んでください。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: 保温カウンター、自動販売機、ホットドッググリル、ポップコーンマシン、ソーダファウンテン、SlurpNBurp、ビアサーバー、換気フード。電源がないと提供を拒否し、「オフ」に戻ります。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: デスクトップPC（電源オン時）。電源がないとシャットダウンします。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: 気象ステーション。電源がないと計測しません。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: ジュークボックス（再生中）。電源がないと停止します。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: ボール盤、金属用バンドソー、油圧プレス、旋盤、グラインダー、テーブルソー、コンクリートミキサー。電源がないと動作を拒否します。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: アーケード筐体、ピンボール、クレーンゲーム、プッシャー、パンチングマシン（通電中）。電源がないと開始できず、進行中のゲームは停止します。[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b]: ボール盤、テーブルソー、旋盤、フライス盤、油圧プレス、グラインダー、充電パネル、缶詰ライン、車両リフト、洗車機。電源がないと開きません。Machineryと併用できます。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b]: 電気柵発生器、モーションセンサー、ゲート制御ボックス、投光器、作業灯、タワーサーチライト、オートタレット。商用電源時に動作し、機器内の車用バッテリーが停電時も維持します。[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b]: 固定式防犯カメラ、Imekagiカメラ、セキュリティモニター、監視PC。電源がないと停止します。Computer Modと併用できます。[/td][/tr]
+[/table]
 
 [h2]注意[/h2]
 [list]
-[*]消費電力は同種の実機を参考にした推定値です。
+[*]消費電力は同種の実機からの推定です。
+[*]LiveWire 2.2.0以降は、オン・オフをインバーター画面にすぐ表示します。
 [*]LiveWireで対応済み、作業不要：[B42] Working Air Conditioner Units、Badlands Power、Industrial Works。
-[*]計上なし：Video Game Consoles、Vectrex、Palm Pilots など、インベントリに入れる物や電池式の物。
+[*]計上なし：Video Game Consoles、Vectrex、Palm Pilotsなど、インベントリ内や電池式の物。
 [/list]
 
 [h2]あなたのMODがリストにない？[/h2]
 
-MOD作者の方へ：電気機械を追加するMODをLiveWireに対応させたい場合は、Discordでご連絡ください。あなたの機械用のプロファイルを追加します。MOD側の変更は不要です。LiveWireの公開APIを自分で使うこともできます：
+MOD作者の方へ：電気機械を追加するMODを対応させたい場合は、Discordでご連絡を。機械用プロファイルを追加します。MOD側の変更は不要です。公開APIも使えます：
 [url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]開発者ガイド[/url]
 [b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
 
 [h2]Discord[/h2]
 
-質問、バグ報告、追加してほしいMOD： [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
+質問、バグ報告、MOD提案： [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
 
 [h2]プロジェクトを支援[/h2]
 
-気に入りましたか？コーヒー1杯が新機能と翻訳の資金になります。
+コーヒー1杯が新機能と翻訳の資金になります。
 [url=https://ko-fi.com/Z8Z8QJV31][img]https://storage.ko-fi.com/cdn/kofi6.png?v=6[/img][/url]
 
 [h2]クレジット[/h2]
 
-制作：batmanfr。上の画像は各対応MODのワークショップのプレビュー画像で、各作者のものです。
+制作：batmanfr。上の画像は各対応MODのプレビューで、作者のものです。
 [url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT

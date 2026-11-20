@@ -6,37 +6,31 @@ Many mods add electric machines that the game does not count: they only check th
 [list]
 [*]the inverter bills what they draw while they run, like a fridge or a stove;
 [*]they appear in the management software, in the Consumers tab;
-[*]the circuits of the breaker panel switch them off, when their mod lets other mods see its power check.
+[*]right-click a machine and choose Turn off or Turn on: a machine that is off draws nothing;
+[*]a machine that is off, without power or cut by a breaker refuses to work: its options are greyed with the reason, and a use in progress stops.
 [/list]
 
 [b]Enable it once.[/b] It detects the supported mods you use and ignores the others: nothing to configure.
 
 [h2]Supported mods[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: well motor, electric dryer, freeze dryer, chemistry table, trade post and Quantum Base. The circuits stop the well motor, the trade post (its own battery keeps working) and the Quantum Base.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: heated and display counters, vending machines, hot dog roller, popcorn machine, soda fountain, SlurpNBurp, bar taps and exhaust hoods; billed only, the circuits cannot stop them.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: desktop computers, while switched on. The circuits cut them on the player's side.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: the weather station; the circuits stop them.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: the jukebox, while it plays; the circuits stop them.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: drill press, metal bandsaw, hydraulic press, lathe, bench grinder, table saws and concrete mixer; the circuits stop them.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: arcade cabinets, pinball tables, claw machines, coin pushers and punching machines, whenever they have power; billed only, the circuits cannot stop them.
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: well motor, electric dryer, freeze dryer, chemistry table, trade post and Quantum Base. Without power they stop: the dryers hold their batch and show Artel's own no-power lamp, the trade post runs on its own battery. Load this mod after Artel Manufactory.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: heated and display counters, vending machines, hot dog roller, popcorn machine, soda fountain, SlurpNBurp, bar taps and exhaust hoods; without power they refuse to serve, and counters and vending machines go back to Off.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: desktop computers, while switched on; a computer without power shuts down.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: the weather station; without power it reads nothing.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: the jukebox, while it plays; without power it stops.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: drill press, metal bandsaw, hydraulic press, lathe, bench grinder, table saws and concrete mixer; without power they refuse to work.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: arcade cabinets, pinball tables, claw machines, coin pushers and punching machines, whenever they have power; without power a game cannot start, before any coin is paid, and a game in progress stops.[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b]: drill press, table saw, lathes, milling machine, hydraulic press, bench grinder, charging panel, canning line, vehicle lift and car wash; without power their stations do not open. Works alongside Machinery.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b]: fence energizer, motion sensor, gate control box, floodlights, work light, tower searchlight and auto-turret, when on mains; a car battery inside a device keeps it running when the mains is cut.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b]: fixed security cameras, Imekagi camera, security monitors and surveillance PC; without power they stop. Works alongside Computer Mod.[/td][/tr]
+[/table]
 
 [h2]Notes[/h2]
 [list]
 [*]Draws are estimates, based on real machines of the same kind.
+[*]With LiveWire 2.2.0 or later, a machine switched on or off shows at once on the inverter screens.
 [*]Already handled by LiveWire, nothing to do: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
 [*]Nothing to bill: Video Game Consoles, Vectrex, Palm Pilots and other items carried in the inventory or running on batteries.
 [/list]

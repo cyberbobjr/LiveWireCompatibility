@@ -6,37 +6,31 @@ Muitos mods adicionam máquinas elétricas que o jogo não contabiliza: elas só
 [list]
 [*]o inversor cobre o que elas consomem enquanto funcionam, como uma geladeira ou um fogão;
 [*]apareçam no software de gerenciamento, na aba Consumidores;
-[*]os circuitos do quadro de disjuntores as desliguem, quando o mod delas deixa outros mods verem seu teste de energia.
+[*]clique com o botão direito em uma máquina e escolha Desligar ou Ligar: uma máquina desligada não consome nada;
+[*]uma máquina desligada, sem energia ou cortada por um disjuntor, se recusa a funcionar: as opções ficam em cinza com o motivo, e um uso em andamento para.
 [/list]
 
 [b]Ative uma vez.[/b] Ele detecta os mods compatíveis que você usa e ignora os outros: nada a configurar.
 
 [h2]Mods compatíveis[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: motor do poço, secadora elétrica, liofilizador, bancada química, posto de comércio e base quântica. Os circuitos param o motor do poço, o posto de comércio (a bateria própria continua) e a base quântica.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: balcões aquecidos e vitrines, máquinas de venda, grelha de cachorro-quente, pipoqueira, máquina de refrigerante, SlurpNBurp, chopeiras e coifas; apenas cobradas, os circuitos não conseguem desligá-las.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: computadores de mesa, enquanto ligados. Os circuitos os cortam do lado do jogador.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: a estação meteorológica; os circuitos as desligam.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: a jukebox, enquanto toca; os circuitos as desligam.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: furadeira de coluna, serra de fita para metal, prensa hidráulica, torno, esmeril, serras de bancada e betoneira; os circuitos as desligam.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: fliperamas, pinballs, máquinas de garra, empurra-moedas e máquinas de soco, sempre que têm energia; apenas cobradas, os circuitos não conseguem desligá-las.
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: motor do poço, secadora elétrica, liofilizador, bancada química, posto de comércio e base quântica. Sem energia, elas param: as secadoras mantêm o lote e mostram a luz de falta de energia da própria Artel, e o posto de comércio funciona com a bateria dele. Carregue este mod depois do Artel Manufactory.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: balcões aquecidos e vitrines, máquinas de venda, grelha de cachorro-quente, pipoqueira, máquina de refrigerante, SlurpNBurp, chopeiras e coifas; sem energia, se recusam a servir, e balcões e máquinas de venda voltam para Desligado.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: computadores de mesa, enquanto ligados. Sem energia, o computador desliga.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: a estação meteorológica; sem energia não registra leituras.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: a jukebox, enquanto toca; sem energia ela para.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: furadeira de coluna, serra de fita para metal, prensa hidráulica, torno, esmeril, serras de bancada e betoneira; sem energia, se recusam a funcionar.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: fliperamas, pinballs, máquinas de garra, empurra-moedas e máquinas de soco, sempre que têm energia; sem energia, um jogo não começa antes de qualquer moeda ser paga, e um jogo em andamento para.[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b]: furadeira de coluna, serra de mesa, tornos, fresadora, prensa hidráulica, esmeril, painel de carga, linha de enlatar, elevador de veículos e lava-rápido; sem energia, as estações não abrem. Funciona junto com o Machinery.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b]: eletrificador de cerca, sensor de movimento, caixa de controle do portão, refletores, luz de trabalho, holofote de torre e torre automática, quando ligados na tomada; uma bateria de carro dentro de um aparelho mantém tudo funcionando quando a energia é cortada.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b]: câmeras de segurança fixas, câmera Imekagi, monitores de segurança e PC de vigilância; sem energia param. Funciona junto com o Computer Mod.[/td][/tr]
+[/table]
 
 [h2]Observações[/h2]
 [list]
 [*]Os consumos são estimativas baseadas em máquinas reais do mesmo tipo.
+[*]Com o LiveWire 2.2.0 ou posterior, uma máquina ligada ou desligada aparece na hora nas telas do inversor.
 [*]Já tratados pelo LiveWire, nada a fazer: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
 [*]Nada a cobrar: Video Game Consoles, Vectrex, Palm Pilots e outros itens do inventário ou a pilha.
 [/list]

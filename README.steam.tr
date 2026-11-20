@@ -6,44 +6,38 @@ Birçok mod, oyunun tüketimini saymadığı elektrikli makineler ekler: yalnız
 [list]
 [*]invertör, çalıştıkları sürece tüketimlerini bir buzdolabı ya da ocak gibi faturalandırır;
 [*]yönetim yazılımında Tüketiciler sekmesinde görünürler;
-[*]modları güç kontrolünü diğer modlara açıyorsa, sigorta panosunun devreleri onları kapatır.
+[*]bir makineye sağ tıklayıp Kapat veya Aç seçeneğini seçin: kapalı bir makine hiç elektrik çekmez;
+[*]kapalı, elektriksiz ya da sigortayla kesilmiş makine çalışmaz: seçenekler nedeniyle gri görünür ve devam eden kullanım durur.
 [/list]
 
 [b]Bir kez etkinleştirin.[/b] Kullandığınız desteklenen modları kendisi algılar, diğerlerini yok sayar: ayarlanacak bir şey yok.
 
 [h2]Desteklenen modlar[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: kuyu motoru, elektrikli kurutucu, dondurarak kurutucu, kimya masası, ticaret noktası ve Kuantum Üssü. Devreler kuyu motorunu, ticaret noktasını (kendi aküsü çalışmaya devam eder) ve Kuantum Üssü'nü durdurur.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: ısıtmalı ve teşhir tezgâhları, otomatlar, sosisli ızgarası, patlamış mısır makinesi, gazoz çeşmesi, SlurpNBurp, bira muslukları ve davlumbazlar; yalnızca faturalandırılır, devreler durduramaz.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: masaüstü bilgisayarlar, açıkken. Devreler onları oyuncu tarafında keser.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: hava istasyonu; devreler onları durdurur.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: müzik kutusu, çalarken; devreler onları durdurur.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: sütunlu matkap, metal şerit testere, hidrolik pres, torna, taşlama motoru, tezgâh testereleri ve beton mikseri; devreler onları durdurur.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: atari makineleri, langırtlar, pençe makineleri, jeton iticiler ve yumruk makineleri, elektrikleri olduğu sürece; yalnızca faturalandırılır, devreler durduramaz.
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b]: kuyu motoru, elektrikli kurutucu, dondurarak kurutucu, kimya masası, ticaret noktası ve Kuantum Üssü. Elektrik olmayınca dururlar: kurutucular partisini korur, ticaret noktası kendi aküsüyle çalışır. Bu modu Artel Manufactory'den sonra yükleyin.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b]: ısıtmalı ve teşhir tezgâhları, otomatlar, sosisli ızgarası, patlamış mısır makinesi, gazoz çeşmesi, SlurpNBurp, bira muslukları ve davlumbazlar; elektrik olmayınca servis vermeyi reddeder, tezgâhlar ve otomatlar Kapalı konumuna döner.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b]: masaüstü bilgisayarlar, açıkken. Elektrik olmayınca bilgisayar kapanır.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b]: hava istasyonu; elektrik olmayınca ölçüm yapmaz.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b]: müzik kutusu, çalarken; elektrik olmayınca durur.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b]: sütunlu matkap, metal şerit testere, hidrolik pres, torna, taşlama motoru, tezgâh testereleri ve beton mikseri; elektrik olmayınca çalışmayı reddeder.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b]: atari makineleri, langırtlar, pençe makineleri, jeton iticiler ve yumruk makineleri, elektrikleri olduğu sürece; elektrik olmayınca oyun başlamaz (jeton atılmadan önce reddedilir) ve devam eden oyun durur.[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b]: sütunlu matkap, masa testeresi, torna tezgâhları, freze, hidrolik pres, taşlama motoru, şarj paneli, konserve hattı, araç kaldırma platformu ve oto yıkama; elektrik olmayınca istasyonları açılmaz. Machinery ile birlikte çalışır.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b]: çit enerji verici, hareket sensörü, kapı kontrol kutusu, projektörler, çalışma lambası, kule arama ışığı ve otomatik taret; şebekedeyken çalışır. Bir cihazın içindeki akü, şebeke kesildiğinde çalışmasını sürdürür.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b]: sabit güvenlik kameraları, Imekagi kamerası, güvenlik monitörleri ve gözetim bilgisayarı; elektrik olmayınca durur. Computer Mod ile birlikte çalışır.[/td][/tr]
+[/table]
 
 [h2]Notlar[/h2]
 [list]
 [*]Tüketimler, aynı türden gerçek makinelere dayanan tahminlerdir.
+[*]LiveWire 2.2.0 ve sonrasında, açılan ya da kapatılan bir makine invertör ekranlarında hemen görünür.
 [*]LiveWire zaten yönetiyor, yapılacak bir şey yok: [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
-[*]Faturalandırılacak bir şey yok: Video Game Consoles, Vectrex, Palm Pilots ve envanterde taşınan ya da pille çalışan diğer eşyalar.
+[*]Faturalandırılmaz: Video Game Consoles, Vectrex, Palm Pilots ve envanterdeki ya da pille çalışan eşyalar.
 [/list]
 
 [h2]Modunuz listede yok mu?[/h2]
 
-Mod yapımcıları: modunuz elektrikli makineler ekliyorsa ve LiveWire ile uyumlu olmasını istiyorsanız, bana Discord'dan ulaşın. Makineleriniz için bir profil eklerim; modunuzda hiçbir şeyi değiştirmeniz gerekmez. LiveWire'ın açık API'sini kendiniz de kullanabilirsiniz:
+Mod yapımcıları: modunuz elektrikli makineler ekliyorsa ve LiveWire ile uyumlu olmasını istiyorsanız Discord'dan ulaşın. Makineleriniz için profil eklerim; modunuzda değişiklik gerekmez. Açık API'yi kendiniz de kullanabilirsiniz:
 [url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]Geliştirici rehberi[/url]
 [b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
 
@@ -58,5 +52,5 @@ Modu beğendiniz mi? Bir kahve yeni özellikleri ve çevirileri finanse etmeye y
 
 [h2]Emeği geçenler[/h2]
 
-batmanfr tarafından yapıldı. Yukarıdaki görseller, desteklenen her modun Atölye önizlemesidir ve yapımcılarına aittir.
+batmanfr tarafından yapıldı. Yukarıdaki görseller, desteklenen modların Atölye önizlemeleridir.
 [url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT

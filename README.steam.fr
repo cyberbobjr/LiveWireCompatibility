@@ -4,46 +4,40 @@
 
 Beaucoup de mods ajoutent des machines électriques que le jeu ne compte pas : elles vérifient seulement que leur case a du courant. Avec [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3821807453]LiveWire[/url], elles tournent gratuitement. Ce mod les déclare à LiveWire, pour que :
 [list]
-[*]l'onduleur facture ce qu'elles consomment pendant qu'elles tournent, comme un frigo ou une cuisinière ;
+[*]l'onduleur facture ce qu'elles consomment en marche, comme un frigo ;
 [*]elles apparaissent dans le logiciel de gestion, onglet Consommateurs ;
-[*]les circuits du tableau électrique les coupent, quand leur mod laisse les autres mods voir son test de courant.
+[*]clic droit sur une machine puis Éteindre ou Allumer : une machine éteinte ne consomme rien ;
+[*]une machine éteinte, sans courant ou coupée par un disjoncteur, refuse de travailler : ses options sont grisées avec la raison, et une utilisation en cours s'arrête.
 [/list]
 
-[b]Activez-le une fois.[/b] Il repère les mods pris en charge que vous utilisez et ignore les autres : rien à configurer.
+[b]Activez-le une fois.[/b] Il repère les mods pris en charge et ignore les autres : rien à configurer.
 
 [h2]Mods pris en charge[/h2]
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b] : moteur du puits, sécheuse électrique, sublimatrice, établi chimique, station de commerce et base quantique. Les circuits arrêtent le moteur du puits, la station de commerce (sa batterie continue) et la base quantique.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b] : comptoirs chauffants et vitrines, distributeurs, grill à hot-dogs, machine à pop-corn, fontaine à soda, SlurpNBurp, tireuses à bière et hottes ; facturés seulement, les circuits ne peuvent pas les arrêter.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b] : ordinateurs de bureau, quand ils sont allumés. Les circuits les coupent côté joueur.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b] : la station météo ; les circuits les arrêtent.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b] : le juke-box, pendant la lecture ; les circuits les arrêtent.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b] : perceuse à colonne, scie à ruban à métaux, presse hydraulique, tour, touret à meuler, scies de table et bétonnière ; les circuits les arrêtent.
-
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/[/img][/url]
-[b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b] : bornes d'arcade, flippers, pinces à peluches, pousse-pièces et punching-balls, dès qu'ils ont du courant ; facturés seulement, les circuits ne peuvent pas les arrêter.
+[table]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594][img]https://images.steamusercontent.com/ugc/9702711852996156865/0908988B1DA421FB3F25EDD6FB2790440BECC920/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3794133594]Artel Manufactory[/url][/b] : moteur du puits, sécheuse électrique, sublimatrice, établi chimique, station de commerce et base quantique. Sans courant, elles s'arrêtent : les sécheuses gardent leur lot, la station de commerce tourne sur batterie. Charger ce mod après Artel Manufactory.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819][img]https://images.steamusercontent.com/ugc/54703869591874735/07B3F94C2FB79AA613397458E7CCCB731163645E/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3042138819]Functional Appliances 2[/url][/b] : comptoirs chauffants et vitrines, distributeurs, grill à hot-dogs, machine à pop-corn, fontaine à soda, SlurpNBurp, tireuses à bière et hottes ; sans courant, elles refusent de servir, et comptoirs et distributeurs repassent sur Éteint.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089][img]https://images.steamusercontent.com/ugc/15241320638712035121/CFE3F705E62C844589C8A55CDD57B18C4405A8BC/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089]Computer Mod[/url][/b] : ordinateurs de bureau, quand ils sont allumés ; sans courant, un ordinateur s'éteint.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169][img]https://images.steamusercontent.com/ugc/13449151454301810231/18B3BCF084BCAFA0C4C6E51D17D1D6ECE0246B72/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781590169]Plysken Weather Station[/url][/b] : la station météo ; sans courant, elle ne relève plus rien.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172][img]https://images.steamusercontent.com/ugc/15339090705338025005/D77B3810F3409D0BBEBBCEA330E5CE770FD860E0/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3632610172]True Moozic[/url][/b] : le juke-box, pendant la lecture ; sans courant, il s'arrête.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195][img]https://images.steamusercontent.com/ugc/12063570618680798612/AC2CE49478E0B03573D7E06697476130F72EDD09/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3780027195]Machinery[/url][/b] : perceuse à colonne, scie à ruban à métaux, presse hydraulique, tour, touret à meuler, scies de table et bétonnière ; sans courant, elles refusent de travailler.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077][img]https://images.steamusercontent.com/ugc/13995068762955474501/E2F135E2346345B612AD3C855D0371E93EEC2721/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3645980077]Project Arcade[/url][/b] : bornes d'arcade, flippers, pinces à peluches, pousse-pièces, punching-balls, dès qu'ils ont du courant ; sans courant, impossible de lancer une partie avant de payer, et une partie en cours s'arrête.[/td][/tr]
+[tr][td][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3841890337]Knox Working Machines[/url][/b] : perceuse à colonne, scie de table, tours, fraiseuse, presse hydraulique, touret à meuler, panneau de charge, ligne de mise en conserve, pont élévateur et station de lavage ; sans courant, leurs postes ne s'ouvrent pas. Fonctionne avec Machinery.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933][img]https://images.steamusercontent.com/ugc/9470137798483022845/5056D8E99EAD9EEE54DF64082AFC8C00DA7FB127/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3838240933]STFO 3T: Traps, Turrets and Towers[/url][/b] : électrificateur de clôture, détecteur de mouvement, boîtier de portail, projecteurs, lampe de travail, projecteur de tour et tourelle automatique, sur secteur ; une batterie de voiture interne le maintient en marche si le secteur est coupé.[/td][/tr]
+[tr][td][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720][img]https://images.steamusercontent.com/ugc/13754094194932320521/39AC75C90732A45E362E40F2CA766723F1F5D033/?imw=128&imh=128&impolicy=Letterbox&letterbox=true[/img][/url][/td][td][b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3840702720]CamRecorder & CCTV[/url][/b] : caméras de sécurité fixes, caméra Imekagi, moniteurs de sécurité et PC de surveillance ; sans courant, ils s'arrêtent. Fonctionne avec Computer Mod.[/td][/tr]
+[/table]
 
 [h2]À savoir[/h2]
 [list]
-[*]Les consommations sont des estimations, d'après des machines réelles du même type.
+[*]Les consommations sont des estimations, d'après des machines réelles semblables.
+[*]Avec LiveWire 2.2.0 ou plus récent, une machine allumée ou éteinte s'affiche aussitôt sur les écrans de l'onduleur.
 [*]Déjà gérés par LiveWire, rien à faire : [B42] Working Air Conditioner Units, Badlands Power, Industrial Works.
-[*]Rien à facturer : Video Game Consoles, Vectrex, Palm Pilots et autres objets portés dans l'inventaire ou sur piles.
+[*]Rien à facturer : Video Game Consoles, Vectrex, Palm Pilots et objets portés dans l'inventaire ou sur piles.
 [/list]
 
 [h2]Votre mod n'est pas dans la liste ?[/h2]
 
-Créateurs de mods : si votre mod ajoute des machines électriques et que vous voulez le rendre compatible avec LiveWire, contactez-moi sur Discord. J'ajoute un profil pour vos machines ; rien à changer dans votre mod. Vous pouvez aussi utiliser vous-même l'API publique de LiveWire :
+Créateurs de mods : si votre mod ajoute des machines électriques et doit être compatible avec LiveWire, contactez-moi sur Discord. J'ajoute un profil pour vos machines, sans rien changer dans votre mod. Vous pouvez aussi utiliser l'API publique de LiveWire :
 [url=https://github.com/cyberbobjr/LiveWire/wiki/EN-15-developers]Guide du développeur[/url]
 [b]Discord:[/b] [url=https://discord.gg/QEsBya7hUA]https://discord.gg/QEsBya7hUA[/url]
 
@@ -53,10 +47,10 @@ Questions, bugs ou un mod à proposer : [url=https://discord.gg/QEsBya7hUA]https
 
 [h2]Soutenir le projet[/h2]
 
-Le mod vous plaît ? Un café aide à financer les nouveautés et les traductions.
+Le mod vous plaît ? Un café aide à financer nouveautés et traductions.
 [url=https://ko-fi.com/Z8Z8QJV31][img]https://storage.ko-fi.com/cdn/kofi6.png?v=6[/img][/url]
 
 [h2]Crédits[/h2]
 
-Créé par batmanfr. Les images ci-dessus sont les aperçus Workshop de chaque mod pris en charge, par leurs auteurs.
+Créé par batmanfr. Images : aperçus Workshop des mods pris en charge, de leurs auteurs.
 [url=https://github.com/cyberbobjr/LiveWireCompatibility]GitHub[/url] · MIT

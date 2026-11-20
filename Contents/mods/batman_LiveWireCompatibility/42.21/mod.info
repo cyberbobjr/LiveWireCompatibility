@@ -6,4 +6,4 @@ description=Machines of other mods draw their power from LiveWire. Supported mod
 require=\batman_LiveWire
 loadModAfter=\batman_LiveWire,\ArtelManufactory
 versionMin=42.21
-modversion=1.0.0
+modversion=1.1.0

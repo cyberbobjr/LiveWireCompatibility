@@ -1,13 +1,13 @@
 # Changelog
 
-## Unreleased
+## 1.1.0 — 2026-11-20
 
 ### Added
 - Knox Working Machines: drill press, table saw, lathes, milling machine, hydraulic press, bench grinder, charging panel, canning line, vehicle lift and car wash draw their power from LiveWire, get the on/off switch and stop without power.
 - STFO 3T: fence energizer, motion sensor, gate control box, floodlights, work light, tower searchlight and auto-turret draw from LiveWire when on mains; a car battery inside a device still works when the mains is cut.
 - CamRecorder: fixed security cameras, Imekagi camera, security monitors and surveillance PC draw their power from LiveWire and stop without power.
 - Two mods that give a use to the same vanilla tile (Machinery and Knox Working Machines, Computer Mod and CamRecorder) can be enabled together: each machine follows the mod that placed it.
-- Switching a machine on or off now shows at once on the inverter screens and in LiveWire's Show consumers view, instead of up to ten game minutes later: our switch, the counters and vending machines of Functional Appliances 2, the desktop computer, the jukebox, and the start and end of an Artel dryer batch (needs the next LiveWire update).
+- Switching a machine on or off now shows at once on the inverter screens and in LiveWire's Show consumers view, instead of up to ten game minutes later: our switch, the counters and vending machines of Functional Appliances 2, the desktop computer, the jukebox, and the start and end of an Artel dryer batch (needs LiveWire 2.2.0 or later).
 - On/off switch: right-click a supported machine and choose Turn off or Turn on. A machine that is off draws no power and does not work. Machines with a button of their own (desktop computer, jukebox, buffet counters, displays and vending machines) keep it.
 - No power, no machine: a machine that is off, unpowered or cut by a breaker refuses to work. Its menu options are greyed with the reason, and a use in progress stops.
 - Artel Manufactory: the electric dryer and the freeze dryer pause their batch when the power goes, then resume; the chemistry table refuses to craft without power.
@@ -20,6 +20,7 @@
 - Artel Manufactory: an electric dryer or freeze dryer switched off, or cut by LiveWire, can no longer start a batch, and Artel itself now sees it without power: red lamp and Paused banner in its window, batches held. Load LiveWire Compatibility after Artel Manufactory in the mod list.
 - Project Arcade: sit-down cabinets facing east or south are now billed.
 - Machinery: the metalwork lathe now stops when its power is cut, whichever part of it is used.
+
 ## 1.0.0 — 2026-11-14
 
 ### Added
