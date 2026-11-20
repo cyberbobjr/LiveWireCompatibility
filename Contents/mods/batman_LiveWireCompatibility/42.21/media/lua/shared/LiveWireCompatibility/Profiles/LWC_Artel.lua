@@ -168,6 +168,22 @@ LiveWireCompat.Profiles.add({
           consumer = { "ArtelElectricDryer", "ArtelSublimator", "ArtelChemTable" } },
         { kind = "action", path = "ISGenericCraftStart", field = "entity", side = "client",
           consumer = { "ArtelElectricDryer", "ArtelSublimator", "ArtelChemTable" } },
+        -- Station window (client/PMK_55_ElectricDryerPanel.lua:2586-2597, class :1960; the freeze
+        -- dryer's window derives from it, client/PMK_59_SublimatorPanel.lua:27): update() copies
+        -- Artel's "no power" flag into pausedFlag, which lights the red lamp, the "Paused" banner
+        -- (:2696) and freezes the batch timers (:1206). Artel writes that flag from its own square
+        -- check (server/PMK_58z:82, :467), a local function that still sees current on a station
+        -- switched off or cut by LiveWire, and clears it every minute: the window of such a station
+        -- shows Artel's no-power state itself, on this client only (entity = the station, :2578).
+        { kind = "call", path = "PMK_ElectricDryerPanel.update", side = "client",
+          consumer = { "ArtelElectricDryer", "ArtelSublimator" },
+          machine = function(panel) return panel.entity end,
+          instead = function(original, panel, ...)
+              local result = original(panel, ...)
+              panel.pausedFlag = true
+              if panel.batchList then panel.batchList.pausedFlag = true end
+              return result
+          end },
         -- client/PMK_57_CraftBenchPanel.lua:2145 PMK_CraftBenchPanel:isUsable() (class :1896,
         -- methods through the metatable :2573-2574), checked before selecting a recipe (:2065) and
         -- starting a craft (:2174). The table is self.entity (:2578), the player self.player

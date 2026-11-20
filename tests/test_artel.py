@@ -80,6 +80,14 @@ function tick(stations)
         for _, crd in ipairs(s.batches) do
             if s.powered then Pause.thaw(crd) else Pause.freeze(crd) end
         end
+        -- server/PMK_58z_SublimatorServer.lua:337-345 setFlag, called just before the stage (:467).
+        local comp = s.obj.getComponent and s.obj:getComponent(ComponentType.DryingCraftLogic)
+        local active = comp and comp:getActiveCraftCount() or 0
+        local md, on = s.obj:getModData(), (not s.powered) and active > 0
+        if (md.PMK_EDryerNoPower and true or false) ~= on then
+            md.PMK_EDryerNoPower = on or nil
+            if s.obj.transmitModData then s.obj:transmitModData() end
+        end
         local applyStage = _G[s.stage]
         if applyStage then applyStage(s.obj, nil) end
     end
@@ -92,6 +100,8 @@ function station(id, cut, active, noPower)
     o.hasComponent = function(self, t) return t == ComponentType.DryingCraftLogic end
     o.getComponent = function(self, t) if t == ComponentType.DryingCraftLogic then return comp end end
     if noPower then o:getModData().PMK_EDryerNoPower = true end
+    o.sent = 0
+    o.transmitModData = function(self) self.sent = self.sent + 1 end
     return o
 end
 
@@ -115,6 +125,18 @@ function PMK_CraftBenchPanel:new(player, entity)
     return o
 end
 function off(o) o:getModData().LWC_off = true; return o end
+-- Station window (client/PMK_55_ElectricDryerPanel.lua:2586-2597; PMK_59:27 derives from it).
+PMK_ElectricDryerPanel = {}
+PMK_ElectricDryerPanel.__index = PMK_ElectricDryerPanel
+function PMK_ElectricDryerPanel:update()
+    local md = self.entity:getModData()
+    self.pausedFlag = (md and md.PMK_EDryerNoPower) and true or false
+    if self.batchList then self.batchList.pausedFlag = self.pausedFlag end
+    self.updated = (self.updated or 0) + 1
+end
+PMK_SublimatorPanel = setmetatable({}, { __index = PMK_ElectricDryerPanel })
+PMK_SublimatorPanel.__index = PMK_SublimatorPanel
+function panel(class, entity) return setmetatable({ entity = entity, batchList = {} }, class) end
 -- Vanilla craft logic start (client/Entity/ISEntityUI.lua:71-87, shared/Entity/TimedActions/ISGenericCraftStart.lua).
 QUEUED = {}
 ISTimedActionQueue = { add = function(a) QUEUED[#QUEUED + 1] = a end }
@@ -231,6 +253,26 @@ class ArtelBatchStart(unittest.TestCase):
     def test_other_stations_keep_the_vanilla_answer(self):
         self.lua.execute("ISEntityUI.GenericCraftStart(hero(), machine('SomeOtherBench', true), {}, print, print)")
         self.assertEqual(self.lua.eval("#QUEUED"), 1)
+
+
+class ArtelStationWindow(unittest.TestCase):
+    def setUp(self):
+        self.lua = make()
+
+    def test_switched_off_freeze_dryer_window_shows_no_power(self):
+        self.lua.execute("W = panel(PMK_SublimatorPanel, off(station('ArtelSublimator', false, 1))); W:update()")
+        self.assertTrue(self.lua.eval("W.pausedFlag and W.batchList.pausedFlag"))
+        self.assertEqual(self.lua.eval("W.updated"), 1)
+
+    def test_cut_dryer_window_shows_no_power(self):
+        self.lua.execute("W = panel(PMK_ElectricDryerPanel, station('ArtelElectricDryer', true, 0)); W:update()")
+        self.assertTrue(self.lua.eval("W.pausedFlag"))
+
+    def test_powered_station_window_keeps_artel_answer(self):
+        self.lua.execute("W = panel(PMK_SublimatorPanel, station('ArtelSublimator', false, 1)); W:update()")
+        self.assertFalse(self.lua.eval("W.pausedFlag"))
+        self.lua.execute("W.entity:getModData().PMK_EDryerNoPower = true; W:update()")
+        self.assertTrue(self.lua.eval("W.pausedFlag"))
 
 
 class ArtelQuantumBase(unittest.TestCase):

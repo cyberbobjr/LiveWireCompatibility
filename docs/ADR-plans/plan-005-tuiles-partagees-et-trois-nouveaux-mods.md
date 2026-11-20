@@ -65,3 +65,14 @@ chemin de la fonction, si bien qu'une seconde garde d'un autre profil sur la mê
 s'installait pas ; `G.wrapName(g)` identifie maintenant chaque garde.
 
 Preuve du vert : `python -B -m unittest discover -s tests` → `Ran 266 tests`, `OK`.
+
+## Correction du 2026-11-20 — voyant « pas de courant » des stations Artel
+
+Signalé par l'utilisateur : lyophilisateur éteint, lot figé mais sans le voyant rouge ni le bandeau d'Artel. Artel
+calcule ce voyant depuis un contrôle de case local (`server/PMK_58z:82`, `:467`), qui voit encore du courant et efface le
+drapeau chaque minute : écrire ce drapeau côté serveur clignoterait. Garde `call` client sur
+`PMK_ElectricDryerPanel.update` (fenêtre du sublimateur dérivée, `PMK_59:27`) : la fenêtre d'une station éteinte ou coupée
+affiche l'état « pas de courant » d'Artel. Couper le courant de la case elle-même est écarté : `haveElectricity` est une
+méthode Java, appelée par le moteur hors Lua, et la case porte d'autres appareils.
+
+Preuve du vert : `python -B -m unittest discover -s tests` → `Ran 269 tests`, `OK`.
