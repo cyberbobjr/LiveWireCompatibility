@@ -54,6 +54,13 @@ colonnes des cartes.
   en note les pixels opaques non couverts. `tools/build_artel_depth.py` devient `tools/depthlib.py` (calcul, sources
   fusionnées comme le moteur, lecture des packs) et `tools/build_depth.py`.
 
+- **D05 — Images superposées à une machine** (2026-11-20, observation de l'utilisateur : la surbrillance du lyophilisateur
+  disparaît quand il est chargé et revient quand il est vide). Artel pose une image du contenu par-dessus la station
+  (`IsoObject:setOverlaySprite` : `Artel_48` à `51` pour la sublimatrice, `Artel_38`, `39`, `42`, `43` pour la sécheuse) ;
+  sans profondeur, elle se dessine sans la couleur par-dessus la machine colorée. Un profil déclare ces images dans un
+  champ `overlays` (image → machine), lu par les outils seulement ; chacune reçoit la profondeur de sa machine,
+  étendue à ses pixels propres. `check_sprites.py` et `check_depth.py` les contrôlent aussi.
+
 ## Conséquences
 
 - La surbrillance de « Afficher les consommateurs » et du menu contextuel doit apparaître de face (à confirmer en

@@ -200,6 +200,22 @@ class DepthSources:
                 return cell
         return None
 
+    def depth_values(self, name):
+        """Depth grid (0..1, NaN where transparent) of the first non-empty cell of `name`, or None."""
+        from PIL import Image
+        parts = split(name)
+        if not parts:
+            return None
+        for path in self.maps.get(parts[0], []):
+            cell = cell_of(self._alpha_of(path), parts[1])
+            if cell is not None and cell.any():
+                rgba = np.array(Image.open(path).convert("RGBA"))
+                cols = rgba.shape[1] // CELL_W
+                x, y = (parts[1] % cols) * CELL_W, (parts[1] // cols) * CELL_H
+                block = rgba[y:y + CELL_H, x:x + CELL_W]
+                return np.where(block[..., 3] > 0, block[..., 0] / 255.0, np.nan)
+        return None
+
     def depth_cell(self, name):
         """('own' or 'assigned', alpha cell, assigned tile) the engine would use, or (None, None, None)."""
         cell = self.own_cell(name)
@@ -297,3 +313,19 @@ def profiles():
     """(name, workshop id, sprite names) of every profile."""
     import check_sprites
     return check_sprites.profiles()
+
+
+def overlays():
+    """(name, workshop id, {overlay sprite: base sprite}) of every profile."""
+    import check_sprites
+    return check_sprites.overlays()
+
+
+def overlay_depth(base_depth, overlay_alpha):
+    """Depth of a sprite drawn over a machine: the machine's depth, extended to the overlay's pixels
+    outside the machine with the farthest neighbouring depth."""
+    mask = overlay_alpha > 0
+    depth = np.where(mask, base_depth, np.nan)
+    depth = fill(depth, mask)
+    depth[~mask] = np.nan
+    return depth, int((mask & np.isnan(depth)).sum())

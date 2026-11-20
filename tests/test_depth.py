@@ -90,6 +90,21 @@ class Fit(unittest.TestCase):
         self.assertEqual(left, 0)
 
 
+class Overlay(unittest.TestCase):
+    def test_overlay_takes_the_machine_depth_and_fills_its_own_extra_pixels(self):
+        base_alpha = box_sprite(0.2, 0.8, 0.2, 0.8, 0.5)
+        base_depth, _box, _left = bad.tile_depth(base_alpha)
+        over = base_alpha.copy()
+        ys, xs = np.nonzero(base_alpha)
+        over[ys.min() - 2, int(xs.mean())] = 255   # a pixel above the machine (steam, a lid...)
+        depth, left = bad.overlay_depth(base_depth, over)
+        self.assertEqual(left, 0)
+        inside = base_alpha > 0
+        self.assertTrue(np.allclose(depth[inside], base_depth[inside]))
+        self.assertFalse(np.isnan(depth[ys.min() - 2, int(xs.mean())]))
+        self.assertTrue(np.isnan(depth[over == 0]).all())
+
+
 class Sources(unittest.TestCase):
     def setUp(self):
         import tempfile

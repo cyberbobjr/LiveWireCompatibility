@@ -92,9 +92,19 @@ local function installQuantumKeepSwitch(gate, G)
     end)
 end
 
+-- Sprites Artel draws over a station to show its load (IsoObject:setOverlaySprite,
+-- shared/PMK_54s_ElectricDryerStage.lua:257-259, shared/PMK_58s_SublimatorStage.lua:40-42), and the
+-- machine sprite each one covers. Read by the depth tools only (ADR-003): an overlay gets the depth
+-- of its machine, otherwise it hides the machine's highlight while the station is loaded.
+local OVERLAYS = {
+    Artel_38 = "Artel_36", Artel_42 = "Artel_36", Artel_39 = "Artel_37", Artel_43 = "Artel_37",
+    Artel_48 = "Artel_52", Artel_50 = "Artel_52", Artel_49 = "Artel_53", Artel_51 = "Artel_53",
+}
+
 LiveWireCompat.Profiles.add({
     name = "Artel",
     workshop = "3794133594",
+    overlays = OVERLAYS,
     mods = { "ArtelManufactory" },
     consumers = {
         -- Well, motor stage only (the hand pump and the pipe stages use other sprites).

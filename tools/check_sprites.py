@@ -24,7 +24,8 @@ DEFAULT_WORKSHOP = r"D:\SteamLibrary\steamapps\workshop\content\108600"
 DEFAULT_GAME = r"D:\SteamLibrary\steamapps\common\ProjectZomboid"
 
 
-def profiles():
+def _profile_list():
+    """LiveWireCompat.Profiles.list after loading the core modules and every profile file."""
     lua = lupa.LuaRuntime(unpack_returned_tuples=True)
     # Kahlua-like require: each module of this mod is loaded once from shared/ (core files need
     # each other: LWC_Profiles requires LWC_Switch, LWC_Gates and the gate kinds).
@@ -45,10 +46,25 @@ require "LiveWireCompatibility/LWC_Profiles"
     for path in sorted(glob.glob(PROFILE_GLOB)):
         with open(path, encoding="ascii") as f:
             lua.execute(f.read())
+    return list(lua.eval("LiveWireCompat.Profiles.list").values())
+
+
+def profiles():
+    """(name, workshop id, sprite names of its consumers) of every profile."""
     out = []
-    for p in lua.eval("LiveWireCompat.Profiles.list").values():
+    for p in _profile_list():
         sprites = [s for c in p.consumers.values() for s in c.sprites.values()]
         out.append((p.name, p.workshop, sprites))
+    return out
+
+
+def overlays():
+    """(name, workshop id, {overlay sprite: base sprite}) of every profile: the optional `overlays`
+    field (tools only) names the sprites the target mod draws over a machine (setOverlaySprite)."""
+    out = []
+    for p in _profile_list():
+        table = p.overlays
+        out.append((p.name, p.workshop, dict(table.items()) if table else {}))
     return out
 
 
@@ -112,7 +128,9 @@ def main():
     args = ap.parse_args()
     vanilla = tiles_in(os.path.join(args.game, "media"))
     code = 0
+    extra = {name: list(table) for name, _w, table in overlays()}
     for name, workshop, sprites in profiles():
+        sprites = sprites + extra.get(name, [])
         mod_dir = os.path.join(args.workshop, str(workshop))
         if not workshop or not os.path.isdir(mod_dir):
             print("%s: target mod not found (%s)" % (name, mod_dir))

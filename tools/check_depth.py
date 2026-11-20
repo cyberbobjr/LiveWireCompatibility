@@ -27,7 +27,9 @@ def check(argv=None):
     sources = dl.DepthSources(dl.media_roots(a.workshop, a.game, include_own=True))
     masks = dl.SpriteMasks(a.forge)
     failed = 0
+    extra = {name: sorted(table) for name, _w, table in dl.overlays()}
     for pname, workshop_id, sprites in dl.profiles():
+        sprites = sprites + extra.get(pname, [])  # sprites drawn over a machine need a depth too
         packs = dl.packs_of(a.workshop, a.game, workshop_id)
         masks.load(packs, sprites)
         counts = {"own": 0, "assigned": 0}

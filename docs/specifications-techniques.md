@@ -86,7 +86,8 @@ dans une carte du jeu ou d'un mod, ni renvoi) : `DEPTH_Artel.png` (40 cases), `D
 `DEPTH_pa_complex.png` (4), `DEPTH_pa_recreational.png` (8), `DEPTH_machinery_metal_bandsaw_01.png` (4),
 `DEPTH_pws_tileset_01.png` (2). Seules ces cases sont remplies ; une carte existante d'un jeu de tuiles garde ses cases et
 fixe les dimensions (le moteur fusionne case par case, `TilesetDepthTexture.mergeTileset`, aux dimensions minimales). Le
-moteur ne les charge qu'avec `common/media/tileGeometry.txt`. Chaque sprite est un bloc carré centré sur sa case ajusté à sa
+moteur ne les charge qu'avec `common/media/tileGeometry.txt`. Les images qu'Artel superpose à ses stations chargées (`overlays` du profil) prennent la profondeur de leur machine.
+Chaque sprite est un bloc carré centré sur sa case ajusté à sa
 silhouette ; aucun pixel du sprite sans texel. Sans profondeur, le jeu ne dessinait pas la surbrillance de ces machines de
 face (« Afficher les consommateurs », menu contextuel).
 

@@ -8,6 +8,7 @@ ADR : [ADR-003](../ADR/003-profondeurs-machines-artel.md) (acceptée le 2026-11-
 | P2 | Carte `common/media/depthmaps/DEPTH_Artel.png` et `common/media/tileGeometry.txt` générées, contrôle : 0 pixel sans texel, cases d'Artel 200-223 laissées vides | Terminée (2026-11-20) | P1 | D01 | S | — |
 | P3 | Documentation (architecture, spécifications, CHANGELOG) | Terminée (2026-11-20) | P2 | — | S | — |
 | P5 | Généralisation (D04) : `tools/depthlib.py`, `tools/build_depth.py`, `tools/check_depth.py`, tests ; cartes de tous les profils | Terminée (2026-11-20) | P3 | D04 | M | — |
+| P6 | Images superposées (D05) : champ `overlays` du profil Artel, profondeur de la machine pour `Artel_38/39/42/43/48-51` | Terminée (2026-11-20) | P5 | D05 | S | — |
 | P4 | Contrôle en jeu par l'utilisateur : lyophilisateur coloré de face dans « Afficher les consommateurs » | À valider (contrôle en jeu par l'utilisateur) | P2 | — | S | — |
 
 ## P1 — Outil
@@ -42,7 +43,16 @@ Preuve du vert : `python -B -m unittest discover -s tests` → `Ran 177 tests in
 `python tools/check_depth.py` → code 0, 7 profils, 229 sprites, `without depth 0` partout (notes : pixels opaques hors
 profondeur de cartes existantes, 54 sprites, non corrigés).
 
+## P6 — Images superposées (D05)
+
+`tools/check_sprites.py` (`overlays()`), `tools/depthlib.py` (`depth_values`, `overlay_depth`), `tools/build_depth.py` (machines
+puis images superposées), `tools/check_depth.py`, profil `LWC_Artel.lua` (`overlays`), `tests/test_depth.py`.
+
+Preuve du vert : `python -B -m unittest discover -s tests` → `Ran 178 tests in 0.535s OK` ; `python tools/build_depth.py` → 8 images superposées
+`without depth 0`, code 0 ; `python tools/check_depth.py` → `Artel: 48 sprites, own depth 48`, code 0 ;
+`python tools/check_sprites.py` → `Artel: 48 sprites found`.
+
 ## P4 — Contrôle en jeu
 
 Fait par l'utilisateur (il lance lui-même les tests en jeu) : lyophilisateur Artel, une borne Project Arcade orientée
-nord ou ouest, la scie à ruban de Machinery, la station météo, colorés de face dans « Afficher les consommateurs ».
+nord ou ouest, la scie à ruban de Machinery, la station météo, colorés de face dans « Afficher les consommateurs » ; lyophilisateur et sécheuse chargés (image superposée) toujours colorés.
