@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 — 2026-11-22
+
+### Fixed
+- Right-clicking in the world could show a red error when another mod's menu held a submenu entry that is not a machine.
+
 ## 1.1.0 — 2026-11-20
 
 ### Added

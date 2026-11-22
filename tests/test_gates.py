@@ -194,6 +194,21 @@ class Menu(unittest.TestCase):
         self.assertTrue(lua.eval("OPT.notAvailable"))
         self.assertIsNone(lua.eval("P.notAvailable"))
 
+    def test_java_object_that_is_not_a_world_object_is_ignored(self):
+        # 42.22 menu options may hold the Java context menu itself; like any Java object in
+        # Kahlua it raises when a missing method is read.
+        class JavaMenu:
+            def __getitem__(self, key):
+                raise KeyError("attempted index: %s of non-table" % key)
+
+        lua = make()
+        lua.globals().JAVA_MENU = JavaMenu()
+        lua.execute("function instanceof(o, class) return false end")
+        self.fill(lua, "A = CTX:addOption('Sub', JAVA_MENU, print, JAVA_MENU); "
+                       "OPT = CTX:addOption('Play', nil, print, machine('GMachine', true))")
+        self.assertIsNone(lua.eval("A.notAvailable"))
+        self.assertTrue(lua.eval("OPT.notAvailable"))
+
     def test_test_pass_changes_nothing(self):
         lua = make()
         lua.execute("CTX = menu(); OPT = CTX:addOption('Play', nil, print, machine('GMachine', true)); "

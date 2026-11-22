@@ -110,6 +110,9 @@ end
 -- the same multi-square entity (SpriteConfig.getAllMultiSquareObjects, B42 built furniture).
 -- A profile bills one piece per furniture, but a target mod may hand any piece to its checks.
 function G.billed(o)
+    -- A Java object that is not a world object (a context menu held by a menu option, ...) has
+    -- none of the methods probed below, and Kahlua raises on a missing Java method.
+    if type(o) == "userdata" and not instanceof(o, "IsoObject") then return nil end
     if LiveWire.API.consumer(o) ~= nil then return o end
     if not o.getSpriteGrid or not o:getSquare() then return nil end
     pieces = pieces or ArrayList.new()
